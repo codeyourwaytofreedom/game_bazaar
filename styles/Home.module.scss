@@ -1,5 +1,4 @@
 .homie{
-    border:5px solid blue;
     padding-top: 60px;
     &_wallpaper{
         width: 100%;
@@ -13,15 +12,30 @@
         z-index: -1;
     }
     &_banner{
-        background-color: darkorange;
+        background-color: #d07303;
         height: 60px;
         position: fixed;
         top: 0; left: 0;right: 0;
-        background-image: linear-gradient(to right, #B87333, #FF8C00);
         animation: shine 0.5s infinite;
     }
-    &_categories{
-        background-color: yellow;
-        position: relative;
+    &_items{
+        display: grid;
+        justify-items: center;
+        &_shell{
+            width: 80%;
+            display: flex;
+            flex-wrap:wrap;
+            gap: 40px;
+            justify-content: space-around;
+            padding: 2%;
+            &_each{
+                width: 200px;
+                aspect-ratio: 2/3;
+                padding: 30px 20px;
+                box-shadow: 1px 1px 9px 0px silver;
+                background-color: rgba($color: #000000, $alpha: 0.5);
+            }
+        }
+
     }
 }

@@ -1,5 +1,4 @@
 .homie {
-  border: 5px solid blue;
   padding-top: 60px;
 }
 .homie_wallpaper {
@@ -17,17 +16,31 @@
   z-index: -1;
 }
 .homie_banner {
-  background-color: darkorange;
+  background-color: #d07303;
   height: 60px;
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  background-image: linear-gradient(to right, #B87333, #FF8C00);
   -webkit-animation: shine 0.5s infinite;
           animation: shine 0.5s infinite;
 }
-.homie_categories {
-  background-color: yellow;
-  position: relative;
+.homie_items {
+  display: grid;
+  justify-items: center;
+}
+.homie_items_shell {
+  width: 80%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+  justify-content: space-around;
+  padding: 2%;
+}
+.homie_items_shell_each {
+  width: 200px;
+  aspect-ratio: 2/3;
+  padding: 30px 20px;
+  box-shadow: 1px 1px 9px 0px silver;
+  background-color: rgba(0, 0, 0, 0.5);
 }/*# sourceMappingURL=Home.module.css.map */
