@@ -9,7 +9,7 @@ function getRandomNumber() {
 
 const Homie = () => {
     useEffect(()=>{
-        fetch("https://game-bazaar.vercel.app/api/hello").then(r=> r.json()).then(rj => console.log(rj))
+        fetch("/api/hello").then(r=> r.json()).then(rj => console.log(rj))
     },[])
     return ( <>
         <div className={h.homie}>
