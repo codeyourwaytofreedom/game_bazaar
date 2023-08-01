@@ -1,20 +1,22 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import type { NextApiRequest, NextApiResponse } from 'next'
-import fs from 'fs';
-import path from 'path';
+import type { NextApiRequest, NextApiResponse } from 'next';
+import { MongoClient} from "mongodb";
 
-type Data = {
-  notes: string
+async function connectToDatabase() {
+  const client = await MongoClient.connect(process.env.MD_URL!);
+  return client;
 }
 
-export default function handler(
+export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<Data>
+  res: NextApiResponse
 ) {
-  const filePath = path.join(process.cwd(), 'notes.txt');
-  const notes = fs.readFileSync(filePath, 'utf-8');
-
-  fs.writeFileSync(filePath, notes + " " + new Date().toDateString(), 'utf-8');
-
-  res.status(200).json({ notes:"notes" })
+  
+  const client = await connectToDatabase();
+  const data_base = client.db('magic_cursor');
+  const coll = data_base.collection('Cursor_sets');
+  coll.insertOne({
+    comment:"Yorum burada",
+    });
+      
+  res.status(200).send('OK');
 }
