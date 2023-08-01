@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { useEffect } from "react";
 import h from "../styles/Home.module.css";
 
 
@@ -7,6 +8,9 @@ function getRandomNumber() {
   }
 
 const Homie = () => {
+    useEffect(()=>{
+        fetch("/api/hello").then(r=> r.json()).then(rj => console.log(rj))
+    },[])
     return ( <>
         <div className={h.homie}>
             <div className={h.homie_wallpaper}></div>
