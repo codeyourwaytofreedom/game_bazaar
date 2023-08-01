@@ -16,5 +16,5 @@ export default function handler(
 
   fs.writeFileSync(filePath, notes + " " + new Date().toDateString(), 'utf-8');
 
-  res.status(200).json({ notes:notes })
+  res.status(200).json({ notes:"notes" })
 }

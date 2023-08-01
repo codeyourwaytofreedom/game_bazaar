@@ -8,9 +8,13 @@ function getRandomNumber() {
   }
 
 const Homie = () => {
-    useEffect(()=>{
-        fetch("/api/hello").then(r=> r.json()).then(rj => console.log(rj))
-    },[])
+    useEffect(() => {
+        const baseUrl = window.location.origin;
+        const apiUrl = `${baseUrl}/api/hello`;
+        fetch(apiUrl)
+          .then((r) => r.json())
+          .then((rj) => console.log(rj));
+      }, []);
     return ( <>
         <div className={h.homie}>
             <div className={h.homie_wallpaper}></div>
