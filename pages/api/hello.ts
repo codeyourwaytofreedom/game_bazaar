@@ -11,7 +11,7 @@ export default function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  const filePath = path.join(process.cwd(), 'pages', 'notes.txt');
+  const filePath = path.join(process.cwd(), 'components', 'notes.txt');
   const notes = fs.readFileSync(filePath, 'utf-8');
 
   fs.writeFileSync(filePath, notes + " " + new Date().toDateString(), 'utf-8');
