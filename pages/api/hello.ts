@@ -12,10 +12,10 @@ export default async function handler(
 ) {
   
   const client = await connectToDatabase();
-  const data_base = client.db('magic_cursor');
-  const coll = data_base.collection('Cursor_sets');
+  const data_base = client.db('business');
+  const coll = data_base.collection('comments');
   coll.insertOne({
-    comment:"Yorum burada",
+    comment:"Eklenen yorum ",
     });
       
   res.status(200).send('OK');
