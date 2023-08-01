@@ -26,6 +26,11 @@
         background-color: #a47f02;
         background-image: linear-gradient(to left, #a47f02, #FFC300);
         z-index: 99;
+        #comments{
+            position: absolute;
+            right: 40px;
+            filter: brightness(1.9);
+        }
 
     }
     &_items{
@@ -49,7 +54,11 @@
                 cursor: pointer;
                 &:hover{
                     box-shadow: 1px 1px 9px 4px var(--mainColor);
-                    
+                }
+                &:hover &_image{
+                    img{
+                        box-shadow: 1px 1px 9px 4px var(--mainColor);
+                    }
                 }
                 #icon{
                     position: absolute;

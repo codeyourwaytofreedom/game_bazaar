@@ -32,6 +32,11 @@
   background-image: linear-gradient(to left, #a47f02, #FFC300);
   z-index: 99;
 }
+.homie_banner #comments {
+  position: absolute;
+  right: 40px;
+  filter: brightness(1.9);
+}
 .homie_items {
   display: grid;
   justify-items: center;
@@ -55,6 +60,9 @@
   cursor: pointer;
 }
 .homie_items_shell_each:hover {
+  box-shadow: 1px 1px 9px 4px var(--mainColor);
+}
+.homie_items_shell_each:hover .homie_items_shell_each_image img {
   box-shadow: 1px 1px 9px 4px var(--mainColor);
 }
 .homie_items_shell_each #icon {

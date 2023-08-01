@@ -10,12 +10,13 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  
+  console.log(req.body);
+
   const client = await connectToDatabase();
   const data_base = client.db('business');
   const coll = data_base.collection('comments');
   coll.insertOne({
-    comment:"Eklenen yorum ",
+    comment:req.body,
     });
       
   res.status(200).send('OK');
