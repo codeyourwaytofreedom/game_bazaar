@@ -18,7 +18,7 @@ const Homie = () => {
                 <div className={h.homie_items_shell}>
                     {
                         [...Array(24)].map((item,index)=>
-                            <div className={h.homie_items_shell_each}>
+                            <div className={h.homie_items_shell_each} key={index}>
                                 <div id={h.icon}>
                                     <Image src={"/item_icon.png"} alt={"sword"} width={30} height={30}/>
                                 </div>
