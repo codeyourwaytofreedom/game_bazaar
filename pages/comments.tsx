@@ -24,29 +24,50 @@ const Comments = () => {
                 (r) => 
                 {
                     if(r.status === 200)
-                    {cmt.current!.value = ""; setDisabled(false)}
+                    {cmt.current!.value = ""; setDisabled(false);}
+                    else{
+                        setDisabled(false);
+                        cmt.current!.value = "Yorum ekleme başarısız";
+                        cmt.current!.style.fontWeight = "bold";
+                        cmt.current!.style.color = "red";
+                    }
                 })
         }
     }
-    
+
     return ( <>
     <div className={c.comments}>
-        <h2>Yorum Geçmişi</h2>
-        <h1>{comment}</h1>
+       <div>
+       <h2>Yorum Geçmişi</h2>
         <div>
             {
                 [...Array(7)].map((e,i)=>
-                    <p key={i}>{i}</p>
+                    <p key={i} style={{backgroundColor: i%2 ? "rgba($color: gray, $alpha: 0.3)" : "#2F4F4F",
+                                    color: i%2 ? "rgba($color: gray, $alpha: 0.1)" : "white"}}>
+                        Yorum metni burada yer alacak..
+                    </p>
                 )
             }
         </div>
+        <br />
         <h2>Lütfen yorumlarınızı maddeler halinde ve net ifadelerle yazınız...</h2>
         <div className={c.comments_adder}>
-            <textarea ref={cmt} rows={10} cols={5} 
+            {
+                disabled ?             
+                <div className={c.comments_adder_temp}>
+                    <h1>Yorum ekleniyor...</h1>
+                </div> 
+                : null
+            }
+            <span style={{color:comment.length === 500 ? "red" : "black"}}>500/{comment.length}</span>
+            <textarea ref={cmt} rows={10} cols={5} maxLength={500}
                 placeholder={"Yorum yazın..."} disabled={disabled}
-                onChange={()=> setComment(cmt.current!.value)}></textarea>
+                onChange={()=> {setComment(cmt.current!.value);cmt.current!.style.fontWeight = "normal";
+                cmt.current!.style.color = "black"; }}>
+                </textarea>
         </div>
         <button onClick={send_comment}>Ekle</button>
+       </div>
     </div>
 
     </> );
