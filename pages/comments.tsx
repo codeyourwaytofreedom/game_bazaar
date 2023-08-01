@@ -10,10 +10,9 @@ const Comments = () => {
     const cmt = useRef<HTMLTextAreaElement>(null);
     const [comment, setComment] = useState("");
     const [disabled, setDisabled] = useState(false);
-    const [existingComments, setExistingOnes] = useState<comment[]>([]);
+    const [existingComments, setExistingOnes] = useState<comment[]>();
 
-    useEffect(()=>{
-
+    const bring_All = () => {
         fetch('/api/bringer')
         .then((response) => response.json())
         .then((data) => {
@@ -23,6 +22,10 @@ const Comments = () => {
         .catch((error) => {
         console.error('Error fetching comments:', error);
         });
+    }
+
+    useEffect(()=>{
+        bring_All();
     },[]);
 
     const requestOptions = {
@@ -41,7 +44,7 @@ const Comments = () => {
                 (r) => 
                 {
                     if(r.status === 200)
-                    {cmt.current!.value = ""; setDisabled(false);}
+                    {cmt.current!.value = ""; setDisabled(false); bring_All()}
                     else{
                         setDisabled(false);
                         cmt.current!.value = "Yorum ekleme başarısız";
@@ -58,14 +61,16 @@ const Comments = () => {
        <h2>Yorum Geçmişi</h2>
         <div>
             {
-                existingComments.map((e,i)=>
+               existingComments? existingComments.map((e,i)=>
                     <p key={i} style={{backgroundColor: i%2 ? "rgba($color: gray, $alpha: 0.3)" : "#2F4F4F",
                                     color: i%2 ? "rgba($color: gray, $alpha: 0.1)" : "white"}}>
                         {e.comment}
                     </p>
                 )
+                : <h1>Yorumlar yükleniyor...Lütfen bekleyin...</h1>
             }
         </div>
+        <h2>{existingComments && existingComments.length === 0 && "Henüz yorum eklenmedi..."}</h2>
         <br />
         <h2>Lütfen yorumlarınızı maddeler halinde ve net ifadelerle yazınız...</h2>
         <div className={c.comments_adder}>
@@ -83,7 +88,7 @@ const Comments = () => {
                 cmt.current!.style.color = "black"; }}>
                 </textarea>
         </div>
-        <button onClick={send_comment}>Ekle</button>
+        <button onClick={send_comment}><h2>Yorum/Değerlendirme ekle</h2></button>
        </div>
     </div>
 
