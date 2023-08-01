@@ -11,10 +11,10 @@ export default function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-/*   const filePath = path.join(process.cwd(), 'public', 'notes.txt');
+  const filePath = path.join(process.cwd(), 'notes.txt');
   const notes = fs.readFileSync(filePath, 'utf-8');
 
-  fs.writeFileSync(filePath, notes + " " + new Date().toDateString(), 'utf-8'); */
+  fs.writeFileSync(filePath, notes + " " + new Date().toDateString(), 'utf-8');
 
   res.status(200).json({ notes:"notes" })
 }
