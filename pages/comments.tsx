@@ -3,10 +3,27 @@ import { useEffect, useRef, useState } from "react";
 
 
 const Comments = () => {
-
+    type comment = {
+        _id:string,
+        comment:string
+    }
     const cmt = useRef<HTMLTextAreaElement>(null);
     const [comment, setComment] = useState("");
     const [disabled, setDisabled] = useState(false);
+    const [existingComments, setExistingOnes] = useState<comment[]>([]);
+
+    useEffect(()=>{
+
+        fetch('/api/bringer')
+        .then((response) => response.json())
+        .then((data) => {
+            console.log(data);
+            setExistingOnes(data)
+        })
+        .catch((error) => {
+        console.error('Error fetching comments:', error);
+        });
+    },[]);
 
     const requestOptions = {
         method: 'POST',
@@ -41,10 +58,10 @@ const Comments = () => {
        <h2>Yorum Geçmişi</h2>
         <div>
             {
-                [...Array(7)].map((e,i)=>
+                existingComments.map((e,i)=>
                     <p key={i} style={{backgroundColor: i%2 ? "rgba($color: gray, $alpha: 0.3)" : "#2F4F4F",
                                     color: i%2 ? "rgba($color: gray, $alpha: 0.1)" : "white"}}>
-                        Yorum metni burada yer alacak..
+                        {e.comment}
                     </p>
                 )
             }

@@ -12,8 +12,9 @@ const Homie = () => {
         <div className={h.homie}>
             <div className={h.homie_wallpaper}></div>
             <div className={h.homie_banner}>
-                <div><Image src={"/banner_sword.png"} alt={"sword"} width={40} height={40}/></div>
-                <h2>Game Bazaar</h2>
+                <Link href={"/"}><div><Image src={"/banner_sword.png"} alt={"sword"} width={40} height={40}/></div></Link>
+                <Link href={"/"}><h2>Game Bazaar</h2></Link>
+
                 <Link id={h.comments} href={"/comments"}>
                     <Image src={"/cmt.png"} alt={"sword"} width={50} height={40}/>
                 </Link>

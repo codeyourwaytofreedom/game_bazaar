@@ -60,7 +60,7 @@
   cursor: pointer;
 }
 .homie_items_shell_each:hover {
-  box-shadow: 1px 1px 9px 4px var(--mainColor);
+  box-shadow: 1px 1px 9px 4px silver;
 }
 .homie_items_shell_each:hover .homie_items_shell_each_image img {
   box-shadow: 1px 1px 9px 4px var(--mainColor);
