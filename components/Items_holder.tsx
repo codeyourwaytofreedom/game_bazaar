@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useRouter } from 'next/router';
 
 const Items_holder = () => {
-    
+
     const router = useRouter();
     const urlPath = router.asPath;
     const partAfterBaseUrl = urlPath.replace(router.basePath, '');
@@ -24,7 +24,7 @@ const Items_holder = () => {
                                         <Image src={`/${Math.floor(Math.random() * (15))}.png`} alt={"dagger"} width={100} height={100}/>
                                     </div>
                                     <div className={h.homie_items_shell_each_details}>
-                                        <h2>{partAfterBaseUrl}</h2>
+                                        <h2>Item name here</h2>
                                         <h3>$ 4.50</h3>
                                     </div>
                                 </div>
