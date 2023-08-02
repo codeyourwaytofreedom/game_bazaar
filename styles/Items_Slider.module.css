@@ -1,0 +1,147 @@
+.slider {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(255, 195, 0, 0.3);
+  padding: 5px 0;
+}
+.slider #back {
+  position: absolute;
+  left: 1vw;
+  z-index: 90 !important;
+  display: grid;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  border: none;
+  cursor: pointer;
+  background-color: white;
+  color: black;
+  border: 2px solid black;
+}
+.slider #back:hover {
+  background-color: black;
+  color: white;
+}
+.slider_topBanner {
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  z-index: 1 !important;
+  width: 90%;
+  padding: 2px;
+}
+.slider_topBanner_menu {
+  display: flex;
+  position: relative;
+  white-space: nowrap !important;
+  -moz-column-gap: 20px;
+       column-gap: 20px;
+}
+.slider_topBanner_menu_double {
+  width: 100px;
+  height: 130px;
+  box-shadow: 0 0 4px 1px whitesmoke;
+}
+.slider_topBanner_menu_double button {
+  background: transparent;
+  border: none;
+  position: relative;
+  display: grid;
+  justify-items: center;
+  align-items: center;
+  padding-bottom: 5px;
+  width: 100%;
+  height: 100%;
+  color: whitesmoke;
+}
+.slider_topBanner_menu_double button:hover {
+  color: black;
+  background-color: whitesmoke;
+}
+.slider_topBanner_menu_double button:hover img {
+  width: 65px;
+  height: 65px;
+}
+.slider_topBanner_menu_double button img {
+  -o-object-fit: contain;
+     object-fit: contain;
+  width: 45px;
+  height: 45px;
+}
+.slider_topBanner_menu_double button #text, .slider_topBanner_menu_double button #hide {
+  position: absolute;
+  display: grid;
+  justify-self: center;
+  border: 2px solid black;
+  background-color: silver;
+  font-size: medium;
+  padding: 2px 0;
+  width: 100%;
+  overflow: hidden;
+  -webkit-animation: enlarge 0.3s 1;
+          animation: enlarge 0.3s 1;
+}
+.slider_topBanner_menu_double button #hide {
+  display: none;
+}
+.slider_topBanner #name {
+  position: absolute;
+  right: 1vw;
+}
+.slider_topBanner #name #forward {
+  position: relative;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  color: silver;
+  cursor: pointer;
+  background-color: white;
+  color: black;
+  border: 2px solid black;
+}
+.slider_topBanner #name #forward:hover {
+  background-color: black;
+  color: white;
+}
+
+@-webkit-keyframes enlarge {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes enlarge {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
+}
+@media (max-width: 499px) {
+  .slider {
+    top: 0;
+  }
+  .slider #back {
+    display: none;
+  }
+  .slider_topBanner {
+    overflow: scroll;
+    padding: 10px;
+    width: 100%;
+  }
+  .slider_topBanner #name {
+    display: none;
+  }
+}/*# sourceMappingURL=Items_Slider.module.css.map */

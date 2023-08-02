@@ -39,7 +39,7 @@ const Comments = () => {
     const send_comment = () =>{
         if(cmt.current && cmt.current.value.length > 0){
             setDisabled(true);
-            fetch('/api/hello',requestOptions)
+            fetch('/api/adder',requestOptions)
               .then(
                 (r) => 
                 {
