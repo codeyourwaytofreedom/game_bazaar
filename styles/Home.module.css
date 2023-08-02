@@ -172,4 +172,21 @@
   .homie_categories {
     grid-template-columns: 1fr;
   }
+}
+@media (max-width: 499px) {
+  .homie_banner {
+    padding: 2%;
+  }
+  .homie_banner span {
+    display: none;
+  }
+  .homie_banner #comments {
+    right: 2%;
+  }
+  .homie_banner #login {
+    right: calc(2% + 40px);
+  }
+  .homie h3 {
+    font-size: x-large;
+  }
 }/*# sourceMappingURL=Home.module.css.map */

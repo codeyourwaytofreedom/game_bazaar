@@ -175,5 +175,26 @@
             grid-template-columns: 1fr;
         }
     }
+ }
 
+
+
+ @media (max-width: 499px) { 
+    .homie{
+        &_banner{
+            padding: 2%;
+            span{
+                display: none;
+            }
+            #comments{
+                right: 2%;
+            }
+            #login{
+                right: calc(2% + 40px);
+            }
+        }
+        h3{
+            font-size: x-large;
+        }
+    }
  }
