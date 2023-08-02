@@ -1,4 +1,4 @@
-import type { NextApiRequest, NextApiResponse } from 'next';
+/* import type { NextApiRequest, NextApiResponse } from 'next';
 import { Issuer } from 'openid-client';
 
 
@@ -33,4 +33,4 @@ export default function handler(
 
     // Respond with some message or status if needed
     res.status(200).json({ message: 'Steam authentication started.' });
-}
+} */
