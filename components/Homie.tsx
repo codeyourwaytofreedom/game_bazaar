@@ -32,6 +32,7 @@ const Homie = () => {
         <div className={h.homie}>
           <br />
             <Img_slider/>
+            <Items_slider/>
             {/* <div className={h.homie_wallpaper}></div> */}
             <Navbar/>
             <div className={h.homie_categories}>
@@ -46,7 +47,6 @@ const Homie = () => {
                     <div id={h.hideout}><Image src={"/banner_sword.png"} alt={"sword"} width={50} height={50}/></div>
                 </div>
             </div>
-            <Items_slider/>
             <br />
         </div>
     </> );

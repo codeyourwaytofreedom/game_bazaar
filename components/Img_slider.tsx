@@ -24,7 +24,7 @@ const Img_slider = () => {
       if (forward.current) {
         forward.current.click();
       }
-    }, 3000); // 1000 milliseconds = 1 second, change this value for the desired interval
+    }, 5000); // 1000 milliseconds = 1 second, change this value for the desired interval
 
     return () => {
       clearInterval(intervalId); // Clear the interval when the component unmounts
