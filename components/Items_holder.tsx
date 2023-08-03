@@ -15,8 +15,8 @@ const Items_holder = () => {
                 <div className={h.homie_items_shell}>
                     {
                         [...Array(24)].map((item,index)=>
-                            <Link href={`/tm2/${index}_item`}>
-                                <div className={h.homie_items_shell_each} key={index}>
+                            <Link href={`/tm2/${index}_item`} key={index}>
+                                <div className={h.homie_items_shell_each}>
                                     <div id={h.icon}>
                                         <Image src={"/item_icon.png"} alt={"sword"} width={30} height={30}/>
                                     </div>
