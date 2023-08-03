@@ -6,6 +6,7 @@ import { Issuer } from 'openid-client';
 import Items_slider from "./Slider";
 import { useRouter } from "next/router";
 import Navbar from "./Navbar";
+import Img_slider from "./Img_slider";
 
 const Homie = () => {
     const router = useRouter();
@@ -29,15 +30,14 @@ const Homie = () => {
 
     return ( <>
         <div className={h.homie}>
+          <br />
+            <Img_slider/>
             {/* <div className={h.homie_wallpaper}></div> */}
             <Navbar/>
             <div className={h.homie_categories}>
                 <div className={h.homie_categories_each} onClick={()=>router.push("/tm2")}>
                     <h3>Team Fortress 2</h3>
                     <Image src={"/tm2.jpeg"} alt={"tm2"} width={800} height={400}/>
-  {/*                   <div id={h.sld}>
-                        <Items_slider/>
-                    </div> */}
                     <div id={h.hideout}><Image src={"/banner_sword.png"} alt={"sword"} width={50} height={50}/></div>
                 </div>
                 <div className={h.homie_categories_each} onClick={()=>router.push("/csgo")}>
@@ -46,8 +46,8 @@ const Homie = () => {
                     <div id={h.hideout}><Image src={"/banner_sword.png"} alt={"sword"} width={50} height={50}/></div>
                 </div>
             </div>
-
             <Items_slider/>
+            <br />
         </div>
     </> );
 }
