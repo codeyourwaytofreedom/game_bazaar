@@ -16,6 +16,7 @@ const Homie = () => {
     const [hei, setHei] = useState<number>(50);
     const [enlarged, setEnlarged] = useState<boolean>(false);
     const [alt_bar, setAlt] = useState<boolean>(false);
+    const [modalVis, setModalVis] = useState<string>("default");
 
     const authenticateWithSteam = async () => {
         try {
@@ -66,7 +67,6 @@ const Homie = () => {
     return ( <>
         <div className={h.homie}>
           <br />
-            
             <div className={h.homie_subs} style={{height:hei}}>
               {
                 csgo_subs.slice(0,csgo_subs.length-1).map((e,i)=>
@@ -85,7 +85,7 @@ const Homie = () => {
             <Img_slider/>
             <Items_slider/>
             {/* <div className={h.homie_wallpaper}></div> */}
-            <Navbar alt_bar={alt_bar} setAlt={setAlt}/>
+            <Navbar alt_bar={alt_bar} setAlt={setAlt} modalVis={modalVis} setModalVis={setModalVis}/>
             <div className={h.homie_categories}>
                 <div className={h.homie_categories_each} onClick={()=>router.push("/market/tm2")}>
                     <h3>Team Fortress 2</h3>
@@ -94,7 +94,7 @@ const Homie = () => {
                 </div>
                 <div className={h.homie_categories_each} onClick={()=>router.push("/market/csgo")}>
                     <h3>Counter Strike Global Offensive</h3>
-                    <Image src={"/cs.jpeg"} alt={"tm2"} width={800} height={400}/>
+                      <Image src={"/cs.jpeg"} alt={"tm2"} width={800} height={400}/>
                     <div id={h.hideout}><Image src={"/banner_sword.png"} alt={"sword"} width={50} height={50}/></div>
                 </div>
             </div>

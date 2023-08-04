@@ -29,6 +29,43 @@
         background-color: #a47f02;
         background-image: linear-gradient(to left, #a47f02, #FFC300);
         z-index: 99;
+        #dropdown{
+            position: relative;
+            left: 10px;
+            display: grid;
+            #category{
+                padding: 0 5px;
+                box-shadow: 0 0 3px 1px black;
+                height: 50px; width: 60px;
+                cursor: pointer;
+            }
+        }
+        #modal{
+            position: fixed;
+            top:70px;
+            left: 0; right: 0; bottom: 0;
+            background-color: rgba($color: #000000, $alpha: 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            column-gap: 20px;
+            color: whitesmoke;
+            div{
+                display: grid;
+                row-gap: 10px;
+                font-size: x-large;
+                padding: 5px;
+                box-shadow: 0 0 3px 1px var(--mainColor);
+                cursor: pointer;
+                &:hover{
+                    padding: 15px;
+                }
+                img{
+                    width: 40vw;
+                    max-width: 190px;
+                }
+            }
+        }
         &_search, &_search2{
             position: absolute;
             left: 0;
@@ -42,7 +79,7 @@
                 width: 50vw;
                 max-width: 500px;
                 position: relative;
-                left: -2vw;
+                left: 4vw;
                 //background-color: rgba($color: #000000, $alpha: 0.2);
                 //border: 2px solid black;
                 border-radius: 10px;
@@ -127,6 +164,7 @@
             font-size: x-large;
             letter-spacing: normal;
             cursor: pointer;
+            letter-spacing: -0.5px;
         }
 
     }
@@ -314,7 +352,7 @@
                     width: 35vw;
                     min-width: 250px;
                     position: relative;
-                    left: -5vw;
+                    left: 6vw;
                 }
             }
         }
@@ -363,6 +401,9 @@
             }
             #login{
                 right: calc(2% + 40px);
+            }
+            #alt_search{
+                right: 80px;
             }
         }
         &_subs{

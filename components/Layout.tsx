@@ -10,6 +10,8 @@ type Layout_props = {
 
 const Layout = ({children}:Layout_props) => {
     const [alt_bar, setAlt] = useState<boolean>(false);
+    const [modalVis, setModalVis] = useState<boolean>(false);
+
     useEffect(()=>{
         const setter = () => {
           setAlt(false)
@@ -21,7 +23,7 @@ const Layout = ({children}:Layout_props) => {
 
     return ( <>
         <div className={h.homie}>
-            <Navbar alt_bar={alt_bar} setAlt={setAlt}/>
+            <Navbar alt_bar={alt_bar} setAlt={setAlt} modalVis={modalVis} setModalVis={setModalVis}/>
             {children}
         </div>
     </> );

@@ -7,15 +7,31 @@ import { NextPage } from "next";
 
 interface Navbar_props {
     setAlt: Dispatch<SetStateAction<boolean>>;
-    alt_bar:boolean
+    alt_bar:boolean,
+    setModalVis:Dispatch<SetStateAction<string>>,
+    modalVis:string
   }
 
 
-const Navbar:NextPage<Navbar_props> = ({alt_bar, setAlt}) => {
+const Navbar:NextPage<Navbar_props> = ({alt_bar, setAlt, modalVis, setModalVis}) => {
     return ( 
         <div className={h.homie_banner}>
                 <Link href={"/"}><div><Image src={"/banner_sword.png"} alt={"sword"} width={40} height={40}/></div></Link>
                 <Link href={"/"}><h2>Game Bazaar</h2></Link>
+                <div id={h.dropdown} onClick={()=> setModalVis("open")}>
+                    <Image src={modalVis === "csgo" ? "/csgo_icon.png" : modalVis === "tm2" ? "/tm2_icn.png" :  "/csgo_icon.png"} 
+                        alt={"category"} width={70} height={60} id={h.category}/>
+                </div>
+                <div id={h.modal} style={{display:modalVis === "open" ? "flex" : "none"}}>
+                    <div onClick={()=> setModalVis("tm2")}>
+                        Team Fortress 2
+                        <Image src={"/tm2.jpeg"} alt={"tm2"} width={190} height={100}/>
+                    </div>
+                    <div onClick={()=> setModalVis("csgo")}>
+                        Csgo
+                        <Image src={"/cs.jpeg"} alt={"tm2"} width={190} height={100}/>
+                    </div>
+                </div>
 
                 <Image src={"/srch.png"} alt={"sword"} width={30} height={30} id={h.alt_search} onClick={()=> setAlt(true)}/>
                 <div className={h.homie_banner_search2} style={{display:alt_bar ? "grid": "none"}}>
@@ -36,7 +52,7 @@ const Navbar:NextPage<Navbar_props> = ({alt_bar, setAlt}) => {
 
                 <Link href={"/"} id={h.login}>
                     <Image src={"/login.png"} alt={"sword"} width={30} height={30}/>
-                    <span>Log in with Steam</span>
+                    <span>Steam</span>
                 </Link>
                 <Link id={h.comments} href={"/comments"}>
                     <Image src={"/cmmt.png"} alt={"sword"} width={30} height={30}/>
