@@ -47,6 +47,60 @@
         }
 
     }
+    &_subs{
+        //border: 2px solid white;
+        color: whitesmoke;
+        padding: 10px 40px;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        column-gap: 20px;
+        flex-wrap: wrap;
+        height: 50px;
+        row-gap: 10px;
+        overflow: hidden;
+        button{
+            padding: 5px 20px;
+            background-color: rgba($color: silver, $alpha: 0.3);
+            color: whitesmoke;
+            height: 30px;
+        }
+        #showall{
+            position: absolute;
+            right: 40px;
+            background-color: black;
+            border: none;
+            span{
+                position: absolute;
+                left: -8px;top:0;
+                width: 9px; height: 35px;
+                background-color: black;
+                box-shadow: -6px -2px 15px 4px black;
+            }
+            h4{
+                position: absolute;
+                top:-3px;
+                background-color: black;
+                color: var(--mainColor);
+                font-size: x-large;
+                font-weight:bolder;
+                padding: 0;
+                border-radius: 50%;
+                width: 35px; height: 35px;
+                border: 2px solid gray;
+            }
+        }
+        #shrink{
+            background-color: transparent;
+            color: var(--mainColor);
+            font-size: x-large;
+            font-weight:bolder;
+            padding: 0;
+            border-radius: 50%;
+            width: 35px; height: 35px;
+            border: 2px solid gray;
+        }
+    }
     &_categories{
         //border: 2px solid yellow;
         display: grid;
@@ -174,6 +228,13 @@
         &_categories{
             grid-template-columns: 1fr;
         }
+        &_subs{
+            padding: 10px;
+            column-gap: 5px;
+            #showall{
+                right: 25px;
+            }
+        }
     }
  }
 
@@ -191,6 +252,17 @@
             }
             #login{
                 right: calc(2% + 40px);
+            }
+        }
+        &_subs{
+            overflow-x: scroll;
+            flex-wrap: nowrap;
+            position: relative;
+            //top: -20px;
+            border-top: 1px solid rgb(70, 68, 68);
+            border-bottom: 1px solid rgb(70, 68, 68);
+            #showall{
+                right: -500px;
             }
         }
         h3{

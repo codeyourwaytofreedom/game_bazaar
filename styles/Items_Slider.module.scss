@@ -4,8 +4,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: rgba($color: #FFC300, $alpha: 0.3);
+    left: 40px;
+    background-color: rgba($color: silver, $alpha: 0.3);
     //border: 3px solid yellow;
+    width: calc(100% - 80px);
     padding:5px 0;
     #back{
         position: absolute;
@@ -123,7 +125,12 @@
 }
 
 
-
+@media (max-width: 991.98px) { 
+    .slider{
+        left: 0;
+            width: 100%;
+    }
+ }
 
 @media (max-width: 499px) { 
     .slider{

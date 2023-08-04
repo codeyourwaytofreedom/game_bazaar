@@ -3,7 +3,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: rgba(255, 195, 0, 0.3);
+  left: 40px;
+  background-color: rgba(192, 192, 192, 0.3);
+  width: calc(100% - 80px);
   padding: 5px 0;
 }
 .slider #back {
@@ -126,6 +128,12 @@
     width: 0%;
   }
   to {
+    width: 100%;
+  }
+}
+@media (max-width: 991.98px) {
+  .slider {
+    left: 0;
     width: 100%;
   }
 }

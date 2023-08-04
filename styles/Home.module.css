@@ -51,6 +51,64 @@
   letter-spacing: normal;
   cursor: pointer;
 }
+.homie_subs {
+  color: whitesmoke;
+  padding: 10px 40px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  -moz-column-gap: 20px;
+       column-gap: 20px;
+  flex-wrap: wrap;
+  height: 50px;
+  row-gap: 10px;
+  overflow: hidden;
+}
+.homie_subs button {
+  padding: 5px 20px;
+  background-color: rgba(192, 192, 192, 0.3);
+  color: whitesmoke;
+  height: 30px;
+}
+.homie_subs #showall {
+  position: absolute;
+  right: 40px;
+  background-color: black;
+  border: none;
+}
+.homie_subs #showall span {
+  position: absolute;
+  left: -8px;
+  top: 0;
+  width: 9px;
+  height: 35px;
+  background-color: black;
+  box-shadow: -6px -2px 15px 4px black;
+}
+.homie_subs #showall h4 {
+  position: absolute;
+  top: -3px;
+  background-color: black;
+  color: var(--mainColor);
+  font-size: x-large;
+  font-weight: bolder;
+  padding: 0;
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  border: 2px solid gray;
+}
+.homie_subs #shrink {
+  background-color: transparent;
+  color: var(--mainColor);
+  font-size: x-large;
+  font-weight: bolder;
+  padding: 0;
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  border: 2px solid gray;
+}
 .homie_categories {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -172,6 +230,14 @@
   .homie_categories {
     grid-template-columns: 1fr;
   }
+  .homie_subs {
+    padding: 10px;
+    -moz-column-gap: 5px;
+         column-gap: 5px;
+  }
+  .homie_subs #showall {
+    right: 25px;
+  }
 }
 @media (max-width: 499px) {
   .homie_banner {
@@ -185,6 +251,16 @@
   }
   .homie_banner #login {
     right: calc(2% + 40px);
+  }
+  .homie_subs {
+    overflow-x: scroll;
+    flex-wrap: nowrap;
+    position: relative;
+    border-top: 1px solid rgb(70, 68, 68);
+    border-bottom: 1px solid rgb(70, 68, 68);
+  }
+  .homie_subs #showall {
+    right: -500px;
   }
   .homie h3 {
     font-size: x-large;
