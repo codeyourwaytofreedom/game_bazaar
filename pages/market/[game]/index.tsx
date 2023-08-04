@@ -1,14 +1,14 @@
 import Items_holder from "../../../components/Items_holder";
+import Layout from "../../../components/Layout";
 import Navbar from "../../../components/Navbar";
 import m from "../../../styles/Home.module.css";
 
 
 const Market = () => {
     return ( <>  
-        <div className={m.homie}>
-            <Navbar/> 
-            <Items_holder/>
-        </div> 
+    <Layout>
+        <Items_holder/>
+    </Layout>
     </> );
 }
  
