@@ -9,13 +9,13 @@ const Items_holder = () => {
     const router = useRouter();
     const urlPath = router.asPath;
     const partAfterBaseUrl = urlPath.replace(router.basePath, '');
-
+    
     return ( 
         <div className={h.homie_items}>
                 <div className={h.homie_items_shell}>
                     {
                         [...Array(24)].map((item,index)=>
-                            <Link href={`/tm2/${index}_item`} key={index}>
+                            <Link href={`${partAfterBaseUrl}/${index}_item`} key={index}>
                                 <div className={h.homie_items_shell_each}>
                                     <div id={h.icon}>
                                         <Image src={"/item_icon.png"} alt={"sword"} width={30} height={30}/>

@@ -29,6 +29,89 @@
         background-color: #a47f02;
         background-image: linear-gradient(to left, #a47f02, #FFC300);
         z-index: 99;
+        &_search, &_search2{
+            position: absolute;
+            left: 0;
+            //border: 2px solid white;
+            width: 100%;
+            display: grid;
+            justify-content: center;
+            z-index: -1;
+            &_kernel{
+                padding: 5px 20px;
+                width: 50vw;
+                max-width: 500px;
+                position: relative;
+                left: -2vw;
+                //background-color: rgba($color: #000000, $alpha: 0.2);
+                //border: 2px solid black;
+                border-radius: 10px;
+                display: flex;
+                column-gap: 10px;
+                box-shadow: 0 0 2px 1px black;
+                input{
+                    outline: none;
+                    border: none;
+                    background: transparent;
+                    width: 100%;
+                    line-height: 1.5;
+                    padding-left: 10px;
+                    font-size: large;
+                    &::placeholder{
+                        color: whitesmoke;
+                        opacity: 0.5;
+                    }
+                }
+                &:hover{
+                    box-shadow: 0 0 4px 2px rgb(36, 35, 35);
+                }
+            }
+
+        }
+        &_search2{
+            z-index: 999;
+            background-color: black;
+            padding: 5px;
+            height: 70px;
+            overflow: hidden;
+            animation: src_enlarge 300ms 1;
+            align-items: center;
+            &_kernel{
+                padding: 5px 4vw;
+                max-width: 100vw;
+                left: 0;
+                width: 100vw;
+                box-shadow: none;
+                input{
+                    color: whitesmoke;
+                    &::placeholder{
+                        color: whitesmoke;
+                        opacity: 0.5;
+                    }
+                }
+            }
+            span{
+                position: absolute;
+                right: 20px;
+                color: white;
+                font-size: x-large;
+                border: 2px solid silver;
+                border-radius: 50%;
+                width: 30px; height: 30px;
+                display: flex; justify-content: center;
+                cursor: pointer;
+                &:hover{
+                    color: crimson;
+                    border: 2px solid crimson;
+                }
+            }
+        }
+        #alt_search{
+            position: absolute;
+            right: 120px;
+            display: none;
+            cursor: pointer;
+        }
         #comments{
             position: absolute;
             right: 40px;
@@ -36,7 +119,7 @@
         }
         #login{
             position: absolute;
-            right: 95px;
+            right: 85px;
             //border: 2px solid blue;
             display: flex;
             column-gap: 5px;
@@ -223,8 +306,18 @@
 
 // Medium devices (tablets, less than 992px)
 @media (max-width: 991.98px) { 
-    
     .homie{
+        &_banner{
+            padding: 0 20px;
+            &_search{
+                &_kernel{
+                    width: 35vw;
+                    min-width: 250px;
+                    position: relative;
+                    left: -5vw;
+                }
+            }
+        }
         &_categories{
             grid-template-columns: 1fr;
         }
@@ -238,7 +331,25 @@
     }
  }
 
+ @media (max-width: 767.98px) { 
+    .homie{
+        &_banner{
+            #login{
+                span{
+                    display: none;
+                }
+            }
+            &_search{
+                display: none;
+            }
+            #alt_search{
+                display: block;
+            }
+        }
+    }
+ }
 
+  
 
  @media (max-width: 499px) { 
     .homie{
@@ -268,5 +379,15 @@
         h3{
             font-size: x-large;
         }
+    }
+ }
+
+
+ @keyframes src_enlarge {
+    from{
+        height: 10px;
+    }
+    to{
+        height: 70px;
     }
  }

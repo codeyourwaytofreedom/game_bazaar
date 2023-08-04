@@ -15,6 +15,7 @@ const Homie = () => {
     const [initialWid, setInitial] = useState<number>(0);
     const [hei, setHei] = useState<number>(50);
     const [enlarged, setEnlarged] = useState<boolean>(false);
+    const [alt_bar, setAlt] = useState<boolean>(false);
 
     const authenticateWithSteam = async () => {
         try {
@@ -44,6 +45,7 @@ const Homie = () => {
 
     useEffect(()=>{
       const setter = () => {
+        setAlt(false)
         if(final_one.current){
           setDistance(final_one.current.offsetTop);
           if(enlarged){
@@ -83,14 +85,14 @@ const Homie = () => {
             <Img_slider/>
             <Items_slider/>
             {/* <div className={h.homie_wallpaper}></div> */}
-            <Navbar/>
+            <Navbar alt_bar={alt_bar} setAlt={setAlt}/>
             <div className={h.homie_categories}>
-                <div className={h.homie_categories_each} onClick={()=>router.push("/tm2")}>
+                <div className={h.homie_categories_each} onClick={()=>router.push("/market/tm2")}>
                     <h3>Team Fortress 2</h3>
                     <Image src={"/tm2.jpeg"} alt={"tm2"} width={800} height={400}/>
                     <div id={h.hideout}><Image src={"/banner_sword.png"} alt={"sword"} width={50} height={50}/></div>
                 </div>
-                <div className={h.homie_categories_each} onClick={()=>router.push("/csgo")}>
+                <div className={h.homie_categories_each} onClick={()=>router.push("/market/csgo")}>
                     <h3>Counter Strike Global Offensive</h3>
                     <Image src={"/cs.jpeg"} alt={"tm2"} width={800} height={400}/>
                     <div id={h.hideout}><Image src={"/banner_sword.png"} alt={"sword"} width={50} height={50}/></div>
