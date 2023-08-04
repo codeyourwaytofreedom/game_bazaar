@@ -10,7 +10,7 @@ type Layout_props = {
 
 const Layout = ({children}:Layout_props) => {
     const [alt_bar, setAlt] = useState<boolean>(false);
-    const [modalVis, setModalVis] = useState<boolean>(false);
+    const [modalVis, setModalVis] = useState<string>("default");
 
     useEffect(()=>{
         const setter = () => {
