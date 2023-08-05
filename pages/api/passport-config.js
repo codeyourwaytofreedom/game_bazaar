@@ -9,12 +9,12 @@ passport.serializeUser((user, done) => {
 passport.deserializeUser((obj, done) => {
   done(null, obj);
 });
-
+const base_url = "https://game-bazaar.vercel.app/"
 passport.use(
   new SteamStrategy(
     {
-      returnURL: 'http://localhost:3000/',
-      realm: 'http://localhost:3000/',
+      returnURL: base_url,
+      realm: base_url,
       //apiKey: process.env.STEAM_API_KEY,
     },
     (identifier, profile, done) => {
