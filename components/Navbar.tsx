@@ -14,6 +14,11 @@ interface Navbar_props {
 
 
 const Navbar:NextPage<Navbar_props> = ({alt_bar, setAlt, modalVis, setModalVis}) => {
+
+    const handle_steam = () => {
+        window.location.href = '/api/login';
+    }
+
     return ( 
         <div className={h.homie_banner}>
                 <Link href={"/"}><div><Image src={"/banner_sword.png"} alt={"sword"} width={40} height={40}/></div></Link>
@@ -50,10 +55,10 @@ const Navbar:NextPage<Navbar_props> = ({alt_bar, setAlt, modalVis, setModalVis})
                 </div>
 
 
-                <Link href={"/"} id={h.login}>
+                <button id={h.login} onClick={handle_steam}>
                     <Image src={"/login.png"} alt={"sword"} width={30} height={30}/>
                     <span>Steam</span>
-                </Link>
+                </button>
                 <Link id={h.comments} href={"/comments"}>
                     <Image src={"/cmmt.png"} alt={"sword"} width={30} height={30}/>
                 </Link>

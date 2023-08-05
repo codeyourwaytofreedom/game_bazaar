@@ -38,6 +38,12 @@
                 box-shadow: 0 0 3px 1px black;
                 height: 50px; width: 60px;
                 cursor: pointer;
+                &:hover{
+                    background-color: rgba($color: #000000, $alpha: 0.3);
+                    border-radius: 5px;
+                    height: 40px;
+                    color: whitesmoke;
+                }
             }
         }
         #modal{
@@ -145,7 +151,7 @@
         }
         #alt_search{
             position: absolute;
-            right: 120px;
+            right: 140px;
             display: none;
             cursor: pointer;
         }
@@ -156,17 +162,25 @@
         }
         #login{
             position: absolute;
-            right: 85px;
+            right: 80px;
             //border: 2px solid blue;
             display: flex;
             column-gap: 5px;
             align-items: center;
-            font-size: x-large;
+            font-size: larger;
             letter-spacing: normal;
             cursor: pointer;
             letter-spacing: -0.5px;
+            border: none;
+            background: transparent;
+            padding: 10px;
+            box-shadow: 0 0 3px 1px black;
+            &:hover{
+                background-color: rgba($color: #000000, $alpha: 0.3);
+                border-radius: 5px;
+                padding: 5px 10px;
+            }
         }
-
     }
     &_subs{
         //border: 2px solid white;
@@ -259,9 +273,6 @@
                     border-bottom-right-radius: 30%;
                     box-shadow: 0 0 8px 1px black;
                 }
-                #hideout{
-                    //bottom: 1%; right: 1%;
-                }
             }
             #hideout{
                 position: absolute;
@@ -338,10 +349,6 @@
     }
 }
 
-
-
-
-
 // Medium devices (tablets, less than 992px)
 @media (max-width: 991.98px) { 
     .homie{
@@ -393,14 +400,12 @@
     .homie{
         &_banner{
             padding: 2%;
-            span{
-                display: none;
-            }
             #comments{
                 right: 2%;
             }
             #login{
-                right: calc(2% + 40px);
+                right: calc(2% + 30px);
+                box-shadow: none;
             }
             #alt_search{
                 right: 80px;

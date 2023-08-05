@@ -47,6 +47,12 @@
   width: 60px;
   cursor: pointer;
 }
+.homie_banner #dropdown #category:hover {
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 5px;
+  height: 40px;
+  color: whitesmoke;
+}
 .homie_banner #modal {
   position: fixed;
   top: 70px;
@@ -171,7 +177,7 @@
 }
 .homie_banner #alt_search {
   position: absolute;
-  right: 120px;
+  right: 140px;
   display: none;
   cursor: pointer;
 }
@@ -182,15 +188,24 @@
 }
 .homie_banner #login {
   position: absolute;
-  right: 85px;
+  right: 80px;
   display: flex;
   -moz-column-gap: 5px;
        column-gap: 5px;
   align-items: center;
-  font-size: x-large;
+  font-size: larger;
   letter-spacing: normal;
   cursor: pointer;
   letter-spacing: -0.5px;
+  border: none;
+  background: transparent;
+  padding: 10px;
+  box-shadow: 0 0 3px 1px black;
+}
+.homie_banner #login:hover {
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 5px;
+  padding: 5px 10px;
 }
 .homie_subs {
   color: whitesmoke;
@@ -404,14 +419,12 @@
   .homie_banner {
     padding: 2%;
   }
-  .homie_banner span {
-    display: none;
-  }
   .homie_banner #comments {
     right: 2%;
   }
   .homie_banner #login {
-    right: calc(2% + 40px);
+    right: calc(2% + 30px);
+    box-shadow: none;
   }
   .homie_banner #alt_search {
     right: 80px;

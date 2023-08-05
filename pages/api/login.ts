@@ -1,36 +1,17 @@
-/* import type { NextApiRequest, NextApiResponse } from 'next';
-import { Issuer } from 'openid-client';
+import type { NextApiRequest, NextApiResponse } from 'next';
+import passport from './passport-config';
 
 
-
-const authenticateWithSteam = async () => {
-    try {
-      const steamIssuer = await Issuer.discover('https://steamcommunity.com/openid');
-      const client = new steamIssuer.Client({
-        client_id: process.env.STEAM_API_KEY, // Use the .env variable here
-        redirect_uris: [`${process.env.BASE_URL}/api/login/callback`], // Use the .env variable here
-      });
-  
-      const url = client.authorizationUrl({
-        scope: 'openid',
-        redirect_uri: `${process.env.BASE_URL}/api/login/callback`, // Use the .env variable here
-      });
-  
-      // Open Steam authentication in a new window or popup
-      window.open(url, 'steamLoginWindow', 'width=800,height=600');
-    } catch (error) {
-      console.error('Steam authentication error:', error);
+export default function handler(req: NextApiRequest, res: NextApiResponse) {
+  passport.authenticate('steam', { session: false }, (err: any, user: any, info: any) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ error: 'Internal Server Error' });
     }
-  };
 
-
-export default function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
-    // Call the authentication function
-    authenticateWithSteam();
-
-    // Respond with some message or status if needed
-    res.status(200).json({ message: 'Steam authentication started.' });
-} */
+    if (!user) {
+      return res.status(401).json({ error: 'Unauthorized' });
+    }
+    return res.status(200).json({ message: 'Authentication successful', user });
+  })(req, res);
+}
