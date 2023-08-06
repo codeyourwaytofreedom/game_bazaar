@@ -1,9 +1,12 @@
 import Link from "next/link";
 import Image from "next/image";
 import h from "../styles/Home.module.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Dispatch, SetStateAction } from 'react';
 import { NextPage } from "next";
+import { useSelector } from "react-redux";
+import { note_login } from "../redux/loginSlice";
+import { useDispatch } from "react-redux";
 
 interface Navbar_props {
     setAlt: Dispatch<SetStateAction<boolean>>;
@@ -12,12 +15,29 @@ interface Navbar_props {
     modalVis:string
   }
 
-
 const Navbar:NextPage<Navbar_props> = ({alt_bar, setAlt, modalVis, setModalVis}) => {
 
+    const dispatch = useDispatch();
     const handle_steam = () => {
         window.location.href = '/api/login';
     }
+    const handle_Logout = () => {
+        fetch('/api/logout').then(
+            (r) =>{
+                if(r.status === 200){
+                    localStorage.removeItem('userLoginStatus');
+                    dispatch(note_login(false));
+                    window.location.href = "/";
+                }
+            }
+        )
+    }
+    const inn = useSelector((state:any) => state.loginSlice.inn);
+    useEffect(()=>{
+        if(localStorage.getItem('userLoginStatus')){
+            dispatch(note_login(true));
+        }
+      },[]);
 
     return ( 
         <div className={h.homie_banner}>
@@ -55,9 +75,9 @@ const Navbar:NextPage<Navbar_props> = ({alt_bar, setAlt, modalVis, setModalVis})
                 </div>
 
 
-                <button id={h.login} onClick={handle_steam}>
-                    <Image src={"/login.png"} alt={"sword"} width={30} height={30}/>
-                    <span>Steam</span>
+                <button id={h.login} onClick={inn ? handle_Logout : handle_steam}>
+                    <Image src={inn ? "/logout.png" : "/login.png"} alt={"sword"} width={30} height={30}/>
+                    <span>{inn ? "Logout" : "Steam"}</span>
                 </button>
                 <Link id={h.comments} href={"/comments"}>
                     <Image src={"/cmmt.png"} alt={"sword"} width={30} height={30}/>

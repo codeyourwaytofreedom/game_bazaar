@@ -50,7 +50,6 @@
 .homie_banner #dropdown #category:hover {
   background-color: rgba(0, 0, 0, 0.3);
   border-radius: 5px;
-  height: 40px;
   color: whitesmoke;
 }
 .homie_banner #modal {
@@ -205,7 +204,6 @@
 .homie_banner #login:hover {
   background-color: rgba(0, 0, 0, 0.3);
   border-radius: 5px;
-  padding: 5px 10px;
 }
 .homie_subs {
   color: whitesmoke;
