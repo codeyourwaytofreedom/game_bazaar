@@ -31,10 +31,9 @@ const Homie = () => {
         .then((response) => {
           if (response.status === 200) {
             dispatch(note_login(true));
-            localStorage.setItem('userLoginStatus', 'in');
-            window.location.href = "/"
+            localStorage.setItem('userLoginStatus', 'in');        
           }
-        })
+        }).then(()=> history.replaceState({}, document.title, "/"))
         .catch((error) => {
           console.error('Error fetching data:', error);
         });
