@@ -8,7 +8,7 @@ import { useRouter } from "next/router";
 import Navbar from "./Navbar";
 import Img_slider from "./Img_slider";
 import { useDispatch } from "react-redux";
-import { note_login } from "../redux/loginSlice";
+import { note_login,note_ppicture } from "../redux/loginSlice";
 
 
 const Homie = () => {
@@ -24,17 +24,18 @@ const Homie = () => {
 
     const csgo_subs = ["Gloves","Heavy","Knife","Pistol","Rifle","SMG","Sticker","Container","Gift","Key","Pass","Tag","Graffiti"];
 
-
-
     useEffect(() => {
       fetch('/api/ins')
-        .then((response) => {
+        .then(async(response) => {          
           if (response.status === 200) {
             dispatch(note_login(true));
             localStorage.setItem('userLoginStatus', 'in');      
-            history.replaceState({}, document.title, "/")  
+            history.replaceState({}, document.title, "/");
+            const rj = await response.json();
+            console.log(rj.url);
+            dispatch(note_ppicture(rj.url));
           }
-        })/* .then(()=> history.replaceState({}, document.title, "/")) */
+        })
         .catch((error) => {
           console.error('Error fetching data:', error);
         });

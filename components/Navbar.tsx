@@ -35,6 +35,8 @@ const Navbar:NextPage<Navbar_props> = ({alt_bar, setAlt, modalVis, setModalVis})
     }
 
     const inn = useSelector((state:any) => state.loginSlice.inn);
+    const url = useSelector((state:any) => state.loginSlice.ppicture);
+
     useEffect(()=>{
         if(localStorage.getItem('userLoginStatus')){
             dispatch(note_login(true));
@@ -76,9 +78,8 @@ const Navbar:NextPage<Navbar_props> = ({alt_bar, setAlt, modalVis, setModalVis})
                     </div>
                 </div>
 
-
                 <button id={h.login} onClick={inn ? handle_Logout : handle_steam}>
-                    <Image src={inn ? "/logout.png" : "/login.png"} alt={"sword"} width={30} height={30}/>
+                    <Image src={inn && url ? url : "/login.png"} alt={"sword"} width={30} height={30}/>
                     <span>{inn ? "Logout" : "Steam"}</span>
                 </button>
                 <Link id={h.comments} href={"/comments"}>
