@@ -9,8 +9,8 @@ passport.serializeUser((user, done) => {
 passport.deserializeUser((obj, done) => {
   done(null, obj);
 });
-//const base_url = "https://game-bazaar.vercel.app/";
-const base_url = 'http://localhost:3000/';
+const base_url = "https://game-bazaar.vercel.app/";
+//const base_url = 'http://localhost:3000/';
 passport.use(
   new SteamStrategy(
     {
