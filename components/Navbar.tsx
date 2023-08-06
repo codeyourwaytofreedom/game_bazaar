@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { Dispatch, SetStateAction } from 'react';
 import { NextPage } from "next";
 import { useSelector } from "react-redux";
-import { note_login } from "../redux/loginSlice";
+import { note_login, note_ppicture } from "../redux/loginSlice";
 import { useDispatch } from "react-redux";
 
 interface Navbar_props {
@@ -40,6 +40,9 @@ const Navbar:NextPage<Navbar_props> = ({alt_bar, setAlt, modalVis, setModalVis})
     useEffect(()=>{
         if(localStorage.getItem('userLoginStatus')){
             dispatch(note_login(true));
+        }
+        if(localStorage.getItem('url')){
+            dispatch(note_ppicture(localStorage.getItem('url')))
         }
       },[]);
 

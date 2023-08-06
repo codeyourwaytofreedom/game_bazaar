@@ -34,6 +34,7 @@ const Homie = () => {
             const rj = await response.json();
             console.log(rj.url);
             dispatch(note_ppicture(rj.url));
+            localStorage.setItem('url',rj.url)
           }
         })
         .catch((error) => {
