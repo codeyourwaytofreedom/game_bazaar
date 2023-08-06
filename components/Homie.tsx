@@ -7,6 +7,9 @@ import Items_slider from "./Slider";
 import { useRouter } from "next/router";
 import Navbar from "./Navbar";
 import Img_slider from "./Img_slider";
+import { useDispatch } from "react-redux";
+import { note_login } from "../redux/loginSlice";
+
 
 const Homie = () => {
     const router = useRouter();
@@ -17,26 +20,24 @@ const Homie = () => {
     const [enlarged, setEnlarged] = useState<boolean>(false);
     const [alt_bar, setAlt] = useState<boolean>(false);
     const [modalVis, setModalVis] = useState<string>("default");
+    const dispatch = useDispatch()
 
-    const authenticateWithSteam = async () => {
-        try {
-          const steamIssuer = await Issuer.discover('https://steamcommunity.com/openid');
-          const client = new steamIssuer.Client({
-            client_id: '<YOUR_STEAM_API_KEY>',
-            redirect_uris: ['http://localhost:3000/auth/steam/callback'],
-          });
-      
-          const url = client.authorizationUrl({
-            scope: 'openid',
-            redirect_uri: 'http://localhost:3000/auth/steam/callback',
-          });
-          window.open(url, 'steamLoginWindow', 'width=800,height=600');
-        } catch (error) {
-          console.error('Steam authentication error:', error);
-        }
-      };
     const csgo_subs = ["Gloves","Heavy","Knife","Pistol","Rifle","SMG","Sticker","Container","Gift","Key","Pass","Tag","Graffiti"];
 
+
+    useEffect(() => {
+      fetch('/api/ins')
+        .then((response) => {
+          if (response.status === 200) {
+            dispatch(note_login(true));
+            localStorage.setItem('userLoginStatus', 'in');
+          }
+        })
+        .catch((error) => {
+          console.error('Error fetching data:', error);
+        });
+    }, []);
+    
     useEffect(()=>{
       if(final_one.current){
         setDistance(final_one.current.offsetTop);
@@ -58,7 +59,6 @@ const Homie = () => {
           }
         }
       }
-
       window.addEventListener("resize", setter)
 
       return () => window.removeEventListener("resize", setter)
