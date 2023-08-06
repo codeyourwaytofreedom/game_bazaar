@@ -29,12 +29,11 @@ const Navbar:NextPage<Navbar_props> = ({alt_bar, setAlt, modalVis, setModalVis})
                 if(r.status === 200){
                     localStorage.removeItem('userLoginStatus');
                     dispatch(note_login(false));
-                    window.location.href = "/";
                 }
             }
-        )
+        ).then(()=>window.location.href = "/")
     }
-    
+
     const inn = useSelector((state:any) => state.loginSlice.inn);
     useEffect(()=>{
         if(localStorage.getItem('userLoginStatus')){
