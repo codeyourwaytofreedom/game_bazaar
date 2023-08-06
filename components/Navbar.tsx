@@ -18,9 +18,11 @@ interface Navbar_props {
 const Navbar:NextPage<Navbar_props> = ({alt_bar, setAlt, modalVis, setModalVis}) => {
 
     const dispatch = useDispatch();
+
     const handle_steam = () => {
         window.location.href = '/api/login';
     }
+
     const handle_Logout = () => {
         fetch('/api/logout').then(
             (r) =>{
@@ -32,6 +34,7 @@ const Navbar:NextPage<Navbar_props> = ({alt_bar, setAlt, modalVis, setModalVis})
             }
         )
     }
+    
     const inn = useSelector((state:any) => state.loginSlice.inn);
     useEffect(()=>{
         if(localStorage.getItem('userLoginStatus')){

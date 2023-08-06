@@ -25,12 +25,14 @@ const Homie = () => {
     const csgo_subs = ["Gloves","Heavy","Knife","Pistol","Rifle","SMG","Sticker","Container","Gift","Key","Pass","Tag","Graffiti"];
 
 
+
     useEffect(() => {
       fetch('/api/ins')
         .then((response) => {
           if (response.status === 200) {
             dispatch(note_login(true));
             localStorage.setItem('userLoginStatus', 'in');
+            window.location.href = "/"
           }
         })
         .catch((error) => {
