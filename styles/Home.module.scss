@@ -534,6 +534,18 @@
         h3{
             font-size: x-large;
         }
+        &_product{
+            &_holder{
+                width: calc(100vw - 20px);
+                #item{
+                    width: 90%;
+                }
+                &_details{
+                    padding: 10px 5px;
+                    width: 90vw;
+                }
+            }
+        }
     }
  }
 

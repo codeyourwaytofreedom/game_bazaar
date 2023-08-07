@@ -545,6 +545,16 @@
   .homie h3 {
     font-size: x-large;
   }
+  .homie_product_holder {
+    width: calc(100vw - 20px);
+  }
+  .homie_product_holder #item {
+    width: 90%;
+  }
+  .homie_product_holder_details {
+    padding: 10px 5px;
+    width: 90vw;
+  }
 }
 @-webkit-keyframes src_enlarge {
   from {
