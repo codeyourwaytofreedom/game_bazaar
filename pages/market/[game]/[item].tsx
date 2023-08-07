@@ -11,7 +11,7 @@ const Item_details = () => {
             <>
                 <div className={i.homie_product}>
                     <div id={i.blacken}></div>
-                    <Image id={i.cover} src={"/hell.jpg"} alt={"cosmic"} width={2000} height={2000} />
+                    <Image id={i.cover} src={"/hell1.jpg"} alt={"cosmic"} width={2000} height={2000} />
 
                     <div className={i.homie_product_holder}>
                         <Image id={i.item} src={"/rifle.png"} alt={"item"} width={300} height={300} />
