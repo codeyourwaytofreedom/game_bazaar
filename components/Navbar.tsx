@@ -28,7 +28,9 @@ const Navbar:NextPage<Navbar_props> = ({alt_bar, setAlt, modalVis, setModalVis})
             (r) =>{
                 if(r.status === 200){
                     localStorage.removeItem('userLoginStatus');
+                    localStorage.removeItem('url');
                     dispatch(note_login(false));
+                    dispatch(note_ppicture(""));
                 }
             }
         ).then(()=>window.location.href = "/")

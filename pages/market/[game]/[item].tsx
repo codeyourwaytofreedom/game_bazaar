@@ -1,8 +1,11 @@
 import Image from "next/image";
+import { useState } from "react";
 import Layout from "../../../components/Layout";
 import i from "../../../styles/Home.module.css";
 
 const Item_details = () => {
+    const [chosen, setChosen] = useState<number>(0);
+    const tabs = ["Sell","Buy", "Gallery", "Price Trends"]
     return ( 
         <Layout>
             <>
@@ -25,13 +28,30 @@ const Item_details = () => {
                             <div className={i.homie_product_holder_details_buts}><button>Sell</button><button>Buy</button></div>
                         </div>
 
-{/*                         <div className={i.homie_product_holder_orders}>
+                        <div className={i.homie_product_holder_orders}>
                             <div className={i.homie_product_holder_orders_kernel}>
-                                <div className={i.homie_product_holder_orders_kernel_tabs}><button>One</button><button>Two</button></div>
+                                <div className={i.homie_product_holder_orders_kernel_tabs}>
+                                {
+                                    tabs.map((e,ind)=>
+                                        <button key={ind} 
+                                            onClick={()=> setChosen(ind)} style={{color:chosen === ind ? "#FFC300" : "whitesmoke"}}
+                                            >
+                                                {e}
+                                            <div id={chosen !== ind ? i.line : ""}></div>
+                                        </button>
+                                    )
+                                }
+                                </div>
                                 <div className={i.homie_product_holder_orders_kernel_options}>
+                                    <div className={i.homie_product_holder_orders_kernel_options_option}>
+                                        <div>Image</div>
+                                        <div>Item</div>
+                                        <div>Price</div>
+                                        <div>Buy</div>
+                                    </div>
                                 </div>
                             </div>
-                        </div> */}
+                        </div>
 
                     </div>
                 </div>

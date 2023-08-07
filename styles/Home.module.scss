@@ -411,7 +411,7 @@
             }
             &_orders{
                 position: absolute;
-                bottom: -70px;
+                bottom: -310px;
                 width: 100%;
                 display: grid;
                 justify-content: center;
@@ -419,7 +419,43 @@
                     background-color: rgba($color: black, $alpha: 0.45);
                     width: 100vw;
                     max-width: 1000px;
+                    padding: 0 40px;
                     &_tabs{
+                        display: flex;
+                        column-gap: 5%;
+                        padding: 20px 0;
+                        //border: 2px solid blue;
+                        button{
+                            border: none;
+                            background-color: transparent;
+                            color: rgb(199, 196, 196);
+                            font-size: larger;
+                            font-weight: bold;
+                            position: relative;
+                            display: grid;
+                            justify-items: center;
+                            &:hover{
+                                #line{
+                                    width: 100%;
+                                    display: block;
+                                    animation: widen 0.2s 1;
+                                    border: 2px solid rgb(199, 196, 196);
+                                }
+                            }
+                            #line{
+                                position: absolute;
+                                bottom: -5px;
+                                display: none;
+                            }
+                        }
+                    }
+                    &_options{
+                        height: 200px;
+                        color: whitesmoke !important;
+                        background-color: rgba($color: white, $alpha: 0.35);
+                        &_option{
+                            display: flex;
+                        }
                     }
                 }
                 
@@ -557,4 +593,8 @@
     to{
         height: 70px;
     }
+ }
+
+ @keyframes widen {
+    from{width: 0;}to{width: 100%;}
  }

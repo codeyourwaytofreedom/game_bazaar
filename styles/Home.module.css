@@ -455,7 +455,7 @@
 }
 .homie_product_holder_orders {
   position: absolute;
-  bottom: -70px;
+  bottom: -310px;
   width: 100%;
   display: grid;
   justify-content: center;
@@ -464,7 +464,45 @@
   background-color: rgba(0, 0, 0, 0.45);
   width: 100vw;
   max-width: 1000px;
+  padding: 0 40px;
 }
+.homie_product_holder_orders_kernel_tabs {
+  display: flex;
+  -moz-column-gap: 5%;
+       column-gap: 5%;
+  padding: 20px 0;
+}
+.homie_product_holder_orders_kernel_tabs button {
+  border: none;
+  background-color: transparent;
+  color: rgb(199, 196, 196);
+  font-size: larger;
+  font-weight: bold;
+  position: relative;
+  display: grid;
+  justify-items: center;
+}
+.homie_product_holder_orders_kernel_tabs button:hover #line {
+  width: 100%;
+  display: block;
+  -webkit-animation: widen 0.2s 1;
+          animation: widen 0.2s 1;
+  border: 2px solid rgb(199, 196, 196);
+}
+.homie_product_holder_orders_kernel_tabs button #line {
+  position: absolute;
+  bottom: -5px;
+  display: none;
+}
+.homie_product_holder_orders_kernel_options {
+  height: 200px;
+  color: whitesmoke !important;
+  background-color: rgba(255, 255, 255, 0.35);
+}
+.homie_product_holder_orders_kernel_options_option {
+  display: flex;
+}
+
 @media (max-width: 991.98px) {
   .homie_banner {
     padding: 0 20px;
@@ -570,5 +608,21 @@
   }
   to {
     height: 70px;
+  }
+}
+@-webkit-keyframes widen {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+@keyframes widen {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
   }
 }/*# sourceMappingURL=Home.module.css.map */
