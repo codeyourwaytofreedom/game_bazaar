@@ -42,13 +42,21 @@ const Item_details = () => {
                                     )
                                 }
                                 </div>
+                                
                                 <div className={i.homie_product_holder_orders_kernel_options}>
-                                    <div className={i.homie_product_holder_orders_kernel_options_option}>
-                                        <div>Image</div>
-                                        <div>Item</div>
-                                        <div>Price</div>
-                                        <div>Buy</div>
+                                    <div id={i.titles}>
+                                        <div>Items</div><div>Seller</div><div>Price</div>
                                     </div>
+                                    {
+                                        [...Array(5)].map((e,index)=>
+                                    <div className={i.homie_product_holder_orders_kernel_options_option} key={index}>
+                                        <div><Image src={"/rifle.png"} alt={"item"} width={200} height={200} /></div>
+                                        <div>Seller {index}</div>
+                                        <div>${3.5 + index}</div>
+                                        <div><button>Buy</button></div>
+                                    </div>
+                                        )
+                                    }
                                 </div>
                             </div>
                         </div>

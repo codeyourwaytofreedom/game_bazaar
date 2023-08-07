@@ -411,25 +411,27 @@
             }
             &_orders{
                 position: absolute;
-                bottom: -310px;
-                width: 100%;
+                bottom: -110px;
                 display: grid;
-                justify-content: center;
+                justify-items: center;
+                //border: 2px solid blue;
+                width: 100%;
                 &_kernel{
-                    background-color: rgba($color: black, $alpha: 0.45);
-                    width: 100vw;
-                    max-width: 1000px;
+                    background-color: rgba($color: black, $alpha: 0.35);
                     padding: 0 40px;
+                    position: relative;
+                    width: 100%;
+                    max-width: 1000px;
+                    border-top: 2px solid rgb(70, 66, 66);
                     &_tabs{
                         display: flex;
                         column-gap: 5%;
                         padding: 20px 0;
-                        //border: 2px solid blue;
                         button{
                             border: none;
                             background-color: transparent;
                             color: rgb(199, 196, 196);
-                            font-size: larger;
+                            font-size: x-large;
                             font-weight: bold;
                             position: relative;
                             display: grid;
@@ -450,11 +452,55 @@
                         }
                     }
                     &_options{
-                        height: 200px;
+                        position: absolute;
+                        padding: 20px 40px;
+                        top:66px; left: 0; right: 0;
                         color: whitesmoke !important;
-                        background-color: rgba($color: white, $alpha: 0.35);
+                        background-color: rgba($color: white, $alpha: 0.15);
+                        display: grid;
+                        row-gap: 5px;
+                        #titles{
+                            display: grid;
+                            grid-template-columns: 1fr 1fr 1fr 1fr;
+                            column-gap: 20px;
+                            div{
+                                padding: 5px 10px;
+                                background-color: rgba($color: black, $alpha: 0.65);
+                                font-size: larger;
+                            }
+                            margin-bottom: 10px;
+                        }
                         &_option{
-                            display: flex;
+                            display: grid;
+                            grid-template-columns: 1fr 1fr 1fr 1fr;
+                            column-gap: 1vw;
+                            div{
+                                display: flex;
+                                align-items: center;
+                                background-color: rgba($color: black, $alpha: 0.65);
+                                padding: 5px 10px;
+                                font-size: larger;
+                                }
+                            div:nth-child(1){
+                                //background-color: red;
+                                justify-content: center;
+                                img{
+                                    object-fit: cover;
+                                    width: 100%;height: auto;
+                                }
+                            }
+                            div:nth-child(4){
+                                justify-content: center;
+                                background-color: transparent;
+                                padding: 0;
+                                button{
+                                    width: 100%; 
+                                    padding: 10px;
+                                    background-color: transparent;
+                                    color: #FFC300;
+                                    font-size: x-large;
+                                }
+                            }
                         }
                     }
                 }
@@ -497,14 +543,6 @@
                 }
                 &_details{
                     min-width: 80vw;
-                    &_title, &_explain, &_price{
-                    }
-                    &_title{
-                    }
-                    &_explain{
-                    }
-                    &_price{
-                    }
                 }
             }
         }
@@ -529,10 +567,20 @@
         &_product{
             padding: 10px;
             &_holder{
-                width: calc(100vw - 40px);
+                width: calc(100vw - 42px);
                 &_details{
                     padding: 4% 2%;
                     width: 90vw;
+                }
+                &_orders{
+                    &_kernel{
+                        padding: 0 10px;
+                        &_tabs{
+                        }
+                        &_options{
+                            padding: 10px;
+                        }
+                    }
                 }
             }
         }
@@ -579,6 +627,38 @@
                 &_details{
                     padding: 10px 5px;
                     width: 90vw;
+                    &_title{
+                        font-size: larger;
+                    }
+                    &_explain{
+                        column-gap: 2%;
+                        font-size: medium;
+                    }
+                    &_price{
+                        font-size: medium;
+                    }
+                }
+                &_orders{
+                    &_kernel{
+                        &_tabs{
+                            padding: 10px;
+                            button{
+                                font-size: large;
+                            }
+                        }
+                        &_options{
+                            top:42px;
+                            #titles{
+                                div{font-size: medium;}
+                            }
+                            &_option{
+                                div{
+                                    font-size: medium;
+                                    button{font-size: medium !important;}
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
