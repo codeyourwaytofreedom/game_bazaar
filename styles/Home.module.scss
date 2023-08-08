@@ -510,6 +510,12 @@
                         padding: 20px 40px;
                         display: grid;
                         grid-template-columns: 30% 70%;
+                        min-height: 300px;
+                        canvas{
+                            background-color: rgba($color: silver, $alpha: 0.2);
+                            position: absolute;
+                            width: 100%;
+                        }
                         &_X{
                             display: grid;
                             align-content: flex-end;

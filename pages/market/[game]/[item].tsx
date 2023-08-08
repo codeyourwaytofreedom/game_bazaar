@@ -67,11 +67,10 @@ const Item_details = () => {
                                 <Chart />
 
                                 : null
-                                
+
                                 }
                             </div>
                         </div>
-
                     </div>
                 </div>
             </>

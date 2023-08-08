@@ -561,6 +561,12 @@
   padding: 20px 40px;
   display: grid;
   grid-template-columns: 30% 70%;
+  min-height: 300px;
+}
+.homie_product_holder_orders_kernel_chart canvas {
+  background-color: rgba(192, 192, 192, 0.2);
+  position: absolute;
+  width: 100%;
 }
 .homie_product_holder_orders_kernel_chart_X {
   display: grid;
