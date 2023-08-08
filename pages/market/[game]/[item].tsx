@@ -43,8 +43,10 @@ const Item_details = () => {
                                     )
                                 }
                                 </div>
-                                
-{/*                                 <div className={i.homie_product_holder_orders_kernel_options}>
+                                {
+                                    chosen === 0 ? 
+
+                                <div className={i.homie_product_holder_orders_kernel_options}>
                                     <div id={i.titles}>
                                         <div>Items</div><div>Seller</div><div>Price</div>
                                     </div>
@@ -58,8 +60,15 @@ const Item_details = () => {
                                     </div>
                                         )
                                     }
-                                </div> */}
-                            <Chart />
+                                </div>
+
+                                : chosen === 3 ? 
+
+                                <Chart />
+
+                                : null
+                                
+                                }
                             </div>
                         </div>
 
