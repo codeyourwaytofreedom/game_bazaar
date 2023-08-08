@@ -7,13 +7,7 @@ import i from "../../../styles/Home.module.css";
 const Item_details = () => {
     const [chosen, setChosen] = useState<number>(0);
     const tabs = ["Sell","Buy", "Gallery", "Price Trends"];
-    useEffect(()=>{
-        const reset = () =>{
-            setChosen(0)
-        }
-        window.addEventListener("resize",reset)
-        return ()=> window.removeEventListener("resize",reset)
-    },[])
+
     return ( 
         <Layout>
             <>

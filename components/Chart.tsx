@@ -85,16 +85,14 @@ const Chart = () => {
             
                 drawLine(startX, startY, endX, endY, 3, "gold");
             
-                setTimeout(() => {
                     animateDrawLines(index + 1);
-                }, 200);
             };
             
             animateDrawLines(0);
 
             
         }
-    },[]);
+    },[window.innerWidth]);
 
 
 
