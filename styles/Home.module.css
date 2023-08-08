@@ -553,6 +553,41 @@
   color: #FFC300;
   font-size: x-large;
 }
+.homie_product_holder_orders_kernel_chart {
+  width: 100%;
+  position: absolute;
+  top: 70px;
+  left: 0;
+  padding: 20px 40px;
+  display: grid;
+  grid-template-columns: 30% 70%;
+}
+.homie_product_holder_orders_kernel_chart_X {
+  display: grid;
+  align-content: flex-end;
+  color: whitesmoke !important;
+  justify-content: flex-start;
+  gap: 4px;
+}
+.homie_product_holder_orders_kernel_chart_X div {
+  background-color: rgba(192, 192, 192, 0.3);
+  padding: 3px;
+  min-height: 30px;
+  min-width: 30px;
+}
+.homie_product_holder_orders_kernel_chart_Y {
+  display: grid;
+  align-content: flex-end;
+  color: whitesmoke !important;
+  justify-content: flex-end;
+  gap: 4px;
+}
+.homie_product_holder_orders_kernel_chart_Y div {
+  background-color: rgba(220, 20, 60, 0.3);
+  padding: 3px;
+  min-height: 30px;
+  min-width: 30px;
+}
 
 @media (max-width: 991.98px) {
   .homie_banner {
@@ -611,6 +646,36 @@
   }
   .homie_product_holder_orders_kernel_options {
     padding: 10px;
+  }
+  .homie_product_holder_orders_kernel_chart {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .homie_product_holder_orders_kernel_chart_X {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    order: 1;
+    flex-direction: row-reverse;
+  }
+  .homie_product_holder_orders_kernel_chart_X div {
+    -ms-writing-mode: tb-rl;
+        writing-mode: vertical-rl;
+    text-align: center;
+    white-space: nowrap;
+  }
+  .homie_product_holder_orders_kernel_chart_Y {
+    display: flex;
+    justify-content: flex-end;
+    order: 2;
+    flex-direction: row-reverse;
+  }
+  .homie_product_holder_orders_kernel_chart_Y div {
+    -ms-writing-mode: tb-rl;
+        writing-mode: vertical-rl;
+    text-align: center;
+    white-space: nowrap;
   }
 }
 @media (max-width: 499px) {

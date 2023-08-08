@@ -503,6 +503,40 @@
                             }
                         }
                     }
+                    &_chart{
+                        width: 100%;
+                        position: absolute;
+                        top:70px; left: 0;
+                        padding: 20px 40px;
+                        display: grid;
+                        grid-template-columns: 30% 70%;
+                        &_X{
+                            display: grid;
+                            align-content: flex-end;
+                            color: whitesmoke !important;
+                            justify-content: flex-start;
+                            gap: 4px;
+                            div{
+                                background-color: rgba($color: silver, $alpha: 0.3);
+                                padding: 3px;
+                                min-height: 30px;
+                                min-width: 30px;
+                            }
+                        }
+                        &_Y{
+                            display: grid;
+                            align-content: flex-end;
+                            color: whitesmoke !important;
+                            justify-content: flex-end;
+                            gap: 4px;
+                            div{
+                                background-color: rgba($color: crimson, $alpha: 0.3);
+                                padding: 3px;
+                                min-height: 30px;
+                                min-width: 30px;
+                            }
+                        }
+                    }
                 }
                 
             }
@@ -579,6 +613,34 @@
                         }
                         &_options{
                             padding: 10px;
+                        }
+                        &_chart{
+                            display: flex;
+                            flex-direction: column;
+                            align-items: center;
+                            &_X{
+                                display: flex;
+                                justify-content: flex-end;
+                                align-items: flex-end;
+                                order: 1;
+                                flex-direction: row-reverse;
+                                div{
+                                    writing-mode: vertical-rl;
+                                    text-align: center;       
+                                    white-space: nowrap; 
+                                }
+                            }
+                            &_Y{
+                                display: flex;
+                                justify-content: flex-end;
+                                order: 2;
+                                flex-direction: row-reverse;
+                                div{
+                                    writing-mode: vertical-rl;
+                                    text-align: center;       
+                                    white-space: nowrap; 
+                                }
+                            }
                         }
                     }
                 }

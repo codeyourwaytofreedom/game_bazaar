@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { useState } from "react";
+import Chart from "../../../components/Chart";
 import Layout from "../../../components/Layout";
 import i from "../../../styles/Home.module.css";
 
@@ -43,7 +44,7 @@ const Item_details = () => {
                                 }
                                 </div>
                                 
-                                <div className={i.homie_product_holder_orders_kernel_options}>
+{/*                                 <div className={i.homie_product_holder_orders_kernel_options}>
                                     <div id={i.titles}>
                                         <div>Items</div><div>Seller</div><div>Price</div>
                                     </div>
@@ -57,7 +58,8 @@ const Item_details = () => {
                                     </div>
                                         )
                                     }
-                                </div>
+                                </div> */}
+                            <Chart />
                             </div>
                         </div>
 
