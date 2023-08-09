@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import c from "../styles/Home.module.css";
 
 
@@ -8,18 +8,18 @@ const Chart = () => {
     const X_axis = [1,3,3,4,5,9,3,7,1];
     const pure:any[] = [];
     X_axis.map(e=>!pure.includes(e) ? pure.push(e) : null);
-    console.log(pure)
-
     const[scr_wid,setScrWd] = useState<number>();
     const max_height = scr_wid && scr_wid > 765 ? 400 : 200;
     const unit = max_height / Math.max(...X_axis);
     const cnv = useRef<HTMLCanvasElement>(null);
     const chart_container = useRef<HTMLDivElement>(null);
-    const [sizes, setSize] = useState<any>();
+    const [coors, setCoors] = useState<any[]>([]);
+    const [closest,setClosest] = useState<number>();
 
     useEffect(()=>{
         setScrWd(window.innerWidth);
     },[]);
+
     useEffect(()=>{
         const setter = () =>{
             setScrWd(window.innerWidth);
@@ -28,6 +28,13 @@ const Chart = () => {
         return ()=> window.removeEventListener("resize",setter);
     },[]);
 
+    const dotter = (canvas_context:any,startX:number,startY:number,color:string, rad:number) => {
+        canvas_context.beginPath();
+        canvas_context.arc(startX, startY, rad, 0, 2 * Math.PI, false);
+        canvas_context.fillStyle = color;
+        canvas_context.fill();
+        canvas_context.closePath();
+    }
     useEffect(()=>{
         const canvas = cnv.current;
         if(canvas && chart_container.current){
@@ -73,28 +80,38 @@ const Chart = () => {
                 
                 )
             }
-            const animateDrawLines = (index:any) => {
-                if (index >= X_axis.length - 1) {
-                    return;
+
+            {
+                X_axis.map((e,index)=>
+                {
+                    const startX = (inset - 20) + x_unit * index;
+                    const startY = containerRect.height - y_unit * X_axis[index];
+                    const endX = (inset - 20) + x_unit * (index + 1);
+                    const endY = containerRect.height - y_unit * X_axis[index + 1];
+
+                    drawLine(startX, startY, endX, endY, 3, "gold");
+                    index === closest ? dotter(ctx,startX,startY,"whitesmoke",7) :dotter(ctx,startX,startY,"crimson",5)
+                    coors[index] = {x:startX,y:startY}
                 }
-            
-                const startX = (inset - 20) + x_unit * index;
-                const startY = containerRect.height - y_unit * X_axis[index];
-                const endX = (inset - 20) + x_unit * (index + 1);
-                const endY = containerRect.height - y_unit * X_axis[index + 1];
-            
-                drawLine(startX, startY, endX, endY, 3, "gold");
-            
-                    animateDrawLines(index + 1);
-            };
-            
-            animateDrawLines(0);
-
-            
+                )
+            }
         }
-    },[window.innerWidth]);
+    },[window.innerWidth,closest]);
+
+    const pointer_detector = (e:React.MouseEvent) => {
+        const x_cor = e.clientX - cnv.current!.getBoundingClientRect().left;
+        const y_cor = Math.floor(e.clientY -  cnv.current!.getBoundingClientRect().top);
+        let difs:any[] = [];
+        coors.forEach(coordinate => {
+            const difference = (Math.floor(Math.abs((coordinate.x - x_cor)) + Math.abs((coordinate.y - y_cor))));
+            difs.push(difference)
+        } )
+        const nearest = difs.indexOf(Math.min(...difs));
+        setClosest(nearest);
 
 
+        /* dotter(cnv.current?.getContext('2d'),coors[difs.indexOf(Math.min(...difs))].x,coors[difs.indexOf(Math.min(...difs))].y,"black",5) */
+    }
 
     
     return ( <>
@@ -116,13 +133,7 @@ const Chart = () => {
                     )
                 }
             </div> */}
-{/*             <div className={c.homie_product_holder_orders_kernel_chart_yy}>
-                {
-                    pure.sort().map((e,i)=> <div>{pure[pure.length-1-i]}</div>
-                    )
-                }
-            </div> */}
-            <canvas ref={cnv}></canvas>
+            <canvas ref={cnv} onMouseMove={pointer_detector}></canvas>
         </div>
     </> );
 }
