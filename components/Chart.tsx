@@ -15,6 +15,7 @@ const Chart = () => {
     const chart_container = useRef<HTMLDivElement>(null);
     const [coors, setCoors] = useState<any[]>([]);
     const [closest,setClosest] = useState<number>();
+    const [cursorPosition, setPosition] = useState<any>();
 
     useEffect(()=>{
         setScrWd(window.innerWidth);
@@ -80,7 +81,7 @@ const Chart = () => {
                 
                 )
             }
-
+            const rec_Size = 70;
             {
                 X_axis.map((e,index)=>
                 {
@@ -92,6 +93,14 @@ const Chart = () => {
                     drawLine(startX, startY, endX, endY, 3, "gold");
                     index === closest ? dotter(ctx,startX,startY,"whitesmoke",7) :dotter(ctx,startX,startY,"crimson",5)
                     index === closest && drawLine(startX, 0, startX, chart_container.current!.offsetHeight, 1, "white");
+                    index === closest && ctx?.fillRect(index === X_axis.length-1 ? startX-rec_Size : startX-(rec_Size/2),
+                        startY > containerRect.height / 2 ? startY-(rec_Size) : startY+(rec_Size*0.6),rec_Size,rec_Size),
+
+                    index === closest && drawLetterOnPoint(
+                        index === X_axis.length-1 ? startX-rec_Size*0.8 : startX-(rec_Size/3),
+                        startY > containerRect.height / 2 ? startY-(rec_Size) : startY+(rec_Size*0.6),"Hello",15,"red"
+                    )
+
                     coors[index] = {x:startX,y:startY}
                 }
                 )
@@ -102,6 +111,7 @@ const Chart = () => {
     const pointer_detector = (e:React.MouseEvent) => {
         const x_cor = e.clientX - cnv.current!.getBoundingClientRect().left;
         const y_cor = Math.floor(e.clientY -  cnv.current!.getBoundingClientRect().top);
+        /* setPosition({left:x_cor, top:y_cor}) */
         let difs:any[] = [];
         coors.forEach(coordinate => {
             const difference = (Math.floor(Math.abs((coordinate.x - x_cor)) + Math.abs((coordinate.y - y_cor))));
@@ -134,7 +144,8 @@ const Chart = () => {
                     )
                 }
             </div> */}
-            <canvas ref={cnv} onMouseMove={pointer_detector}></canvas>
+{/*             <div id={c.result} style={{left:cursorPosition ? cursorPosition.left : "50%", top:cursorPosition ? cursorPosition.top : "50%"}}>Results</div>
+ */}            <canvas ref={cnv} onMouseMove={pointer_detector}></canvas>
         </div>
     </> );
 }
