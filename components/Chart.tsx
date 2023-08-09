@@ -44,8 +44,9 @@ const Chart = () => {
             canvas.width = containerRect.width / X_axis.length * (X_axis.length-1) ;
             canvas.height = containerRect.height;
             const inset = 90;
+            const up = 50;
             const x_unit = (containerRect.width - inset )/ Y_axis.length;
-            const y_unit = (containerRect.height-20) / Math.max(...X_axis);
+            const y_unit = ((containerRect.height-20) / Math.max(...X_axis))-5;
             
 
             const ctx = canvas.getContext('2d');
@@ -73,42 +74,40 @@ const Chart = () => {
             
             {
                 pure.sort().map((e,i)=>
-                    drawLetterOnPoint((inset-20)/2, containerRect.height-y_unit*pure[i], e, 14, 'white')
+                    drawLetterOnPoint((inset-20)/2, containerRect.height-up-y_unit*pure[i]+4, e, 14, 'white')
                 )
+                    drawLetterOnPoint((inset-20)/2, containerRect.height-up+2, "0", 14, 'white')
             }
 
             {
                 pure.map((e,index)=>
                 {
                     drawLine(
-                        (inset-20), containerRect.height - y_unit*pure[index],
-                        containerRect.width-(inset-20), containerRect.height - y_unit*pure[index],0.5,"white"
+                        (inset-20), containerRect.height-up - y_unit*pure[index],
+                        containerRect.width-(inset-20), containerRect.height-up - y_unit*pure[index],0.5,"white"
                         )
                 }
-                
                 )
+                drawLine(
+                    (inset-20), containerRect.height-up,
+                    containerRect.width-(inset-20), containerRect.height-up,0.5,"white"
+                    )
+
             }
             const rec_Size = 70;
             {
                 X_axis.map((e,index)=>
                 {
                     const startX = (inset - 20) + x_unit * index;
-                    const startY = containerRect.height - y_unit * X_axis[index];
+                    const startY = containerRect.height - up - y_unit * X_axis[index];
                     const endX = (inset - 20) + x_unit * (index + 1);
-                    const endY = containerRect.height - y_unit * X_axis[index + 1];
+                    const endY = containerRect.height -up- y_unit * X_axis[index + 1];
 
                     drawLine(startX, startY, endX, endY, 3, "gold");
                     index === closest ? dotter(ctx,startX,startY,"whitesmoke",7) :dotter(ctx,startX,startY,"crimson",5)
                     index === closest && drawLine(startX, 0, startX, chart_container.current!.offsetHeight, 1, "white");
 
-                    /* index === closest && drawRect(index === X_axis.length-1 ? startX-rec_Size : startX-(rec_Size/2),
-                        startY > containerRect.height / 2 ? startY-(rec_Size) : startY+(rec_Size*0.6),rec_Size,rec_Size), */
-
-      /*               index === closest && drawLetterOnPoint(
-                        index === X_axis.length-1 ? startX-rec_Size*0.8 : startX-(rec_Size/3),
-                        startY > containerRect.height / 2 ? startY-(rec_Size*0.5) : startY+(rec_Size*1.2),"X_axis[index].toString()",14,"black"
-                    ) */
-
+                    drawLetterOnPoint(index === 0 ? startX : startX-10,containerRect.height-up+15,Y_axis[index].substring(0,3).toLowerCase(),10,"white");
                     coors[index] = {x:startX,y:startY}
                 }
                 )
