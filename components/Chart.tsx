@@ -14,7 +14,7 @@ const Chart = () => {
     const cnv = useRef<HTMLCanvasElement>(null);
     const chart_container = useRef<HTMLDivElement>(null);
     const [coors, setCoors] = useState<any[]>([]);
-    const [closest,setClosest] = useState<number>();
+    const [closest,setClosest] = useState<number>(0);
     const [cursorPosition, setPosition] = useState<any>();
 
     useEffect(()=>{
@@ -24,6 +24,7 @@ const Chart = () => {
     useEffect(()=>{
         const setter = () =>{
             setScrWd(window.innerWidth);
+            setClosest(0)
         }
         window.addEventListener("resize", setter)
         return ()=> window.removeEventListener("resize",setter);
