@@ -5,7 +5,7 @@ import c from "../styles/Home.module.css";
 
 const Chart = () => {
     const Y_axis = ["January", "February","March","April","May","June","July","August","September"];
-    const X_axis = [1,3,3,4,5,9,3,7,1];
+    const X_axis = [6,3,3,4,5,9,3,7,1];
     const pure:any[] = [];
     X_axis.map(e=>!pure.includes(e) ? pure.push(e) : null);
     const[scr_wid,setScrWd] = useState<number>();
@@ -48,6 +48,12 @@ const Chart = () => {
             
 
             const ctx = canvas.getContext('2d');
+
+            const drawRect = (x:any,y:any,w:any,h:any) =>{
+                ctx!.fillStyle = "silver";
+                ctx!.textAlign ="center"
+                ctx!.fillRect(x,y,w,h);
+            }
 
             const drawLine = (x1:number, y1:number, x2:number, y2:number,t:number,color:string) => {
                     ctx!.beginPath();
@@ -93,13 +99,14 @@ const Chart = () => {
                     drawLine(startX, startY, endX, endY, 3, "gold");
                     index === closest ? dotter(ctx,startX,startY,"whitesmoke",7) :dotter(ctx,startX,startY,"crimson",5)
                     index === closest && drawLine(startX, 0, startX, chart_container.current!.offsetHeight, 1, "white");
-                    index === closest && ctx?.fillRect(index === X_axis.length-1 ? startX-rec_Size : startX-(rec_Size/2),
-                        startY > containerRect.height / 2 ? startY-(rec_Size) : startY+(rec_Size*0.6),rec_Size,rec_Size),
 
-                    index === closest && drawLetterOnPoint(
+                    /* index === closest && drawRect(index === X_axis.length-1 ? startX-rec_Size : startX-(rec_Size/2),
+                        startY > containerRect.height / 2 ? startY-(rec_Size) : startY+(rec_Size*0.6),rec_Size,rec_Size), */
+
+      /*               index === closest && drawLetterOnPoint(
                         index === X_axis.length-1 ? startX-rec_Size*0.8 : startX-(rec_Size/3),
-                        startY > containerRect.height / 2 ? startY-(rec_Size) : startY+(rec_Size*0.6),"Hello",15,"red"
-                    )
+                        startY > containerRect.height / 2 ? startY-(rec_Size*0.5) : startY+(rec_Size*1.2),"X_axis[index].toString()",14,"black"
+                    ) */
 
                     coors[index] = {x:startX,y:startY}
                 }
@@ -111,17 +118,18 @@ const Chart = () => {
     const pointer_detector = (e:React.MouseEvent) => {
         const x_cor = e.clientX - cnv.current!.getBoundingClientRect().left;
         const y_cor = Math.floor(e.clientY -  cnv.current!.getBoundingClientRect().top);
-        /* setPosition({left:x_cor, top:y_cor}) */
-        let difs:any[] = [];
+
+        setPosition({left:x_cor, top:y_cor})
+        let difs:number[] = [];
+
         coors.forEach(coordinate => {
             const difference = (Math.floor(Math.abs((coordinate.x - x_cor)) + Math.abs((coordinate.y - y_cor))));
+            console.log(difference)
             difs.push(difference)
         } )
         const nearest = difs.indexOf(Math.min(...difs));
+        console.log(nearest)
         setClosest(nearest);
-
-
-        /* dotter(cnv.current?.getContext('2d'),coors[difs.indexOf(Math.min(...difs))].x,coors[difs.indexOf(Math.min(...difs))].y,"black",5) */
     }
 
     
@@ -144,8 +152,19 @@ const Chart = () => {
                     )
                 }
             </div> */}
-{/*             <div id={c.result} style={{left:cursorPosition ? cursorPosition.left : "50%", top:cursorPosition ? cursorPosition.top : "50%"}}>Results</div>
- */}            <canvas ref={cnv} onMouseMove={pointer_detector}></canvas>
+                
+                
+                <div id={c.result} style={{
+                                    left:closest && scr_wid && scr_wid < 765 && closest === X_axis.length-1 ? (coors[closest].x-50) : (coors[closest!].x), 
+                                    top:closest ? coors[closest].y : "50%"
+                                    
+                                    }}>
+                    {
+                        X_axis.map((e,i)=> i === closest && <>{e}-{Y_axis[i]}</> )
+                    }
+                </div>
+                
+            <canvas ref={cnv} onMouseMove={pointer_detector}></canvas>
         </div>
     </> );
 }
