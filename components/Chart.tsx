@@ -91,6 +91,7 @@ const Chart = () => {
 
                     drawLine(startX, startY, endX, endY, 3, "gold");
                     index === closest ? dotter(ctx,startX,startY,"whitesmoke",7) :dotter(ctx,startX,startY,"crimson",5)
+                    index === closest && drawLine(startX, 0, startX, chart_container.current!.offsetHeight, 1, "white");
                     coors[index] = {x:startX,y:startY}
                 }
                 )
