@@ -155,7 +155,7 @@ const Chart = () => {
                 
                 
                 <div id={c.result} style={{
-                                    left:closest && scr_wid && scr_wid < 765 && closest === X_axis.length-1 ? (coors[closest].x-50) : (coors[closest!].x), 
+                                    left:closest && scr_wid && scr_wid < 765 && closest === X_axis.length-1 ? (coors[closest].x-50) : (closest && coors[closest!].x), 
                                     top:closest ? coors[closest].y : "50%"
                                     
                                     }}>
