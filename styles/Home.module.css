@@ -216,6 +216,7 @@
   display: grid;
   padding: 5px;
   gap: 5px;
+  overflow: hidden;
 }
 .homie_banner #login #afterlogin button {
   background: transparent;
@@ -859,8 +860,7 @@
 @-webkit-keyframes login_enlarge {
   from {
     height: 0;
-    opacity: 0 button;
-    opacity-height: 0;
+    opacity: 0;
   }
   to {
     height: 150px;
@@ -870,8 +870,7 @@
 @keyframes login_enlarge {
   from {
     height: 0;
-    opacity: 0 button;
-    opacity-height: 0;
+    opacity: 0;
   }
   to {
     height: 150px;

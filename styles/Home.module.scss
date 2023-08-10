@@ -187,6 +187,7 @@
                 display: grid;
                 padding: 5px;
                 gap: 5px;
+                overflow: hidden;
                 button{
                     background: transparent;
                     border: 2px solid black;
@@ -815,14 +816,8 @@
  @keyframes login_enlarge {
 from{height: 0; 
     opacity: 0;
-    button{
-        height: 0;
-    }
 }
 to{height: 150px;
     opacity: 1;
-    button{
-        height: 100%;
-    }
 }
  }
