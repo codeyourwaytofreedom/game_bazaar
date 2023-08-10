@@ -859,7 +859,8 @@
 @-webkit-keyframes login_enlarge {
   from {
     height: 0;
-    opacity: 0;
+    opacity: 0 button;
+    opacity-height: 0;
   }
   to {
     height: 150px;
@@ -869,7 +870,8 @@
 @keyframes login_enlarge {
   from {
     height: 0;
-    opacity: 0;
+    opacity: 0 button;
+    opacity-height: 0;
   }
   to {
     height: 150px;
