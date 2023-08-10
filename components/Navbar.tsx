@@ -51,7 +51,7 @@ const Navbar:NextPage<Navbar_props> = ({alt_bar, setAlt, modalVis, setModalVis})
     return ( 
         <div className={h.homie_banner}>
                 <Link href={"/"}><div><Image src={"/banner_sword.png"} alt={"sword"} width={40} height={40}/></div></Link>
-                <Link href={"/"}><h2>Game Bazaar</h2></Link>
+                <Link href={"/"}><h3>Game Bazaar</h3></Link>
                 <div id={h.dropdown} onClick={()=> setModalVis("open")}>
                     <Image src={modalVis === "csgo" ? "/csgo_icon.png" : modalVis === "tm2" ? "/tm2_icn.png" :  "/csgo_icon.png"} 
                         alt={"category"} width={70} height={60} id={h.category}/>
@@ -83,13 +83,24 @@ const Navbar:NextPage<Navbar_props> = ({alt_bar, setAlt, modalVis, setModalVis})
                     </div>
                 </div>
 
+{/*                 <Link id={h.comments} href={"/comments"}>
+                    <Image src={"/cmmt.png"} alt={"sword"} width={30} height={30}/>
+                </Link> */}
+
+
+
+
+
+
+
+
+
+
+
                 <button id={h.login} onClick={inn ? handle_Logout : handle_steam}>
                     <Image src={inn && url ? url : "/login.png"} alt={"sword"} width={30} height={30}/>
                     <span>{inn ? "Logout" : "Steam"}</span>
                 </button>
-                <Link id={h.comments} href={"/comments"}>
-                    <Image src={"/cmmt.png"} alt={"sword"} width={30} height={30}/>
-                </Link>
             </div>
      );
 }

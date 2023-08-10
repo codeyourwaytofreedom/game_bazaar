@@ -1,7 +1,5 @@
 .homie {
   padding-top: 75px;
-  font-family: "Handjet", cursive;
-  letter-spacing: 0.4px;
   min-height: 100vh;
 }
 .homie_wallpaper {
@@ -160,13 +158,14 @@
   position: absolute;
   right: 20px;
   color: white;
-  font-size: x-large;
+  font-size: larger;
   border: 2px solid silver;
   border-radius: 50%;
   width: 30px;
   height: 30px;
   display: flex;
   justify-content: center;
+  align-items: center;
   cursor: pointer;
 }
 .homie_banner_search2 span:hover {
@@ -186,7 +185,7 @@
 }
 .homie_banner #login {
   position: absolute;
-  right: 80px;
+  right: 40px;
   display: flex;
   -moz-column-gap: 5px;
        column-gap: 5px;
@@ -194,7 +193,6 @@
   font-size: larger;
   letter-spacing: normal;
   cursor: pointer;
-  letter-spacing: -0.5px;
   border: none;
   background: transparent;
   padding: 10px;
@@ -222,6 +220,8 @@
   background-color: rgba(192, 192, 192, 0.3);
   color: whitesmoke;
   height: 30px;
+  display: flex;
+  align-items: center;
 }
 .homie_subs #showall {
   position: absolute;
@@ -640,6 +640,9 @@
     position: relative;
     left: 6vw;
   }
+  .homie_banner #login {
+    right: 20px;
+  }
   .homie_categories {
     grid-template-columns: 1fr;
   }
@@ -727,11 +730,11 @@
     right: 2%;
   }
   .homie_banner #login {
-    right: calc(2% + 30px);
+    right: 2%;
     box-shadow: none;
   }
   .homie_banner #alt_search {
-    right: 80px;
+    right: 50px;
   }
   .homie_subs {
     overflow-x: scroll;
@@ -744,7 +747,7 @@
     right: -500px;
   }
   .homie h3 {
-    font-size: x-large;
+    font-size: large;
   }
   .homie_product_holder {
     width: calc(100vw - 20px);

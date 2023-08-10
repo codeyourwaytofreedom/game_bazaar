@@ -2,8 +2,6 @@
 
 .homie{
     padding-top: 75px;
-    font-family: 'Handjet', cursive;
-    letter-spacing: 0.4px;
     //background-color: #000000;
     min-height: 100vh;
     &_wallpaper{
@@ -136,11 +134,11 @@
                 position: absolute;
                 right: 20px;
                 color: white;
-                font-size: x-large;
+                font-size: larger;
                 border: 2px solid silver;
                 border-radius: 50%;
                 width: 30px; height: 30px;
-                display: flex; justify-content: center;
+                display: flex; justify-content: center;align-items: center;
                 cursor: pointer;
                 &:hover{
                     color: crimson;
@@ -161,7 +159,7 @@
         }
         #login{
             position: absolute;
-            right: 80px;
+            right: 40px;
             //border: 2px solid blue;
             display: flex;
             column-gap: 5px;
@@ -169,7 +167,6 @@
             font-size: larger;
             letter-spacing: normal;
             cursor: pointer;
-            letter-spacing: -0.5px;
             border: none;
             background: transparent;
             padding: 10px;
@@ -197,6 +194,8 @@
             background-color: rgba($color: silver, $alpha: 0.3);
             color: whitesmoke;
             height: 30px;
+            display: flex;
+            align-items: center;
         }
         #showall{
             position: absolute;
@@ -593,6 +592,9 @@
                     left: 6vw;
                 }
             }
+            #login{
+                right: 20px;
+            }
         }
         &_categories{
             grid-template-columns: 1fr;
@@ -695,11 +697,11 @@
                 right: 2%;
             }
             #login{
-                right: calc(2% + 30px);
+                right: 2%;
                 box-shadow: none;
             }
             #alt_search{
-                right: 80px;
+                right: 50px;
             }
         }
         &_subs{
@@ -714,7 +716,7 @@
             }
         }
         h3{
-            font-size: x-large;
+            font-size: large;
         }
         &_product{
             &_holder{
