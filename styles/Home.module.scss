@@ -148,7 +148,7 @@
         }
         #alt_search{
             position: absolute;
-            right: 140px;
+            right: 80px;
             display: none;
             cursor: pointer;
         }
@@ -160,7 +160,6 @@
         #login{
             position: absolute;
             right: 40px;
-            //border: 2px solid blue;
             display: flex;
             column-gap: 5px;
             align-items: center;
@@ -173,6 +172,17 @@
             box-shadow: 0 0 3px 1px black;
             &:hover{
                 background-color: rgba($color: #000000, $alpha: 0.3);
+                border-radius: 5px;
+            }
+            #afterlogin{
+                position: absolute;
+                right: -15%;
+                top:75px;
+                background-color: rgba($color: #a47f02, $alpha: 1);
+                display: flex;
+                width: 130%;
+                animation: login_enlarge 0.7s 1;
+                height: 200px;
                 border-radius: 5px;
             }
         }
@@ -628,6 +638,10 @@
                 span{
                     display: none;
                 }
+                #afterlogin{
+                    right: -20%;
+                    width: 140%;
+                }
             }
             &_search{
                 display: none;
@@ -777,4 +791,8 @@
 
  @keyframes widen {
     from{width: 0;}to{width: 100%;}
+ }
+
+ @keyframes login_enlarge {
+from{height: 0;}to{height: 200px;}
  }

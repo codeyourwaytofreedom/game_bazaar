@@ -18,6 +18,7 @@ interface Navbar_props {
 const Navbar:NextPage<Navbar_props> = ({alt_bar, setAlt, modalVis, setModalVis}) => {
 
     const dispatch = useDispatch();
+    const [after_login, setAfterLogin] = useState<boolean>(false);
 
     const handle_steam = () => {
         window.location.href = '/api/login';
@@ -97,9 +98,12 @@ const Navbar:NextPage<Navbar_props> = ({alt_bar, setAlt, modalVis, setModalVis})
 
 
 
-                <button id={h.login} onClick={inn ? handle_Logout : handle_steam}>
+                <button id={h.login} /* onClick={inn ? handle_Logout : handle_steam} */ onClick={()=> setAfterLogin(after_login=>!after_login)}>
                     <Image src={inn && url ? url : "/login.png"} alt={"sword"} width={30} height={30}/>
                     <span>{inn ? "Logout" : "Steam"}</span>
+                    {
+                        after_login && <div id={h.afterlogin}></div>
+                    }
                 </button>
             </div>
      );

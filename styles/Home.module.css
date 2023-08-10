@@ -174,7 +174,7 @@
 }
 .homie_banner #alt_search {
   position: absolute;
-  right: 140px;
+  right: 80px;
   display: none;
   cursor: pointer;
 }
@@ -200,6 +200,18 @@
 }
 .homie_banner #login:hover {
   background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 5px;
+}
+.homie_banner #login #afterlogin {
+  position: absolute;
+  right: -15%;
+  top: 75px;
+  background-color: #a47f02;
+  display: flex;
+  width: 130%;
+  -webkit-animation: login_enlarge 0.7s 1;
+          animation: login_enlarge 0.7s 1;
+  height: 200px;
   border-radius: 5px;
 }
 .homie_subs {
@@ -669,6 +681,10 @@
   .homie_banner #login span {
     display: none;
   }
+  .homie_banner #login #afterlogin {
+    right: -20%;
+    width: 140%;
+  }
   .homie_banner_search {
     display: none;
   }
@@ -819,5 +835,21 @@
   }
   to {
     width: 100%;
+  }
+}
+@-webkit-keyframes login_enlarge {
+  from {
+    height: 0;
+  }
+  to {
+    height: 200px;
+  }
+}
+@keyframes login_enlarge {
+  from {
+    height: 0;
+  }
+  to {
+    height: 200px;
   }
 }/*# sourceMappingURL=Home.module.css.map */
