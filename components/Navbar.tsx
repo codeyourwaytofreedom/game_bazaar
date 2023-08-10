@@ -98,11 +98,15 @@ const Navbar:NextPage<Navbar_props> = ({alt_bar, setAlt, modalVis, setModalVis})
 
 
 
-                <button id={h.login} /* onClick={inn ? handle_Logout : handle_steam} */ onClick={()=> setAfterLogin(after_login=>!after_login)}>
+                <button id={h.login} onClick={inn ? ()=> setAfterLogin(after_login=>!after_login) : handle_steam}>
                     <Image src={inn && url ? url : "/login.png"} alt={"sword"} width={30} height={30}/>
                     <span>{inn ? "Logout" : "Steam"}</span>
                     {
-                        after_login && <div id={h.afterlogin}></div>
+                       inn && url && after_login && <div id={h.afterlogin}>
+                            <button>Profile</button>
+                            <button>Balance</button>
+                            <button onClick={handle_Logout}>Logout</button>
+                        </div>
                     }
                 </button>
             </div>

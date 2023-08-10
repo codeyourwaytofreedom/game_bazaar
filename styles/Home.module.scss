@@ -182,8 +182,20 @@
                 display: flex;
                 width: 130%;
                 animation: login_enlarge 0.7s 1;
-                height: 200px;
+                height: 150px;
                 border-radius: 5px;
+                display: grid;
+                padding: 5px;
+                gap: 5px;
+                button{
+                    background: transparent;
+                    border: 2px solid black;
+                    border-radius: 3px;
+                    &:hover{
+                        background-color: black;
+                        color: whitesmoke;
+                    }
+                }
             }
         }
     }
@@ -711,11 +723,18 @@
                 right: 2%;
             }
             #login{
-                right: 2%;
+                right: 10px;
                 box-shadow: none;
+                &:hover{
+                    background: transparent;
+                }
+                #afterlogin{
+                    right: -6px;
+                    width: 140%;
+                }
             }
             #alt_search{
-                right: 50px;
+                right: 60px;
             }
         }
         &_subs{
@@ -794,5 +813,5 @@
  }
 
  @keyframes login_enlarge {
-from{height: 0;}to{height: 200px;}
+from{height: 0; opacity: 0;}to{height: 150px;opacity: 1;}
  }
