@@ -71,7 +71,7 @@ const Profile = () => {
                         <div>
                             <div id={c.key}>--------------------</div>
                             <Image src={"/edit.png"} width={25} height={25} alt={"copy"}/>
-                            <button>Create KEY</button>
+                            <button>Get it</button>
                         </div>
                     </div>
 
@@ -84,7 +84,7 @@ const Profile = () => {
                         <div>
                             <div id={c.key}>---------------------</div>
                             <Image src={"/edit.png"} width={25} height={25} alt={"copy"}/>
-                            <button>Create KEY</button>
+                            <button>Get it</button>
                         </div>
                     </div>
 
