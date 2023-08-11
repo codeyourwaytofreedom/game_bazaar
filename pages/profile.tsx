@@ -2,16 +2,46 @@ import Layout from "../components/Layout";
 import c from "../styles/Home.module.css";
 import Image from "next/image";
 import { useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { note_login, note_ppicture } from "../redux/loginSlice";
 
 const Profile = () => {
     const dispatch = useDispatch();
-
     const inn = useSelector((state:any) => state.loginSlice.inn);
     const url = useSelector((state:any) => state.loginSlice.ppicture);
+    const ak = useRef<HTMLInputElement>(null);
+    const link = useRef<HTMLInputElement>(null);
 
+    const handle_ak = () => {
+        if(ak.current && ak.current.value.length === 32){
+            fetch('/api/ak',{
+                method:'POST',
+                body:ak.current!.value
+            }).then(r => {
+                if(r.status === 200){
+                    console.log("API KEY geçerli")
+                }
+                else{
+                    console.log("API KEY Yanlış")
+                }
+            })
+        }
+    }
+    const handle_link = () => {
+        if(link.current && link.current.value.length > 0){
+            fetch('/api/lk',{
+                method:'POST',
+                body:link.current!.value
+            }).then(r=> {
+                if(r.status === 200){
+                    console.log("Geçerli Trade Link")
+                }
+                else{console.log("Yanlış Trade Link")}
+            })
+        }
+        }
+    
     useEffect(()=>{
         if(localStorage.getItem('userLoginStatus')){
             dispatch(note_login(true));
@@ -20,6 +50,8 @@ const Profile = () => {
             dispatch(note_ppicture(localStorage.getItem('url')))
         }
       },[]);
+
+
     return ( <Layout>
         <div className={c.homie_profile}>
             <div className={c.homie_profile_kernel}>
@@ -69,9 +101,9 @@ const Profile = () => {
                         </div>
                         <span></span>
                         <div>
-                            <div id={c.key}>--------------------</div>
+                            <input id={c.link} type={"text"} placeholder={"Trade Link"} ref={link}/>
                             <Image src={"/edit.png"} width={25} height={25} alt={"copy"}/>
-                            <button>Get it</button>
+                            <button onClick={handle_link}>Get it</button>
                         </div>
                     </div>
 
@@ -82,9 +114,9 @@ const Profile = () => {
                         </div>
                         <span></span>
                         <div>
-                            <div id={c.key}>---------------------</div>
+                            <input id={c.key} type={"password"} placeholder={"Your Steam API key"} ref={ak}/>
                             <Image src={"/edit.png"} width={25} height={25} alt={"copy"}/>
-                            <button>Get it</button>
+                            <button onClick={handle_ak}>Get it</button>
                         </div>
                     </div>
 

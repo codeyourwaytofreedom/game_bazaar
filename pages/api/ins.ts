@@ -28,7 +28,7 @@ export default async function handler(
                 const profileImage = data.response.players[0].avatarfull;
                 console.log('User Profile Image URL:', profileImage);
                 res.setHeader('Set-Cookie', `ID=${steamID}; HttpOnly; Max-Age=${60 * 60}; Path=/; Secure`);
-                res.status(200).json({url:profileImage});
+                res.status(200).json({url:profileImage,id:steamID});
                 } else {
                 console.log('Profile image not found');
                 }

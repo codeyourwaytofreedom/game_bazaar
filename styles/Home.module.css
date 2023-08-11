@@ -760,12 +760,13 @@
 .homie_profile_kernel_column_API :nth-child(3) img {
   cursor: pointer;
 }
-.homie_profile_kernel_column_API #key {
+.homie_profile_kernel_column_API #key, .homie_profile_kernel_column_API #link {
   border: 1px solid rgb(88, 87, 87);
   width: 200px;
   padding: 2px 5px;
   background-color: black;
   border-radius: 5px;
+  color: whitesmoke;
 }
 
 @media (max-width: 991.98px) {
