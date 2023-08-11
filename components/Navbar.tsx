@@ -98,12 +98,13 @@ const Navbar:NextPage<Navbar_props> = ({alt_bar, setAlt, modalVis, setModalVis})
 
 
 
-                <button id={h.login} onClick={inn ? ()=> setTimeout(() => {setAfterLogin(after_login=>!after_login)}, 50) : handle_steam}>
+                <button id={h.login} onClick={inn ? ()=> setTimeout(() => {setAfterLogin(after_login=>!after_login)}, 50) : handle_steam}
+                        onBlur={()=> setTimeout(() => {setAfterLogin(false)}, 300)}>
                     <Image src={inn && url ? url : "/login.png"} alt={"sword"} width={30} height={30}/>
                     <span>{inn ? "Logout" : "Steam"}</span>
                     {
                        inn && url && after_login && <div id={h.afterlogin}>
-                            <button>Profile</button>
+                            <button><Link href={"/profile"}>Profile</Link></button>
                             <button>Balance</button>
                             <button onClick={handle_Logout}>Logout</button>
                         </div>

@@ -600,6 +600,104 @@
             }
         }
     }
+    &_profile{
+        display: grid;
+        justify-content: center;
+        align-items: center;
+        min-height: 600px;
+        &_kernel{
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            column-gap: 20px;
+            color: white;
+            &_column{
+                width: 95vw;
+                max-width: 470px;
+                padding: 20px;
+                display: grid;
+                row-gap: 30px;
+                background-color: rgb(20, 20, 20);
+                align-items: start;
+                h3{
+                    color: #FFC300;
+                }
+                &_intro{
+                    border-bottom: 1px dashed gray;
+                    padding: 5px;
+                    padding-bottom: 10px;
+                    display: flex;
+                    column-gap: 5px;
+                    align-items: center;
+                    position: relative;
+                }
+                &_balance{
+                    border-bottom: 1px dashed gray;
+                    padding: 5px;
+                    padding-bottom: 10px;
+                    #double{
+                        display: flex;
+                        column-gap: 35px;
+                        align-items: center;
+                        #buts{
+                            display: flex;
+                            column-gap: 10px;
+                            align-items: center;
+                            span{
+                                width: 35px; height: 35px; 
+                                display: grid; justify-content: center; align-items: center;
+                                border-radius: 5px;
+                                font-size: x-large;
+                            }
+                            :nth-child(1){
+                                background-color: rgba($color: green, $alpha: 0.5);
+                                cursor: pointer;
+                                &:hover{
+                                    background-color: rgba($color: rgb(61, 187, 61), $alpha: 0.5);
+                                }
+                            }
+                            :nth-child(2){
+                                background-color: rgba($color: red, $alpha: 0.5);
+                                cursor: pointer;
+                                &:hover{
+                                    background-color: rgba($color: rgb(190, 54, 54), $alpha: 0.5);
+                                }
+                            }
+                        }
+                    }
+                }
+                &_API{
+                    border-bottom: 1px dashed gray;
+                    padding: 5px;
+                    padding-bottom: 10px;
+                    :nth-child(3){
+                        display: flex;
+                        column-gap: 25px;
+                        align-items: center;
+                        button{
+                            background: transparent;
+                            border: none;
+                            background-image: linear-gradient(to left, #a47f02, #FFC300);
+                            padding: 5px 10px;
+                            border-radius: 5px;
+                            &:hover{
+                                background-image: linear-gradient(to left,#FFC300, #a47f02);
+                            }
+                        }
+                        img{
+                            cursor: pointer;
+                        }
+                    }
+                    #key{
+                        border: 1px solid rgb(88, 87, 87);
+                        width: 200px;
+                        padding: 2px 5px;
+                        background-color: black;
+                        border-radius: 5px;
+                    }
+                }
+            }
+        }
+    }
 }
 
 // Medium devices (tablets, less than 992px)
@@ -638,6 +736,14 @@
                 }
                 &_details{
                     min-width: 80vw;
+                }
+            }
+        }
+        &_profile{
+            &_kernel{
+                grid-template-columns: 1fr;
+                &_column{
+                    max-width: 550px;
                 }
             }
         }

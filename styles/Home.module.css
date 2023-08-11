@@ -654,6 +654,112 @@
   min-height: 30px;
   min-width: 30px;
 }
+.homie_profile {
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  min-height: 600px;
+}
+.homie_profile_kernel {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  -moz-column-gap: 20px;
+       column-gap: 20px;
+  color: white;
+}
+.homie_profile_kernel_column {
+  width: 95vw;
+  max-width: 470px;
+  padding: 20px;
+  display: grid;
+  row-gap: 30px;
+  background-color: rgb(20, 20, 20);
+  align-items: start;
+}
+.homie_profile_kernel_column h3 {
+  color: #FFC300;
+}
+.homie_profile_kernel_column_intro {
+  border-bottom: 1px dashed gray;
+  padding: 5px;
+  padding-bottom: 10px;
+  display: flex;
+  -moz-column-gap: 5px;
+       column-gap: 5px;
+  align-items: center;
+  position: relative;
+}
+.homie_profile_kernel_column_balance {
+  border-bottom: 1px dashed gray;
+  padding: 5px;
+  padding-bottom: 10px;
+}
+.homie_profile_kernel_column_balance #double {
+  display: flex;
+  -moz-column-gap: 35px;
+       column-gap: 35px;
+  align-items: center;
+}
+.homie_profile_kernel_column_balance #double #buts {
+  display: flex;
+  -moz-column-gap: 10px;
+       column-gap: 10px;
+  align-items: center;
+}
+.homie_profile_kernel_column_balance #double #buts span {
+  width: 35px;
+  height: 35px;
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  font-size: x-large;
+}
+.homie_profile_kernel_column_balance #double #buts :nth-child(1) {
+  background-color: rgba(0, 128, 0, 0.5);
+  cursor: pointer;
+}
+.homie_profile_kernel_column_balance #double #buts :nth-child(1):hover {
+  background-color: rgba(61, 187, 61, 0.5);
+}
+.homie_profile_kernel_column_balance #double #buts :nth-child(2) {
+  background-color: rgba(255, 0, 0, 0.5);
+  cursor: pointer;
+}
+.homie_profile_kernel_column_balance #double #buts :nth-child(2):hover {
+  background-color: rgba(190, 54, 54, 0.5);
+}
+.homie_profile_kernel_column_API {
+  border-bottom: 1px dashed gray;
+  padding: 5px;
+  padding-bottom: 10px;
+}
+.homie_profile_kernel_column_API :nth-child(3) {
+  display: flex;
+  -moz-column-gap: 25px;
+       column-gap: 25px;
+  align-items: center;
+}
+.homie_profile_kernel_column_API :nth-child(3) button {
+  background: transparent;
+  border: none;
+  background-image: linear-gradient(to left, #a47f02, #FFC300);
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+.homie_profile_kernel_column_API :nth-child(3) button:hover {
+  background-image: linear-gradient(to left, #FFC300, #a47f02);
+}
+.homie_profile_kernel_column_API :nth-child(3) img {
+  cursor: pointer;
+}
+.homie_profile_kernel_column_API #key {
+  border: 1px solid rgb(88, 87, 87);
+  width: 200px;
+  padding: 2px 5px;
+  background-color: black;
+  border-radius: 5px;
+}
 
 @media (max-width: 991.98px) {
   .homie_banner {
@@ -688,6 +794,12 @@
   }
   .homie_product_holder_details {
     min-width: 80vw;
+  }
+  .homie_profile_kernel {
+    grid-template-columns: 1fr;
+  }
+  .homie_profile_kernel_column {
+    max-width: 550px;
   }
 }
 @media (max-width: 767.98px) {
