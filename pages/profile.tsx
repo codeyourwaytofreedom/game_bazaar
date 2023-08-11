@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { note_login, note_ppicture } from "../redux/loginSlice";
+import Link from "next/link";
 
 const Profile = () => {
     const dispatch = useDispatch();
@@ -103,7 +104,7 @@ const Profile = () => {
                         <div>
                             <input id={c.link} type={"text"} placeholder={"Trade Link"} ref={link}/>
                             <Image src={"/edit.png"} width={25} height={25} alt={"copy"}/>
-                            <button onClick={handle_link}>Get it</button>
+                            <Link href={"http://steamcommunity.com/my/tradeoffers/privacy#trade_offer_access_url"} target={"_blank"}>Get it</Link>
                         </div>
                     </div>
 
@@ -116,10 +117,9 @@ const Profile = () => {
                         <div>
                             <input id={c.key} type={"password"} placeholder={"Your Steam API key"} ref={ak}/>
                             <Image src={"/edit.png"} width={25} height={25} alt={"copy"}/>
-                            <button onClick={handle_ak}>Get it</button>
+                            <Link href={"https://steamcommunity.com/dev/apikey"} target={"_blank"}>Get it</Link>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>

@@ -747,15 +747,18 @@
        column-gap: 25px;
   align-items: center;
 }
-.homie_profile_kernel_column_API :nth-child(3) button {
+.homie_profile_kernel_column_API :nth-child(3) button, .homie_profile_kernel_column_API :nth-child(3) a {
   background: transparent;
   border: none;
   background-image: linear-gradient(to left, #a47f02, #FFC300);
-  padding: 5px 10px;
+  padding: 3px 15px;
   border-radius: 5px;
+  color: #000000;
+  font-size: 15px;
 }
-.homie_profile_kernel_column_API :nth-child(3) button:hover {
+.homie_profile_kernel_column_API :nth-child(3) button:hover, .homie_profile_kernel_column_API :nth-child(3) a:hover {
   background-image: linear-gradient(to left, #FFC300, #a47f02);
+  color: whitesmoke;
 }
 .homie_profile_kernel_column_API :nth-child(3) img {
   cursor: pointer;
