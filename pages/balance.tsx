@@ -12,7 +12,7 @@ const Balance = () => {
                 <div className={b.balance_kernel}>
                     <div className={b.balance_kernel_tabs}>
                         <div className={b.balance_kernel_tabs_each}>
-                            <Image src={"/wallet.png"} alt={"steam"} width={40} height={40}/>
+                            <Image src={"/wallet.png"} alt={"steam"} width={50} height={50}/>
                             <div className={b.balance_kernel_tabs_each_double}>
                                 <h4>Balance</h4>
                                 <h3>$ 126</h3>

@@ -1,5 +1,5 @@
 .balance {
-  min-height: 600px;
+  min-height: 500px;
   display: flex;
   justify-content: center;
   padding-top: 30px;
@@ -7,7 +7,7 @@
 .balance_kernel {
   width: 100vw;
   max-width: 600px;
-  padding: 30px 50px;
+  padding: 20px 30px;
   background-color: rgb(20, 20, 20);
 }
 .balance_kernel_tabs {
@@ -26,6 +26,7 @@
 .balance_kernel_tabs_each h4 {
   color: rgb(200, 196, 196);
   font-weight: 400;
+  font-size: larger;
 }
 .balance_kernel_triple {
   background-color: black;
@@ -38,6 +39,7 @@
   -moz-column-gap: 20px;
        column-gap: 20px;
   padding: 10px 20px;
+  border-top: 1px dashed gray;
 }
 .balance_kernel_triple_buts button {
   padding-left: 10px;
@@ -74,6 +76,7 @@
   width: 100%;
   padding: 40px 20px;
   min-height: 250px;
+  border-top: 1px dashed gray;
 }
 .balance_kernel_triple_explain_amount {
   display: flex;
