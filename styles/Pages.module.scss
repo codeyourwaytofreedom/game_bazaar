@@ -1,0 +1,127 @@
+.balance{
+    min-height: 600px;
+    display: flex;
+    justify-content: center;
+    padding-top: 30px;
+    &_kernel{
+        width: 100vw;
+        max-width: 600px;
+        padding: 30px 50px;
+        background-color: rgb(20, 20, 20);
+        &_tabs{
+            display: flex;
+            padding-left: 10px;
+            &_each{
+                display: flex;
+                column-gap: 20px;
+                align-items: center;
+                h3{
+                    color: gold;
+                }
+                h4{
+                    color: rgb(200, 196, 196);
+                    font-weight: 400;
+                }
+            }
+        }
+
+        &_triple{
+            background-color: black;
+            color: whitesmoke;
+            margin-top: 20px;
+            position: relative;
+            &_buts{
+                display: flex;
+                column-gap: 20px;
+                padding: 10px 20px;
+                button{
+                    padding-left: 10px;
+                    background: transparent;
+                    color: whitesmoke;
+                    padding: 5px 0;
+                    border: none;
+                    display: flex;
+                    justify-content: center;
+                    font-size: large;
+                    position: relative;
+                    #enlarge{
+                        width: 100%;
+                        height: 2px;
+                        border: 2px solid silver;
+                        position: absolute;
+                        bottom: -2px;
+                        display: none;
+                        animation: enlarge 0.5s 1;
+                    }
+                    #active{
+                        position: absolute;
+                        bottom: -35px;
+                    }
+                    &:hover{
+                        #enlarge{
+                            display: block;
+                        }
+                    }
+                }
+            }
+            &_explain{
+                position: absolute;
+                background-color: black;
+                top:90px;
+                width: 100%;
+                padding: 40px 20px;
+                min-height: 250px;
+                &_amount{
+                    display: flex;
+                    column-gap: 20px;
+                    align-items: center;
+                    margin-bottom: 20px;
+                    div{
+                        width: 50px;
+                        line-height: 1.1;
+                    }
+                    input{
+                        border: 1px solid rgb(203, 184, 77);
+                        outline: none;
+                        background-color: rgb(29, 29, 29);
+                        color: whitesmoke;
+                        padding: 3px 5px;
+                        height: 35px;
+                        border-radius: 3px;
+                    }
+                    button{
+                        border: 1px solid rgb(203, 184, 77);
+                        background: transparent;
+                        padding: 3px 10px;
+                        border-radius: 3px;
+                        color: whitesmoke;
+                        display: flex;
+                        column-gap: 5px;
+                        align-items: center;
+                        font-size: 14px !important;
+                        height: 35px;
+                        &:hover{
+                            border: 1px solid whitesmoke;
+                            background-color: rgb(58, 57, 57);
+                            color: gold;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+@keyframes enlarge {
+    from{width: 0;}
+    to{width: 100%;}
+}
+
+@media (max-width: 575.98px) { 
+    .balance{
+        &_kernel{
+            padding: 20px;
+        }
+    }
+ }

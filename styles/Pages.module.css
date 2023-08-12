@@ -1,0 +1,138 @@
+.balance {
+  min-height: 600px;
+  display: flex;
+  justify-content: center;
+  padding-top: 30px;
+}
+.balance_kernel {
+  width: 100vw;
+  max-width: 600px;
+  padding: 30px 50px;
+  background-color: rgb(20, 20, 20);
+}
+.balance_kernel_tabs {
+  display: flex;
+  padding-left: 10px;
+}
+.balance_kernel_tabs_each {
+  display: flex;
+  -moz-column-gap: 20px;
+       column-gap: 20px;
+  align-items: center;
+}
+.balance_kernel_tabs_each h3 {
+  color: gold;
+}
+.balance_kernel_tabs_each h4 {
+  color: rgb(200, 196, 196);
+  font-weight: 400;
+}
+.balance_kernel_triple {
+  background-color: black;
+  color: whitesmoke;
+  margin-top: 20px;
+  position: relative;
+}
+.balance_kernel_triple_buts {
+  display: flex;
+  -moz-column-gap: 20px;
+       column-gap: 20px;
+  padding: 10px 20px;
+}
+.balance_kernel_triple_buts button {
+  padding-left: 10px;
+  background: transparent;
+  color: whitesmoke;
+  padding: 5px 0;
+  border: none;
+  display: flex;
+  justify-content: center;
+  font-size: large;
+  position: relative;
+}
+.balance_kernel_triple_buts button #enlarge {
+  width: 100%;
+  height: 2px;
+  border: 2px solid silver;
+  position: absolute;
+  bottom: -2px;
+  display: none;
+  -webkit-animation: enlarge 0.5s 1;
+          animation: enlarge 0.5s 1;
+}
+.balance_kernel_triple_buts button #active {
+  position: absolute;
+  bottom: -35px;
+}
+.balance_kernel_triple_buts button:hover #enlarge {
+  display: block;
+}
+.balance_kernel_triple_explain {
+  position: absolute;
+  background-color: black;
+  top: 90px;
+  width: 100%;
+  padding: 40px 20px;
+  min-height: 250px;
+}
+.balance_kernel_triple_explain_amount {
+  display: flex;
+  -moz-column-gap: 20px;
+       column-gap: 20px;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.balance_kernel_triple_explain_amount div {
+  width: 50px;
+  line-height: 1.1;
+}
+.balance_kernel_triple_explain_amount input {
+  border: 1px solid rgb(203, 184, 77);
+  outline: none;
+  background-color: rgb(29, 29, 29);
+  color: whitesmoke;
+  padding: 3px 5px;
+  height: 35px;
+  border-radius: 3px;
+}
+.balance_kernel_triple_explain_amount button {
+  border: 1px solid rgb(203, 184, 77);
+  background: transparent;
+  padding: 3px 10px;
+  border-radius: 3px;
+  color: whitesmoke;
+  display: flex;
+  -moz-column-gap: 5px;
+       column-gap: 5px;
+  align-items: center;
+  font-size: 14px !important;
+  height: 35px;
+}
+.balance_kernel_triple_explain_amount button:hover {
+  border: 1px solid whitesmoke;
+  background-color: rgb(58, 57, 57);
+  color: gold;
+}
+
+@-webkit-keyframes enlarge {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes enlarge {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+@media (max-width: 575.98px) {
+  .balance_kernel {
+    padding: 20px;
+  }
+}/*# sourceMappingURL=Pages.module.css.map */

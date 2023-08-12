@@ -98,7 +98,7 @@ const Navbar:NextPage<Navbar_props> = ({alt_bar, setAlt, modalVis, setModalVis})
                             <Link href={"/profile"}><button><Image src={"/profile.png"} alt={"sword"} width={30} height={30}/>
                             <span>Profile</span></button></Link>
 
-                            <Link href={"/"}><button><Image src={"/balance.png"} alt={"sword"} width={30} height={30}/>
+                            <Link href={"/balance"}><button><Image src={"/balance.png"} alt={"sword"} width={30} height={30}/>
                             <span>Balance</span></button></Link>
 
                             <button onClick={handle_Logout}>
