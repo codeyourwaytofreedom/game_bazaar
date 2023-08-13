@@ -137,6 +137,10 @@
   border-bottom: none !important;
 }
 
+.inventory {
+  color: whitesmoke;
+}
+
 @-webkit-keyframes enlarge {
   from {
     width: 0;
