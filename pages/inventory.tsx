@@ -23,21 +23,21 @@ const Inventory = () => {
             <div className={i.inventory}>
 {/*                 <h1>{inventory && inventory.length}</h1>
  */}                <div className={i.inventory_kernel}>
-                    <div className={i.inventory_kernel_item} key={199911}>
-                        <span>Selected Category</span>
-                    </div>
+{/*                     <div className={i.inventory_kernel_item} key={199911}>
+                        <button>Selected Category</button>
+                    </div> */}
                     {
                         inventory && inventory.map((item,index)=>
                         <div className={i.inventory_kernel_item} key={index}
                             style={{backgroundColor:index%2 ? "rgb(40,40,40)" : "gray"}}
                         >
-                            <span>
+                            <span id={i.icon}>
                                 <Image alt={"steam image"} src={`${base_url}${item.icon_url}`} width={90} height={90}/>
                             </span>
                             <span>{item.market_name}</span>
                             <span>Price</span>
-                            <span>Edit</span>
-                            <span>Delete</span>
+                            <span>Edit Price</span>
+                            <span><Image alt={"delete steam"} src={index%2 ? "/delete1.png" : "/delete.png" } width={20} height={20}/></span>
                         </div>
                         )
                     }

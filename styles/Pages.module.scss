@@ -144,6 +144,7 @@
         display: grid;
         justify-content: center;
         row-gap: 10px;
+        padding-top: 20px;
         &_item{
             display: grid;
             grid-template-columns: 1fr 3fr 1fr 1fr 1fr;
@@ -162,14 +163,13 @@
                     padding-left: 10px;
                 }
             }
-            img{
-                width: 90px;
-                height: auto;
-                background-color: rgba($color: goldenrod, $alpha: 0.8);
-                //border-top: 5px solid goldenrod;
-
+            #icon{
+                img{
+                    width: 90px;
+                    height: auto;
+                    background-color: rgba($color: goldenrod, $alpha: 0.8);
+                }
             }
-            
         }
     }
 }
