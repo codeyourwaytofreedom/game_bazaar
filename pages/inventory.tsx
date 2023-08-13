@@ -9,7 +9,7 @@ const Inventory = () => {
 
     useEffect(() => {
         fetch('/api/inventory')
-            .then(response => response && response.json())
+            .then(response => response.json())
             .then(data => {
                 console.log(data);
                 setInventory(data)

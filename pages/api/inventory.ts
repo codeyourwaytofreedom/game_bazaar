@@ -12,10 +12,11 @@ export default async function handler(req:NextApiRequest, res:NextApiResponse) {
         const response = await fetch(url);
         const data = await response.json();
         const descriptions = data.response.descriptions;
+        if(descriptions){
+            res.status(200).json(descriptions);
+        }
 
         console.log(descriptions);
-
-        res.status(200).json(descriptions);
     } catch (error) {
         console.error("Error:", error);
         res.status(500).json("Error");
