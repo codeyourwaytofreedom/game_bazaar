@@ -29,15 +29,16 @@ const Inventory = () => {
                     {
                         inventory && inventory.map((item,index)=>
                         <div className={i.inventory_kernel_item} key={index}
-                            style={{backgroundColor:index%2 ? "rgb(40,40,40)" : "gray"}}
+                            style={{backgroundColor:index%2 ? "rgb(40,40,40)" : "rgb(30,30,30)"}}
                         >
                             <span id={i.icon}>
                                 <Image alt={"steam image"} src={`${base_url}${item.icon_url}`} width={90} height={90}/>
+                                <span style={{boxShadow: index%2 ? "0 0 35px 15px whitesmoke" : "0 0 35px 15px gold"}}></span>
                             </span>
                             <span>{item.market_name}</span>
                             <span>Price</span>
                             <span>Edit Price</span>
-                            <span><Image alt={"delete steam"} src={index%2 ? "/delete1.png" : "/delete.png" } width={20} height={20}/></span>
+                            <span><Image alt={"delete steam"} src={index%2 ? "/delete4.png" : "/delete3.png" } width={20} height={20}/></span>
                         </div>
                         )
                     }

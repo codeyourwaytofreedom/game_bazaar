@@ -164,10 +164,22 @@
                 }
             }
             #icon{
+                display: grid;
+                justify-content: center;
+                position: relative;
+                span{
+                    width: 10px;
+                    height: 10px;
+                    position: absolute;
+                    left: calc(50% - 5px);
+                    border-radius: 50%;
+                    box-shadow: 0 0 35px 15px gold;
+                }
                 img{
                     width: 90px;
                     height: auto;
-                    background-color: rgba($color: goldenrod, $alpha: 0.8);
+                    z-index: 3;
+                    //background-color: rgba($color: goldenrod, $alpha: 0.8);
                 }
             }
         }
