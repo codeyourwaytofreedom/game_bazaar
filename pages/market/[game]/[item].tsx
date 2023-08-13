@@ -4,9 +4,26 @@ import Chart from "../../../components/Chart";
 import Layout from "../../../components/Layout";
 import i from "../../../styles/Home.module.css";
 
+
+type item_details = {
+    item_name:string,
+    item_quality:string,
+    item_category:string,
+    item_type:string,
+    item_price:number,
+    XX:any[],
+    YY:any[],
+    sellers:any[]
+
+}
+
 const Item_details = () => {
     const [chosen, setChosen] = useState<number>(0);
-    const tabs = ["Sell","Buy", "Gallery", "Price Trends"];
+    const tabs = ["Sell","Buy", "Price Trends"];
+    const [item_details,setDetails] = useState<item_details>();
+    useEffect(()=>{
+        fetch('/api/item_fetcher').then(r=>r.json()).then(rj => setDetails(rj));
+    },[])
 
     return ( 
         <Layout>
@@ -18,14 +35,14 @@ const Item_details = () => {
                     <div className={i.homie_product_holder}>
                         <Image id={i.item} src={"/rifle.png"} alt={"item"} width={300} height={300} />
                         <div className={i.homie_product_holder_details}>
-                            <div className={i.homie_product_holder_details_title}>M4A4 | Urban DDPAT (Field-Tested)</div>
+                            <div className={i.homie_product_holder_details_title}>{item_details && item_details.item_name}</div>
                             <div className={i.homie_product_holder_details_explain}>
-                                <div><span>Quality :</span><span> Industrial Grade</span></div>
-                                <div><span>Category :</span><span> Normal</span></div>
-                                <div><span>Type :</span><span> Rifles</span></div>
+                                <div><span>Quality :</span><span> {item_details && item_details.item_quality}</span></div>
+                                <div><span>Category :</span><span> {item_details && item_details.item_category}</span></div>
+                                <div><span>Type :</span><span> {item_details && item_details.item_type}</span></div>
                             </div>
                             <div className={i.homie_product_holder_details_price}>
-                                <span>Price :</span><span> $3.55</span>
+                                <span>Price :</span><span> $ {item_details && item_details.item_price}</span>
                             </div>
                             <div className={i.homie_product_holder_details_buts}><button>Sell</button><button>Buy</button></div>
                         </div>
@@ -45,27 +62,27 @@ const Item_details = () => {
                                 }
                                 </div>
                                 {
-                                    chosen === 0 ? 
+                                    chosen === 0 || chosen === 1 ? 
 
                                 <div className={i.homie_product_holder_orders_kernel_options}>
                                     <div id={i.titles}>
                                         <div>Items</div><div>Seller</div><div>Price</div>
                                     </div>
                                     {
-                                        [...Array(5)].map((e,index)=>
+                                       item_details &&  item_details.sellers.map((e,index)=>
                                     <div className={i.homie_product_holder_orders_kernel_options_option} key={index}>
                                         <div><Image src={"/rifle.png"} alt={"item"} width={200} height={200} /></div>
-                                        <div>Seller {index}</div>
-                                        <div>${3.5 + index}</div>
-                                        <div><button>Buy</button></div>
+                                        <div>{e.seller}</div>
+                                        <div>${e.price}</div>
+                                        <div><button>{chosen === 0 ? "Sell" : "Buy"}</button></div>
                                     </div>
                                         )
                                     }
                                 </div>
 
-                                : chosen === 3 ? 
+                                : chosen === 2 ? 
 
-                                <Chart />
+                                <Chart item_details={item_details}/>
 
                                 : null
 

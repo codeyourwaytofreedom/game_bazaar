@@ -1,16 +1,17 @@
 import React, { useEffect, useRef, useState } from "react";
 import c from "../styles/Home.module.css";
+import { Dispatch, SetStateAction } from 'react';
 
 
 
-const Chart = () => {
-    const Y_axis = ["January", "February","March","April","May","June","July","August","September"];
-    const X_axis = [6,3,3,4,5,9,3,7,1];
+const Chart = ({item_details}:any) => {
+    const XX = item_details?.XX || []
+    const YY = item_details?.YY || []
     const pure:any[] = [];
-    X_axis.map(e=>!pure.includes(e) ? pure.push(e) : null);
+    YY.map((e:any)=>!pure.includes(e) ? pure.push(e) : null);
     const[scr_wid,setScrWd] = useState<number>();
     const max_height = scr_wid && scr_wid > 765 ? 400 : 200;
-    const unit = max_height / Math.max(...X_axis);
+    const unit = max_height / Math.max(...YY);
     const cnv = useRef<HTMLCanvasElement>(null);
     const chart_container = useRef<HTMLDivElement>(null);
     const [coors, setCoors] = useState<any[]>([]);
@@ -41,12 +42,12 @@ const Chart = () => {
         const canvas = cnv.current;
         if(canvas && chart_container.current){
             const containerRect = chart_container.current.getBoundingClientRect();
-            canvas.width = containerRect.width / X_axis.length * (X_axis.length-1) ;
+            canvas.width = containerRect.width / YY.length * (YY.length-1) ;
             canvas.height = containerRect.height;
             const inset = 90;
             const up = 50;
-            const x_unit = (containerRect.width - inset )/ Y_axis.length;
-            const y_unit = ((containerRect.height-20) / Math.max(...X_axis))-5;
+            const x_unit = (containerRect.width - inset )/ XX.length;
+            const y_unit = ((containerRect.height-20) / Math.max(...YY))-5;
             
 
             const ctx = canvas.getContext('2d');
@@ -96,18 +97,18 @@ const Chart = () => {
             }
             const rec_Size = 70;
             {
-                X_axis.map((e,index)=>
+                YY.map((e:any,index:any)=>
                 {
                     const startX = (inset - 20) + x_unit * index;
-                    const startY = containerRect.height - up - y_unit * X_axis[index];
+                    const startY = containerRect.height - up - y_unit * YY[index];
                     const endX = (inset - 20) + x_unit * (index + 1);
-                    const endY = containerRect.height -up- y_unit * X_axis[index + 1];
+                    const endY = containerRect.height -up- y_unit * YY[index + 1];
 
                     drawLine(startX, startY, endX, endY, 3, "gold");
                     index === closest ? dotter(ctx,startX,startY,"whitesmoke",7) :dotter(ctx,startX,startY,"crimson",5)
                     index === closest && drawLine(startX, 0, startX, chart_container.current!.offsetHeight, 1, "white");
 
-                    drawLetterOnPoint(index === 0 ? startX : startX-10,containerRect.height-up+15,Y_axis[index].substring(0,3).toLowerCase(),10,"white");
+                    drawLetterOnPoint(index === 0 ? startX : startX-10,containerRect.height-up+15,XX[index].substring(0,3).toLowerCase(),10,"white");
                     coors[index] = {x:startX,y:startY}
                 }
                 )
@@ -135,32 +136,13 @@ const Chart = () => {
     
     return ( <>
         <div className={c.homie_product_holder_orders_kernel_chart} ref={chart_container}>
-{/*             <div className={c.homie_product_holder_orders_kernel_chart_Y}>
-                {
-                    Y_axis.map((e,i)=>
-                    <div key={i}>{Y_axis[Y_axis.length-1-i]}</div>
-                    )
-                }
-            </div>
-            <div className={c.homie_product_holder_orders_kernel_chart_X}>
-                {
-                    X_axis.map((e,i)=>
-                    <div key={i} style={{
-                        width:scr_wid && scr_wid > 765 ? unit*X_axis[X_axis.length-1-i] : "auto",
-                        height:scr_wid && scr_wid < 765 ? unit*X_axis[X_axis.length-1-i] : "auto"}}
-                        ></div>
-                    )
-                }
-            </div> */}
-                
-                
                 <div id={c.result} style={{
-                                    left:closest && scr_wid && scr_wid < 765 && closest === X_axis.length-1 ? (coors[closest].x-50) : (closest && coors[closest!].x), 
+                                    left:closest && scr_wid && scr_wid < 765 && closest === YY.length-1 ? (coors[closest].x-50) : (closest && coors[closest!].x), 
                                     top:closest ? coors[closest].y : "50%"
                                     
                                     }}>
                     {
-                        X_axis.map((e,i)=> i === closest && <>{e}-{Y_axis[i]}</> )
+                        YY.map((e:any,i:any)=> i === closest && <>{e}-{XX[i]}</> )
                     }
                 </div>
                 
