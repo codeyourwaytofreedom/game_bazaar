@@ -1,7 +1,7 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ['avatars.steamstatic.com'],
+    domains: ['avatars.steamstatic.com','community.cloudflare.steamstatic.com'],
   },
 };
 
