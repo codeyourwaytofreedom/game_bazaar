@@ -5,8 +5,10 @@ const baseUrl = "https://community.cloudflare.steamstatic.com/economy/image";
 
 export default async function handler(req:NextApiRequest, res:NextApiResponse) {
     try {
+        const { game } = req.query;
+        console.log(game)
         console.log("Inventory endpoint accessed...");
-        const appId = '730';
+        const appId = '440';
         const url = `https://api.steampowered.com/IEconService/GetInventoryItemsWithDescriptions/v1/?key=${process.env.STEAM}&steamid=${process.env.ID}&appid=${appId}&contextid=2&get_descriptions=true`;
 
         const response = await fetch(url);

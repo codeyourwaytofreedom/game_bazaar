@@ -5,10 +5,10 @@ import i from "../styles/Pages.module.css";
 
 const Inventory = () => {
     const [inventory, setInventory] = useState<any[]>();
-    const base_url = "https://community.cloudflare.steamstatic.com/economy/image/"
-
+    const base_url = "https://community.cloudflare.steamstatic.com/economy/image/";
+    const game = "csgo"
     useEffect(() => {
-        fetch('/api/inventory')
+        fetch(`/api/inventory?game=${game}`)
             .then(response => response.json())
             .then(data => {
                 console.log(data);

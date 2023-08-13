@@ -147,7 +147,7 @@
         padding-top: 20px;
         &_item{
             display: grid;
-            grid-template-columns: 1fr 3fr 1fr 1fr 1fr;
+            grid-template-columns: 2fr 6fr 2fr 2fr 50px;
             width: 90vw;
             max-width: 1200px;
             span{
