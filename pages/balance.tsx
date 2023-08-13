@@ -36,14 +36,14 @@ const Balance = () => {
                         </div>
 
                         {
-                            chosen === 0 ? 
+                            chosen === 0 || chosen === 1 ? 
                             <div className={b.balance_kernel_triple_explain}>
                             <div className={b.balance_kernel_triple_explain_amount}>
-                                <div>Deposit amount</div>
+                                <div>{chosen === 0 ? "Deposit" : "Withdraw"}  amount</div>
                                 <input type={"number"} placeholder={"000"} min={1}/>
                             </div>
                             <div className={b.balance_kernel_triple_explain_amount}>
-                                <div>Deposit method</div>
+                                <div>{chosen === 0 ? "Deposit" : "Withdraw"} method</div>
                                 <button>                    
                                     <Image src={"/bitcoin.png"} alt={"bitcoin"} width={30} height={30}/> <span>Crypto</span>
                                 </button>
@@ -60,7 +60,22 @@ const Balance = () => {
                             </div>
                             :
                             <div className={b.balance_kernel_triple_explain}>
-
+                                <div className={b.balance_kernel_triple_explain_transactions}>
+                                    <span className={b.balance_kernel_triple_explain_transactions_tab}>Type</span>
+                                    <span className={b.balance_kernel_triple_explain_transactions_tab}>Changes</span>
+                                    <span className={b.balance_kernel_triple_explain_transactions_tab}>Balance ($)</span>
+                                    <span className={b.balance_kernel_triple_explain_transactions_tab}>Create time</span>
+                                    {
+                                        [...Array(10)].map((e,i)=>
+                                            <>
+                                            <span>{i%2 ? "Sell" : "Buy"}</span>
+                                            <span>{(Math.random() * 41 - 20).toString().substring(0,4)}</span>
+                                            <span>{(Math.random() * 151 + 50).toString().substring(0,6)}</span>
+                                            <span>{(new Date).toLocaleString()}</span>
+                                            </>
+                                        )
+                                    }
+                                </div>
                             </div>
                         }
                     </div>

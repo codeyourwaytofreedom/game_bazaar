@@ -59,8 +59,8 @@
   position: absolute;
   bottom: -2px;
   display: none;
-  -webkit-animation: enlarge 0.5s 1;
-          animation: enlarge 0.5s 1;
+  -webkit-animation: enlarge 0.3s 1;
+          animation: enlarge 0.3s 1;
 }
 .balance_kernel_triple_buts button #active {
   position: absolute;
@@ -116,6 +116,22 @@
   background-color: rgb(58, 57, 57);
   color: gold;
 }
+.balance_kernel_triple_explain_transactions {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 2fr;
+}
+.balance_kernel_triple_explain_transactions span {
+  display: flex;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 300;
+}
+.balance_kernel_triple_explain_transactions_tab {
+  font-size: 17px !important;
+  margin-bottom: 5px;
+  color: gold;
+  font-weight: 400;
+}
 
 @-webkit-keyframes enlarge {
   from {
@@ -137,5 +153,11 @@
 @media (max-width: 575.98px) {
   .balance_kernel {
     padding: 20px;
+  }
+  .balance_kernel_triple_explain_transactions {
+    grid-template-columns: 1fr 1fr 2fr 3fr;
+  }
+  .balance_kernel_triple_explain_transactions span {
+    font-size: small;
   }
 }/*# sourceMappingURL=Pages.module.css.map */

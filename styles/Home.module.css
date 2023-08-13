@@ -814,6 +814,9 @@
   }
 }
 @media (max-width: 767.98px) {
+  .homie h3 {
+    font-size: x-large;
+  }
   .homie_banner #login span {
     display: none;
   }
