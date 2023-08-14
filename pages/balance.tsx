@@ -1,11 +1,15 @@
 import Layout from "../components/Layout";
 import b from "../styles/Pages.module.css";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const Balance = () => {
     const [chosen, setChosen] = useState<number>(0);
-    const tabs = ["Deposit","Withdraw","Transactions"]
+    const tabs = ["Deposit","Withdraw","Transactions"];
+
+    useEffect(()=>{
+        fetch('/api/checkout').then(r=> r.text()).then(rt => console.log(rt))
+    },[])
     return ( 
         <Layout>
             <div className={b.balance}>
