@@ -23,7 +23,7 @@ export default async function handler(req:NextApiRequest, res:NextApiResponse) {
           quantity: 1
         }],
       "success_url": `${base_url}/profile`,
-      "cancel_url": `${base_url}/`,
+      "cancel_url": `${base_url}/balance`,
     });
     res.send(session.url);
   } catch {

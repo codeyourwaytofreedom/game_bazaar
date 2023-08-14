@@ -7,9 +7,9 @@ const Balance = () => {
     const [chosen, setChosen] = useState<number>(0);
     const tabs = ["Deposit","Withdraw","Transactions"];
 
-    useEffect(()=>{
-        fetch('/api/checkout').then(r=> r.text()).then(rt => console.log(rt))
-    },[])
+/*     useEffect(()=>{
+        fetch('/api/checkout').then(r=> r.text()).then(rt => window.location.href = rt)
+    },[]) */
     return ( 
         <Layout>
             <div className={b.balance}>

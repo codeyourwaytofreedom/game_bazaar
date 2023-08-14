@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import Layout from "../components/Layout";
 import i from "../styles/Pages.module.css";
@@ -9,6 +9,9 @@ const Inventory = () => {
     const base_url = "https://community.cloudflare.steamstatic.com/economy/image/";
     const game = "csgo";
     const category = useSelector((state:any) => state.loginSlice.category);
+    const search = useRef<HTMLInputElement>(null);
+    const [filterVal, setFilterVal] = useState<string>("");
+
     useEffect(() => {
         fetch(`/api/inventory?game=${category}`)
             .then(response => response.json())
@@ -21,12 +24,26 @@ const Inventory = () => {
             });
     }, [category]);
 
+    const handle_search = () =>{
+        if(search.current){
+            console.log(search.current.value);
+            setFilterVal(search.current.value);
+        }
+    }
+
     return ( 
         <Layout>
             <div className={i.inventory}>
                 <div className={i.inventory_kernel}>
+                    <div className={i.inventory_kernel_item} key={98765}>
+                        <input type="text" placeholder={'search...'} onChange={handle_search} ref={search}/>
+                    </div>
                     {
-                        inventory && inventory.map((item,index)=>
+                        inventory && inventory.filter(e=>e.market_name.includes(filterVal)).length === 0 && 
+                        <h1>No result found !!!</h1>
+                    }
+                    {
+                        inventory && inventory.filter(e=>e.market_name.includes(filterVal)).map((item,index)=>
                         <div className={i.inventory_kernel_item} key={index}
                             style={{backgroundColor:index%2 ? "rgb(40,40,40)" : "rgb(30,30,30)"}}
                         >

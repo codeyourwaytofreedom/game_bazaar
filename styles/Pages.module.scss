@@ -145,11 +145,24 @@
         justify-content: center;
         row-gap: 10px;
         padding-top: 20px;
+        align-items: center;
         &_item{
             display: grid;
             grid-template-columns: 2fr 6fr 2fr 2fr 50px;
             width: 90vw;
             max-width: 1200px;
+            input{
+                background-color: transparent;
+                border: 2px solid silver;
+                border-radius: 5px;
+                padding: 3px 5px;
+                outline: none;
+                font-size: large;
+                color: whitesmoke;
+                &:focus{
+                    border: 2px solid gold;
+                }
+            }
             span{
                 display: flex;
                 justify-content: flex-start;
