@@ -1,14 +1,17 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import Layout from "../components/Layout";
 import i from "../styles/Pages.module.css";
 
 const Inventory = () => {
     const [inventory, setInventory] = useState<any[]>();
     const base_url = "https://community.cloudflare.steamstatic.com/economy/image/";
-    const game = "csgo"
+    const game = "csgo";
+    const category = useSelector((state:any) => state.loginSlice.category);
+
     useEffect(() => {
-        fetch(`/api/inventory?game=${game}`)
+        fetch(`/api/inventory?game=${category}`)
             .then(response => response.json())
             .then(data => {
                 console.log(data);
@@ -17,7 +20,7 @@ const Inventory = () => {
             .catch(error => {
                 console.error('Error fetching inventory:', error);
             });
-    }, []);
+    }, [category]);
     return ( 
         <Layout>
             <div className={i.inventory}>

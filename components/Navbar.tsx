@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { Dispatch, SetStateAction } from 'react';
 import { NextPage } from "next";
 import { useSelector } from "react-redux";
-import { note_login, note_ppicture } from "../redux/loginSlice";
+import { note_login, note_ppicture,note_category } from "../redux/loginSlice";
 import { useDispatch } from "react-redux";
 
 interface Navbar_props {
@@ -18,6 +18,9 @@ interface Navbar_props {
 const Navbar:NextPage<Navbar_props> = ({alt_bar, setAlt, modalVis, setModalVis}) => {
 
     const dispatch = useDispatch();
+    const inn = useSelector((state:any) => state.loginSlice.inn);
+    const url = useSelector((state:any) => state.loginSlice.ppicture);
+
     const [after_login, setAfterLogin] = useState<boolean>(false);
 
     const handle_steam = () => {
@@ -37,9 +40,6 @@ const Navbar:NextPage<Navbar_props> = ({alt_bar, setAlt, modalVis, setModalVis})
         ).then(()=>window.location.href = "/")
     }
 
-    const inn = useSelector((state:any) => state.loginSlice.inn);
-    const url = useSelector((state:any) => state.loginSlice.ppicture);
-
     useEffect(()=>{
         if(localStorage.getItem('userLoginStatus')){
             dispatch(note_login(true));
@@ -58,11 +58,11 @@ const Navbar:NextPage<Navbar_props> = ({alt_bar, setAlt, modalVis, setModalVis})
                         alt={"category"} width={70} height={60} id={h.category}/>
                 </div>
                 <div id={h.modal} style={{display:modalVis === "open" ? "flex" : "none"}}>
-                    <div onClick={()=> setModalVis("tm2")}>
+                    <div onClick={()=> {setModalVis("tm2");dispatch(note_category("tm2"))}}>
                         Team Fortress 2
                         <Image src={"/tm2.jpeg"} alt={"tm2"} width={190} height={100}/>
                     </div>
-                    <div onClick={()=> setModalVis("csgo")}>
+                    <div onClick={()=> {setModalVis("csgo"); dispatch(note_category("csgo"))}}>
                         Csgo
                         <Image src={"/cs.jpeg"} alt={"tm2"} width={190} height={100}/>
                     </div>
@@ -83,11 +83,6 @@ const Navbar:NextPage<Navbar_props> = ({alt_bar, setAlt, modalVis, setModalVis})
                         <input type="text" placeholder={"Search for items..."} />
                     </div>
                 </div>
-
-{/*                 <Link id={h.comments} href={"/comments"}>
-                    <Image src={"/cmmt.png"} alt={"sword"} width={30} height={30}/>
-                </Link> */}
-
 
                 <button id={h.login} onClick={inn ? ()=> setTimeout(() => {setAfterLogin(after_login=>!after_login)}, 50) : handle_steam}
                         onBlur={()=> setTimeout(() => {setAfterLogin(false)}, 300)}>

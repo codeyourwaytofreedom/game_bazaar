@@ -2,7 +2,8 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   inn: false,
-  ppicture:""
+  ppicture:"",
+  category:"csgo"
 }
 
 export const loginSlice = createSlice({
@@ -15,9 +16,12 @@ export const loginSlice = createSlice({
     note_ppicture: (state, action) => {
       state.ppicture = action.payload;
     },
+    note_category: (state, action) => {
+      state.category = action.payload;
+    },
   },
 })
 
-export const { note_login,note_ppicture} = loginSlice.actions
+export const { note_login,note_ppicture,note_category} = loginSlice.actions
 
 export default loginSlice.reducer
