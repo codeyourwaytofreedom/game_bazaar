@@ -9,7 +9,6 @@ const Inventory = () => {
     const base_url = "https://community.cloudflare.steamstatic.com/economy/image/";
     const game = "csgo";
     const category = useSelector((state:any) => state.loginSlice.category);
-
     useEffect(() => {
         fetch(`/api/inventory?game=${category}`)
             .then(response => response.json())
@@ -21,14 +20,11 @@ const Inventory = () => {
                 console.error('Error fetching inventory:', error);
             });
     }, [category]);
+
     return ( 
         <Layout>
             <div className={i.inventory}>
-{/*                 <h1>{inventory && inventory.length}</h1>
- */}                <div className={i.inventory_kernel}>
-{/*                     <div className={i.inventory_kernel_item} key={199911}>
-                        <button>Selected Category</button>
-                    </div> */}
+                <div className={i.inventory_kernel}>
                     {
                         inventory && inventory.map((item,index)=>
                         <div className={i.inventory_kernel_item} key={index}

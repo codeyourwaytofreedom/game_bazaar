@@ -45,7 +45,7 @@ const Navbar:NextPage<Navbar_props> = ({alt_bar, setAlt, modalVis, setModalVis})
             dispatch(note_login(true));
         }
         if(localStorage.getItem('url')){
-            dispatch(note_ppicture(localStorage.getItem('url')))
+            dispatch(note_ppicture(localStorage.getItem('url')!))
         }
       },[]);
 
