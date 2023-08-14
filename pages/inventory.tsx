@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import Layout from "../components/Layout";
 import i from "../styles/Pages.module.css";
+import { useRouter } from "next/router";
 
 const Inventory = () => {
     const [inventory, setInventory] = useState<any[]>();
@@ -11,6 +12,7 @@ const Inventory = () => {
     const category = useSelector((state:any) => state.loginSlice.category);
     const search = useRef<HTMLInputElement>(null);
     const [filterVal, setFilterVal] = useState<string>("");
+    const router = useRouter();
 
     useEffect(() => {
         fetch(`/api/inventory?game=${category}`)
@@ -29,6 +31,10 @@ const Inventory = () => {
             console.log(search.current.value);
             setFilterVal(search.current.value);
         }
+    }
+
+    const handle_item_choose = (item_name:string) =>{
+        router.push(`/market/${category}/${item_name}`);
     }
 
     return ( 
@@ -51,8 +57,8 @@ const Inventory = () => {
                                 <Image alt={"steam image"} src={`${base_url}${item.icon_url}`} width={90} height={90}/>
                                 <span style={{boxShadow: index%2 ? "0 0 35px 15px whitesmoke" : "0 0 35px 15px gold"}}></span>
                             </span>
-                            <span>{item.market_name}</span>
-                            <span>Price</span>
+                            <span onClick={() => handle_item_choose(item.market_name)}>{item.market_name}</span>
+                            <span>None</span>
                             <span>Edit Price</span>
                             <span><Image alt={"delete steam"} src={index%2 ? "/delete4.png" : "/delete3.png" } width={20} height={20}/></span>
                         </div>

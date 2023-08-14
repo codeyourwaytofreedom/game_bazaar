@@ -179,6 +179,7 @@
 }
 .inventory_kernel_item span:nth-child(2) {
   padding-left: 10px;
+  cursor: pointer;
 }
 .inventory_kernel_item #icon {
   display: grid;
