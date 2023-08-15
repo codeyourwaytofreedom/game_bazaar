@@ -80,7 +80,7 @@ const Inventory = () => {
                 method:'POST',
                 body:JSON.stringify(
                     {
-                        classId:chosen.classid,
+                        classid:chosen.classid,
                         price:price_input.current!.value, 
                         appId:chosen.appid
                     }

@@ -18,15 +18,18 @@ export default async function handler(req:NextApiRequest, res:NextApiResponse) {
     const item_new_price = client_input.price; 
     const item_group = client_input.appId;
 
+    console.log(client_input);
     
     if(existingUser){
         if(item_new_price){
             const inventory = await existingUser[`descriptions_${item_group}`];
-            const itemToUpdate = inventory.find((item:any) => item.classId === item_classid);
+            const itemToUpdate = inventory.find((item:any) => item.classid === item_classid);
+            console.log(itemToUpdate);
+            
             if(itemToUpdate){
                 const updateQuery = {
                     steamId: steamID,
-                    [`descriptions_${item_group}.classId`]: item_classid
+                    [`descriptions_${item_group}.classid`]: item_classid
                   };
               
                 const updateOperation = {
