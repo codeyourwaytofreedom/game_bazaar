@@ -57,10 +57,10 @@ const Navbar:NextPage<Navbar_props> = ({alt_bar, setAlt, modalVis, setModalVis})
 
       const formatter = (balance:string) =>{
         if(!balance.toString().includes(".")){
-            return balance + ".00"
+            return "$" + balance + ".00"
         }
         else{
-            return balance
+            return "$" + balance
         }
       }
 
