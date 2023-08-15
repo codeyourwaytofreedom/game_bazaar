@@ -89,6 +89,33 @@ const Inventory = () => {
         } 
     }
 
+    const formatter = (price:string) =>{
+        if(price.includes(".")){
+            if(price.length > 4 || price.length === 4){
+                return "$" + price.substring(0,5)
+            }
+            if(price.length === 3){
+                return "$" + price + "0"
+            }
+            else{
+                return "$" + price + ".0"
+            }
+        }
+        else{
+            if(price.length > 3 || price.length === 3){
+                return "$" + price + ".0"
+            }
+            else{
+                if(price === "0"){
+                    return "-"
+                }
+                else{
+                    return "$" + price + ".00"
+                }
+            }
+        }
+    }
+
     return ( 
         <Layout>
             <div className={i.inventory}>
@@ -134,10 +161,7 @@ const Inventory = () => {
                             <span onClick={() => handle_item_choose(item.market_name)}>{item.market_name}</span>
                             <span style={{color:item.price === 0 ? "whitesmoke" : "gold"}}>
                                 {   
-                                    item.price === 0 ? "-" : 
-                                    item.price.includes(".") && item.price.length < 4 ? "$"+ item.price + "0" :
-                                    item.price.includes(".") ? "$" + item.price.substring(0,4) : 
-                                    "$"+ item.price + ".00" 
+                                    formatter(item.price.toString())
                                 }
                                 
                                 </span>
