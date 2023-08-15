@@ -138,7 +138,7 @@ const Inventory = () => {
                             <span>{chosen.market_name}</span>
                             <span> $<input ref={price_input} type="number" placeholder={chosen.price ? chosen.price : "0"} /></span>
                             <button onClick={handle_update}>Save</button>
-                            <button id={i.close} onClick={()=> setModal(false)}>X</button>
+                            <button id={i.close} onClick={()=> {setModal(false); setFeedback("")}}>X</button>
                         </div>
                         </div>
                     }
