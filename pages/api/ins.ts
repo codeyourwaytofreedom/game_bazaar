@@ -1,10 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { MongoClient} from "mongodb";
-
-async function connectToDatabase() {
-  const client = await MongoClient.connect(process.env.MD_URL!);
-  return client;
-}
+import {connectToDatabase} from "./db";
 
 export default async function handler(
   req: NextApiRequest,

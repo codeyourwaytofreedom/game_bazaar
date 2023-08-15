@@ -43,6 +43,11 @@ const Inventory = () => {
     const handle_price_editing = (item:any) => {
         setChosen(item);
         setModal(true);
+        console.log(item);
+    }
+
+    const handle_update = (item:any) => {
+        console.log(item);
     }
 
     return ( 
@@ -62,7 +67,7 @@ const Inventory = () => {
                             </span>
                             <span>{chosen.market_name}</span>
                             <span> $<input type="number" placeholder={chosen.price ? chosen.price : "0"} /></span>
-                            <button>Save</button>
+                            <button onClick={()=>handle_update(chosen)}>Save</button>
                             <button id={i.close} onClick={()=> setModal(false)}>X</button>
                         </div>
                         </div>
