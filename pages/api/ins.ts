@@ -24,7 +24,7 @@ export default async function handler(
         const url = existingUser.profile_img_url;
         const balance = existingUser.balance;
         const id = existingUser.steamId;
-
+        console.log(balance)
         res.setHeader('Set-Cookie', `ID=${id}; HttpOnly; Max-Age=${60 * 60}; Path=/; Secure`);
         res.status(200).json({url:url,id:id, balance:balance});
       }

@@ -10,6 +10,8 @@ const Balance = () => {
     const tabs = ["Deposit","Withdraw","Transactions"];
     const balance = useSelector((state:any) => state.loginSlice.balance);
 
+    console.log(balance)
+
 /*     useEffect(()=>{
         fetch('/api/checkout').then(r=> r.text()).then(rt => window.location.href = rt)
     },[]) */
