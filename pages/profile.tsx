@@ -48,7 +48,7 @@ const Profile = () => {
             dispatch(note_login(true));
         }
         if(localStorage.getItem('url')){
-            dispatch(note_ppicture(localStorage.getItem('url')!))
+            dispatch(note_ppicture(localStorage.getItem('url')))
         }
       },[]);
 
