@@ -160,6 +160,14 @@
                 background-color: gray !important;
                 box-shadow: 0 0 9px 2px whitesmoke;
                 grid-template-columns: 2fr 6fr 2fr 2fr 1fr;
+                position: relative;
+                h1{
+                    position: absolute;
+                    color: white;
+                    top:-70px;
+                    display: grid;
+                    justify-self: center;
+                }
                 input{
                     height: 35px;
                     width: 100%;

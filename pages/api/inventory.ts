@@ -15,41 +15,42 @@ export default async function handler(req:NextApiRequest, res:NextApiResponse) {
     const idCookie = req.cookies.ID;
     const existingUser = await members.findOne({steamId:idCookie});
 
-    const game = req.query.game;
     const appId = req.query.game === "csgo" ? "730" : '440';
 
-    if( existingUser && !existingUser[`descriptions_${appId}`] ){
-        console.log("ilk defa envanter ekleniyor price prop ile ve eklenmiş hali gönderiliyor")
-        try {
-            const url = `https://api.steampowered.com/IEconService/GetInventoryItemsWithDescriptions/v1/?key=${process.env.STEAM}&steamid=${process.env.ID}&appid=${appId}&contextid=2&get_descriptions=true`;
-    
-            const response = await fetch(url);
-            const data = await response.json();
-            const descriptions = data.response.descriptions;
-            if(descriptions){
-                const descriptions_with_prices = descriptions.map((game_item:any) => {return {...game_item, price:0}})
-                await members.updateOne(
-                    { steamId: idCookie },
-                    { $set: { [`descriptions_${appId}`]: descriptions_with_prices } }
-                  );
-                res.status(200).json(descriptions_with_prices);
-            }
-            else{
-                res.status(404).send("not found")
-            }
-    
-            //console.log(descriptions);
-        } catch (error) {
-            console.error("Error:", error);
-            res.status(500).json("Error");
-        } 
-    }
-    else if( existingUser && existingUser[`descriptions_${appId}`] ){
-        console.log("mevcut price lı obje gönderildi")
-        res.status(200).json(existingUser[`descriptions_${appId}`]);
+    if(existingUser){
+        const existing_inventory = existingUser[`descriptions_${appId}`];
+        if(!existing_inventory)    {
+            console.log("ilk defa envanter ekleniyor price prop ile ve eklenmiş hali gönderiliyor")
+            try {
+                const url = `https://api.steampowered.com/IEconService/GetInventoryItemsWithDescriptions/v1/?key=${process.env.STEAM}&steamid=${process.env.ID}&appid=${appId}&contextid=2&get_descriptions=true`;
+        
+                const response = await fetch(url);
+                const data = await response.json();
+                const descriptions = data.response.descriptions;
+                if(descriptions){
+                    const descriptions_with_prices = descriptions.map((game_item:any) => {return {...game_item, price:0}})
+                    await members.updateOne(
+                        { steamId: idCookie },
+                        { $set: { [`descriptions_${appId}`]: descriptions_with_prices } }
+                      );
+                    res.status(200).json(descriptions_with_prices);
+                }
+                else{
+                    res.status(404).send("not found")
+                }
+        
+                //console.log(descriptions);
+            } catch (error) {
+                console.error("Error:", error);
+                res.status(500).json("Error");
+            } 
+        }
+        else{
+            console.log("mevcut price lı obje gönderildi")
+            res.status(200).json(existingUser[`descriptions_${appId}`]);
+        }
     }
     else{
-        console.log("not logged in");
-        res.status(404).send("not accessible")
+        console.log("must login")
     }
 }
