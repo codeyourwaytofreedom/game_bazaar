@@ -4,7 +4,7 @@ const initialState = {
   inn: false,
   ppicture:"",
   category:"csgo",
-  balance:null
+  balance:0
 }
 
 interface LoginState {
