@@ -2,10 +2,13 @@ import Layout from "../components/Layout";
 import b from "../styles/Pages.module.css";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+
 
 const Balance = () => {
     const [chosen, setChosen] = useState<number>(0);
     const tabs = ["Deposit","Withdraw","Transactions"];
+    const balance = useSelector((state:any) => state.loginSlice.balance);
 
 /*     useEffect(()=>{
         fetch('/api/checkout').then(r=> r.text()).then(rt => window.location.href = rt)
@@ -19,7 +22,7 @@ const Balance = () => {
                             <Image src={"/wallet.png"} alt={"steam"} width={50} height={50}/>
                             <div className={b.balance_kernel_tabs_each_double}>
                                 <h4>Balance</h4>
-                                <h3>$ 126</h3>
+                                <h3>$ {balance}</h3>
                             </div>
                         </div>
                     </div>

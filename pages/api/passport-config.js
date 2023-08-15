@@ -17,7 +17,7 @@ passport.use(
     {
       returnURL: base_url,
       realm: base_url,
-      //apiKey: process.env.STEAM_API_KEY,
+      apiKey: process.env.STEAM,
     },
     (identifier, profile, done) => {
       process.nextTick(() => {

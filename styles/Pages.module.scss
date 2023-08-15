@@ -146,6 +146,42 @@
         row-gap: 10px;
         padding-top: 20px;
         align-items: center;
+        #modal{
+            position: fixed;
+            top:70px;
+            left: 0; right: 0; bottom: 0;
+            background-color: rgba($color: #000000, $alpha: 0.8);
+            z-index: 99;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            #chosen{
+                align-items: center;
+                background-color: gray !important;
+                box-shadow: 0 0 9px 2px whitesmoke;
+                grid-template-columns: 2fr 6fr 2fr 2fr 1fr;
+                input{
+                    height: 35px;
+                    width: 100%;
+                    margin-left: 3px;
+                    &::placeholder{
+                        color: whitesmoke;
+                    }
+                }
+                button{
+                    font-size: large;
+                }
+                #close{
+                    width: 35px; height: 35px;
+                    border: 2px solid silver;
+                    border-radius: 50%;
+                    &:hover{
+                        background-color: black;
+                        color: crimson;
+                    }
+                }
+            }
+        }
         &_item{
             display: grid;
             grid-template-columns: 2fr 6fr 2fr 2fr 50px;
@@ -163,6 +199,15 @@
                     border: 2px solid gold;
                 }
             }
+            button{
+                border: none;
+                background:transparent;
+                color: whitesmoke;
+                &:hover{
+                    text-decoration: underline;
+                    color: gold;
+                }
+            }
             span{
                 display: flex;
                 justify-content: flex-start;
@@ -175,6 +220,10 @@
                 &:nth-child(2){
                     padding-left: 10px;
                     cursor: pointer;
+                    &:hover{
+                        text-decoration: underline;
+                        color: gold;
+                    }
                 }
             }
             #icon{

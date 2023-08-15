@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { Dispatch, SetStateAction } from 'react';
 import { NextPage } from "next";
 import { useSelector } from "react-redux";
-import { note_login, note_ppicture,note_category } from "../redux/loginSlice";
+import { note_login, note_ppicture,note_category,note_balance } from "../redux/loginSlice";
 import { useDispatch } from "react-redux";
 
 interface Navbar_props {
@@ -20,6 +20,7 @@ const Navbar:NextPage<Navbar_props> = ({alt_bar, setAlt, modalVis, setModalVis})
     const dispatch = useDispatch();
     const inn = useSelector((state:any) => state.loginSlice.inn);
     const url = useSelector((state:any) => state.loginSlice.ppicture);
+    const balance = useSelector((state:any) => state.loginSlice.balance);
 
     const [after_login, setAfterLogin] = useState<boolean>(false);
 
@@ -33,6 +34,8 @@ const Navbar:NextPage<Navbar_props> = ({alt_bar, setAlt, modalVis, setModalVis})
                 if(r.status === 200){
                     localStorage.removeItem('userLoginStatus');
                     localStorage.removeItem('url');
+                    localStorage.removeItem('balance');
+
                     dispatch(note_login(false));
                     dispatch(note_ppicture(""));
                 }
@@ -46,6 +49,9 @@ const Navbar:NextPage<Navbar_props> = ({alt_bar, setAlt, modalVis, setModalVis})
         }
         if(localStorage.getItem('url')){
             dispatch(note_ppicture(localStorage.getItem('url')!))
+        }
+        if(localStorage.getItem('balance')){
+            dispatch(note_balance(localStorage.getItem('balance')!))
         }
       },[]);
 
@@ -86,15 +92,16 @@ const Navbar:NextPage<Navbar_props> = ({alt_bar, setAlt, modalVis, setModalVis})
 
                 <div id={h.login} onClick={inn ? ()=> setTimeout(() => {setAfterLogin(after_login=>!after_login)}, 50) : handle_steam}
                         onBlur={()=> setTimeout(() => {setAfterLogin(false)}, 300)}>
+                    {inn && <Image id={h.w} src={"/w.png"} alt={"sword"} width={25} height={25}/>}
+                    <span>{inn ? "$" + balance : "Steam"}</span>
                     <Image src={inn && url ? url : "/login.png"} alt={"sword"} width={30} height={30}/>
-                    <span>{inn ? "UserName" : "Steam"}</span>
                     {
                        inn && url && after_login && <div id={h.afterlogin}>
                             <Link href={"/profile"}><button><Image src={"/profile.png"} alt={"sword"} width={30} height={30}/>
                             <span>Profile</span></button></Link>
 
                             <Link href={"/balance"}><button><Image src={"/balance.png"} alt={"sword"} width={30} height={30}/>
-                            <span>Balance</span></button></Link>
+                            <span>${balance}</span></button></Link>
 
                             <button onClick={handle_Logout}>
                                 <Image src={"/out.png"} alt={"sword"} width={30} height={30}/>

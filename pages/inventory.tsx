@@ -14,6 +14,9 @@ const Inventory = () => {
     const [filterVal, setFilterVal] = useState<string>("");
     const router = useRouter();
 
+    const [modal, setModal] = useState<boolean>(false);
+    const [chosen, setChosen] = useState<any>();
+
     useEffect(() => {
         fetch(`/api/inventory?game=${category}`)
             .then(response => response.json())
@@ -37,10 +40,33 @@ const Inventory = () => {
         router.push(`/market/${category}/${item_name}`);
     }
 
+    const handle_price_editing = (item:any) => {
+        setChosen(item);
+        setModal(true);
+    }
+
     return ( 
         <Layout>
             <div className={i.inventory}>
                 <div className={i.inventory_kernel}>
+                    {
+                        modal && 
+                        
+                        <div id={i.modal}>
+                        <div className={i.inventory_kernel_item} key={0} id={i.chosen}
+                            style={{backgroundColor:0%2 ? "rgb(40,40,40)" : "rgb(30,30,30)"}}
+                        >
+                            <span id={i.icon}>
+                                <Image alt={"steam image"} src={`${base_url}${chosen.icon_url}`} width={90} height={90}/>
+                                <span style={{boxShadow: 0%2 ? "0 0 35px 15px whitesmoke" : "0 0 35px 15px gold"}}></span>
+                            </span>
+                            <span>{chosen.market_name}</span>
+                            <span> $<input type="number" placeholder={chosen.price ? chosen.price : "0"} /></span>
+                            <button>Save</button>
+                            <button id={i.close} onClick={()=> setModal(false)}>X</button>
+                        </div>
+                        </div>
+                    }
                     <div className={i.inventory_kernel_item} key={98765}>
                         <input type="text" placeholder={'search...'} onChange={handle_search} ref={search}/>
                     </div>
@@ -59,7 +85,7 @@ const Inventory = () => {
                             </span>
                             <span onClick={() => handle_item_choose(item.market_name)}>{item.market_name}</span>
                             <span>None</span>
-                            <span>Edit Price</span>
+                            <button onClick={()=> handle_price_editing(item)}>Edit Price</button>
                             <span><Image alt={"delete steam"} src={index%2 ? "/delete4.png" : "/delete3.png" } width={20} height={20}/></span>
                         </div>
                         )

@@ -820,6 +820,9 @@
   .homie_banner #login span {
     display: none;
   }
+  .homie_banner #login #w {
+    display: none;
+  }
   .homie_banner #login #afterlogin {
     right: -20%;
     width: 140%;

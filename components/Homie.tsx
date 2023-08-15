@@ -8,7 +8,7 @@ import { useRouter } from "next/router";
 import Navbar from "./Navbar";
 import Img_slider from "./Img_slider";
 import { useDispatch } from "react-redux";
-import { note_login,note_ppicture } from "../redux/loginSlice";
+import { note_login,note_ppicture, note_balance } from "../redux/loginSlice";
 
 
 const Homie = () => {
@@ -32,15 +32,20 @@ const Homie = () => {
             localStorage.setItem('userLoginStatus', 'in');      
             history.replaceState({}, document.title, "/");
             const rj = await response.json();
-            console.log(rj.url);
-            dispatch(note_ppicture(rj.url));
-            localStorage.setItem('url',rj.url)
+
+            if(rj){
+              dispatch(note_ppicture(rj.url));
+              dispatch(note_balance(rj.balance))
+              localStorage.setItem('url',rj.url);
+              localStorage.setItem('balance',rj.balance);
+            }
           }
         })
         .catch((error) => {
           console.error('Error fetching data:', error);
         });
     }, []);
+    
     
     useEffect(()=>{
       if(final_one.current){

@@ -149,6 +149,51 @@
   padding-top: 20px;
   align-items: center;
 }
+.inventory_kernel #modal {
+  position: fixed;
+  top: 70px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  z-index: 99;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.inventory_kernel #modal #chosen {
+  align-items: center;
+  background-color: gray !important;
+  box-shadow: 0 0 9px 2px whitesmoke;
+  grid-template-columns: 2fr 6fr 2fr 2fr 1fr;
+}
+.inventory_kernel #modal #chosen input {
+  height: 35px;
+  width: 100%;
+  margin-left: 3px;
+}
+.inventory_kernel #modal #chosen input::-moz-placeholder {
+  color: whitesmoke;
+}
+.inventory_kernel #modal #chosen input:-ms-input-placeholder {
+  color: whitesmoke;
+}
+.inventory_kernel #modal #chosen input::placeholder {
+  color: whitesmoke;
+}
+.inventory_kernel #modal #chosen button {
+  font-size: large;
+}
+.inventory_kernel #modal #chosen #close {
+  width: 35px;
+  height: 35px;
+  border: 2px solid silver;
+  border-radius: 50%;
+}
+.inventory_kernel #modal #chosen #close:hover {
+  background-color: black;
+  color: crimson;
+}
 .inventory_kernel_item {
   display: grid;
   grid-template-columns: 2fr 6fr 2fr 2fr 50px;
@@ -167,6 +212,15 @@
 .inventory_kernel_item input:focus {
   border: 2px solid gold;
 }
+.inventory_kernel_item button {
+  border: none;
+  background: transparent;
+  color: whitesmoke;
+}
+.inventory_kernel_item button:hover {
+  text-decoration: underline;
+  color: gold;
+}
 .inventory_kernel_item span {
   display: flex;
   justify-content: flex-start;
@@ -180,6 +234,10 @@
 .inventory_kernel_item span:nth-child(2) {
   padding-left: 10px;
   cursor: pointer;
+}
+.inventory_kernel_item span:nth-child(2):hover {
+  text-decoration: underline;
+  color: gold;
 }
 .inventory_kernel_item #icon {
   display: grid;
