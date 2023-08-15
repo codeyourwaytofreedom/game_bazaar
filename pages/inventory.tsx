@@ -70,7 +70,7 @@ const Inventory = () => {
         console.log(typeof chosen.price);
         if(price_input.current){
             ready = price_input.current.value.length > 0 && 
-            !price_input.current.value.toLowerCase().startsWith("0") &&
+            parseFloat(price_input.current.value) > 0 &&
             price_input.current.value !== chosen.price
         }
         if(!ready){setFeedback("Enter a valid number different from current price!!!")}
@@ -132,7 +132,15 @@ const Inventory = () => {
                                 <span style={{boxShadow: index%2 ? "0 0 35px 15px whitesmoke" : "0 0 35px 15px gold"}}></span>
                             </span>
                             <span onClick={() => handle_item_choose(item.market_name)}>{item.market_name}</span>
-                            <span style={{color:item.price === 0 ? "whitesmoke" : "gold"}}>{item.price === 0 ? "none" : ("$" + item.price)}</span>
+                            <span style={{color:item.price === 0 ? "whitesmoke" : "gold"}}>
+                                {   
+                                    item.price === 0 ? "-" : 
+                                    item.price.includes(".") && item.price.length < 4 ? "$"+ item.price + "0" :
+                                    item.price.includes(".") ? "$" + item.price.substring(0,4) : 
+                                    "$"+ item.price + ".00" 
+                                }
+                                
+                                </span>
                             <button onClick={()=> handle_price_editing(item)}>Edit Price</button>
                             <span><Image alt={"delete steam"} src={index%2 ? "/delete4.png" : "/delete3.png" } width={20} height={20}/></span>
                         </div>
