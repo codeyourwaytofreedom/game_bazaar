@@ -95,7 +95,10 @@ const Profile = () => {
         }
     }
     
-    
+    const handle_create_key = async () => {
+        const response = await fetch('/api/key_generator');
+        console.log(response);
+    }
 
     return ( <Layout>
         <div className={c.homie_profile}>
@@ -132,7 +135,7 @@ const Profile = () => {
                         <div>
                         <div id={c.key}>--------------------</div>
                             <Image src={"/copy.png"} width={25} height={25} alt={"copy"}/>
-                            <button>Create KEY</button>
+                            <button onClick={handle_create_key}>Create KEY</button>
                         </div>
                     </div>
 
