@@ -6,7 +6,7 @@ import i from "../styles/Pages.module.css";
 import { useRouter } from "next/router";
 
 const Inventory = () => {
-    const [inventory, setInventory] = useState<any[]>();
+    const [inventory, setInventory] = useState<any>();
     const base_url = "https://community.cloudflare.steamstatic.com/economy/image/";
     const game = "csgo";
     const category = useSelector((state:any) => state.loginSlice.category);
@@ -20,6 +20,7 @@ const Inventory = () => {
     const [feedback, setFeedback] = useState<string>();
 
     useEffect(() => {
+        setInventory(null);
         fetch(`/api/inventory?game=${category}`)
             .then(response => response.json())
             .then(data => {
