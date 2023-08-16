@@ -6,22 +6,11 @@ const codes = {
     csgo:"730", tm2:"440"
 }
 export default async function handler(req:NextApiRequest, res:NextApiResponse) {
-    console.log("inventory api endpoint accessed");
-    const idCookie = req.cookies.ID;
-    console.log(idCookie);
+
+        console.log("inventory api endpoint accessed");
+        const idCookie = req.cookies.ID;
+        console.log(idCookie);
     
-    /* cookie yoksa */
-/*     if(!idCookie){
-        console.log("must login")
-        res.status(401).json({
-            error: 'Unauthorized',
-            message: 'Login Required...'
-        });
-    } */
-
-
-    /* cookie varsa */
-
         const client = await connectToDatabase();
         const data_base = client.db('game-bazaar');
         const members = data_base.collection('members');
@@ -31,7 +20,7 @@ export default async function handler(req:NextApiRequest, res:NextApiResponse) {
         const appId = req.query.game === "csgo" ? "730" : '440';
     
         if(existingUser){
-            const existing_inventory = existingUser[`descriptions_${appId}`];
+            const existing_inventory = await existingUser[`descriptions_${appId}`];
             if(!existing_inventory)    {
                 console.log("ilk defa envanter ekleniyor price prop ile ve eklenmiş hali gönderiliyor")
                 try {
@@ -52,7 +41,6 @@ export default async function handler(req:NextApiRequest, res:NextApiResponse) {
                         res.status(404).send("not found")
                     }
             
-                    //console.log(descriptions);
                 } catch (error) {
                     console.error("Error:", error);
                     res.status(500).json("Error");
