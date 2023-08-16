@@ -20,23 +20,13 @@ const Inventory = () => {
     const [feedback, setFeedback] = useState<string>("Inventory loading...");
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                setInventory(null);
-                const response = await fetch(`/api/inventory?game=${category}`);
-    
-                if (response.status === 200) {
-                    const data = await response.json();
-                    setInventory(data);
-                } else {
-                    console.log(response)
-                }
-            } catch (error) {
-                console.error('Error fetching inventory:', error);
-            }
-        };
-    
-        fetchData();
+        fetch(`/api/inventory?game=${category}`).then(
+            r => {
+                console.log(r);
+                r.json()
+            }).then(rj => {
+                console.log(rj)
+            })
     }, [category]);
     
 

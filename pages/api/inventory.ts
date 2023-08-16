@@ -37,19 +37,19 @@ export default async function handler(req:NextApiRequest, res:NextApiResponse) {
                         res.status(200).json(descriptions_with_prices);
                     }
                     else{
-                        res.status(404).send("not found")
+                        res.status(404).json({message:"descriptions yok"})
                     }
             
                 } catch (error) {
                     console.error("Error:", error);
-                    res.status(500).json({message:"olmadı"});
+                    res.status(500).json({message:"inventory getirilemedi..."});
                 } 
+            }
+            else{
+                res.status(401).json({message:"Existing inventory var"})
             }
         }
         else{
-            res.send("ok")
+            res.status(404).json({message:"existing user yokkk"})
         }
-
-        
-
 }
