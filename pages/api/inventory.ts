@@ -9,7 +9,19 @@ export default async function handler(req:NextApiRequest, res:NextApiResponse) {
 
         console.log("inventory api endpoint accessed");
         const idCookie = req.cookies.ID;
-        console.log(idCookie);
+        let steamID;
+
+        if(idCookie){
+            const isSteamOpenIDURL = idCookie.includes("https://steamcommunity.com/openid/id/");
+            if(isSteamOpenIDURL){
+                const parts = idCookie.split("/");
+                steamID = parts[parts.length - 1];
+            }
+            else {
+                steamID = idCookie;
+                console.log("direk id")
+            }
+        }
     
         const client = await connectToDatabase();
         const data_base = client.db('game-bazaar');
@@ -17,13 +29,13 @@ export default async function handler(req:NextApiRequest, res:NextApiResponse) {
 
         const appId = req.query.game === "csgo" ? "730" : '440';
 
-        const existingUser = await members.findOne({steamId:idCookie});
+        const existingUser = await members.findOne({steamId:steamID});
 
         if(existingUser){
-            res.status(200).json({message:idCookie})
+            res.status(200).json({message:steamID})
         }
         else{
-            res.status(404).json({message:idCookie})
+            res.status(404).json({message:steamID})
         }
 }
 
