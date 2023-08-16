@@ -21,14 +21,24 @@ const Inventory = () => {
 
     useEffect(() => {
         fetch(`/api/inventory?game=${category}`)
-            .then(r => r.json())
+            .then(response => {
+                if (response.status === 200) {
+                    return response.json();
+                } else {
+                    throw new Error(`Response status: ${response.status}`);
+                }
+            })
             .then(data => {
-                console.log(data.message);
+                if (data) {
+                    setInventory(data);
+                    setFeedback("")
+                }
             })
             .catch(error => {
                 console.error("Error fetching data:", error);
             });
-    }, []);
+    }, [category]);
+    
     
     
 
