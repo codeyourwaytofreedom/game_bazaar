@@ -14,15 +14,14 @@ export default async function handler(req:NextApiRequest, res:NextApiResponse) {
         const client = await connectToDatabase();
         const data_base = client.db('game-bazaar');
         const members = data_base.collection('members');
-    
-        const existingUser = await members.findOne({steamId:idCookie});
-    
+
         const appId = req.query.game === "csgo" ? "730" : '440';
-    
+
+        const existingUser = await members.findOne({steamId:idCookie});
         if(existingUser){
+
             const existing_inventory = await existingUser[`descriptions_${appId}`];
-            if(!existing_inventory)    {
-                console.log("ilk defa envanter ekleniyor price prop ile ve eklenmiş hali gönderiliyor")
+            if(!existing_inventory){
                 try {
                     const url = `https://api.steampowered.com/IEconService/GetInventoryItemsWithDescriptions/v1/?key=${process.env.STEAM}&steamid=${process.env.ID}&appid=${appId}&contextid=2&get_descriptions=true`;
             
@@ -43,12 +42,14 @@ export default async function handler(req:NextApiRequest, res:NextApiResponse) {
             
                 } catch (error) {
                     console.error("Error:", error);
-                    res.status(500).json("Error");
+                    res.status(500).json({message:"olmadı"});
                 } 
             }
-            else{
-                console.log("mevcut price lı obje gönderildi")
-                res.status(200).json(existingUser[`descriptions_${appId}`]);
-            }
-        }    
+        }
+        else{
+            res.send("ok")
+        }
+
+        
+
 }

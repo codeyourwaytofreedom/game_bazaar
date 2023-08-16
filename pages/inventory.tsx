@@ -29,8 +29,7 @@ const Inventory = () => {
                     const data = await response.json();
                     setInventory(data);
                 } else {
-                    const message = await response.json();
-                    setFeedback(message.message)
+                    console.log(response)
                 }
             } catch (error) {
                 console.error('Error fetching inventory:', error);
