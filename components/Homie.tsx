@@ -9,6 +9,7 @@ import Navbar from "./Navbar";
 import Img_slider from "./Img_slider";
 import { useDispatch } from "react-redux";
 import { note_login,note_ppicture, note_balance } from "../redux/loginSlice";
+import Items_holder from "./Items_holder";
 
 
 const Homie = () => {
@@ -95,7 +96,7 @@ const Homie = () => {
             <Items_slider/>
             {/* <div className={h.homie_wallpaper}></div> */}
             <Navbar alt_bar={alt_bar} setAlt={setAlt} modalVis={modalVis} setModalVis={setModalVis}/>
-            <div className={h.homie_categories}>
+{/*             <div className={h.homie_categories}>
                 <div className={h.homie_categories_each} onClick={()=>router.push("/market/tm2")}>
                     <h3>Team Fortress 2</h3>
                     <Image src={"/tm2.jpeg"} alt={"tm2"} width={800} height={400}/>
@@ -106,7 +107,8 @@ const Homie = () => {
                       <Image src={"/cs.jpeg"} alt={"tm2"} width={800} height={400}/>
                     <div id={h.hideout}><Image src={"/banner_sword.png"} alt={"sword"} width={50} height={50}/></div>
                 </div>
-            </div>
+            </div> */}
+            <Items_holder />
             <br />
         </div>
     </> );

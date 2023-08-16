@@ -74,7 +74,7 @@ const Item_details = () => {
                                         <div><Image src={"/rifle.png"} alt={"item"} width={200} height={200} /></div>
                                         <div>{e.seller}</div>
                                         <div>${e.price}</div>
-                                        <div><button>{chosen === 0 ? "Sell" : "Buy"}</button></div>
+                                        <div><button>{chosen === 0 ? "Buy" : "Sell"}</button></div>
                                     </div>
                                         )
                                     }

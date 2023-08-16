@@ -3,19 +3,18 @@ import { useEffect,useState } from "react";
 import h from "../styles/Home.module.css";
 import Link from "next/link";
 import { useRouter } from 'next/router';
+import { useSelector } from "react-redux";
 
 const Items_holder = () => {
-
-    const router = useRouter();
-    const urlPath = router.asPath;
-    const partAfterBaseUrl = urlPath.replace(router.basePath, '');
     
+    const category = useSelector((state:any) => state.loginSlice.category);
+
     return ( 
         <div className={h.homie_items}>
                 <div className={h.homie_items_shell}>
                     {
-                        [...Array(24)].map((item,index)=>
-                            <Link href={`${partAfterBaseUrl}/${index}_item`} key={index}>
+                        [...Array(30)].map((item,index)=>
+                            <Link href={`market/${category}/${index}_item`} key={index}>
                                 <div className={h.homie_items_shell_each}>
                                     <div id={h.icon}>
                                         <Image src={"/item_icon.png"} alt={"sword"} width={30} height={30}/>
