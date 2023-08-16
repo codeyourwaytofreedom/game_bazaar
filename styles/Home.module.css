@@ -674,6 +674,18 @@
        column-gap: 20px;
   color: white;
 }
+.homie_profile_kernel #modal {
+  position: fixed;
+  top: 70px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  z-index: 99;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .homie_profile_kernel_column {
   width: 95vw;
   max-width: 470px;
@@ -746,6 +758,7 @@
   -moz-column-gap: 25px;
        column-gap: 25px;
   align-items: center;
+  position: relative;
 }
 .homie_profile_kernel_column_API :nth-child(3) button, .homie_profile_kernel_column_API :nth-child(3) a {
   background: transparent;
@@ -755,6 +768,11 @@
   border-radius: 5px;
   color: #000000;
   font-size: 15px;
+  width: 110px;
+  position: absolute;
+  right: 30px;
+  display: flex;
+  justify-content: center;
 }
 .homie_profile_kernel_column_API :nth-child(3) button:hover, .homie_profile_kernel_column_API :nth-child(3) a:hover {
   background-image: linear-gradient(to left, #FFC300, #a47f02);
@@ -762,6 +780,26 @@
 }
 .homie_profile_kernel_column_API :nth-child(3) img {
   cursor: pointer;
+}
+.homie_profile_kernel_column_API #delivery {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.homie_profile_kernel_column_API #delivery button {
+  position: relative;
+  right: 0;
+  width: 100%;
+  background: wheat;
+  display: flex;
+  align-items: center;
+  -moz-column-gap: 10px;
+       column-gap: 10px;
+  height: 35px;
+}
+.homie_profile_kernel_column_API #delivery button:hover {
+  color: black;
+  background-color: rgb(213, 190, 146);
+  border: 2px solid silver;
 }
 .homie_profile_kernel_column_API #key, .homie_profile_kernel_column_API #link {
   border: 1px solid rgb(88, 87, 87);

@@ -49,6 +49,8 @@ export default async function handler(
                       profile_img_url:profileImage,
                       date_joined: new Date(),
                       balance:0,
+                      delivery_time:"12 hr",
+                      email:"",
                       steam_api_key:"keykey",
                       game_bazaar_api_key:"...."
                     } }, 

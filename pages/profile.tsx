@@ -13,6 +13,14 @@ const Profile = () => {
     const url = useSelector((state:any) => state.loginSlice.ppicture);
     const ak = useRef<HTMLInputElement>(null);
     const link = useRef<HTMLInputElement>(null);
+    const [profile_details, setDetails] = useState<any>();
+    const [feedback, setFeedback] = useState<string>("");
+
+    const dels = ["12 hr", "15 min"]
+
+    useEffect(()=>{
+        fetch('/api/user').then(r=> r.json()).then(rj => setDetails(rj))
+    },[])
 
     const handle_ak = () => {
         if(ak.current && ak.current.value.length === 32){
@@ -52,25 +60,66 @@ const Profile = () => {
         }
       },[]);
 
+      const formatter = (price:string) => {
+        const price_numbered = parseFloat(price);
+        const price_rounded = Math.round(price_numbered * 100) / 100;
+        const price_formatted = `$${price_rounded.toFixed(2)}`;
+        return price_formatted;
+    }
+    
+    const handle_delivery = async (e: any) => {
+        if (profile_details && e !== profile_details.delivery && confirm(`Do you want to set delivery time to ${e}?`)) {
+            setFeedback("Updating delivery time...");
+    
+            try {
+                const response = await fetch('/api/profile_update', {
+                    method: 'POST',
+                    body: e
+                });
+    
+                if (response.status === 200) {
+                    const updatedDetails = await response.json();
+                    setDetails(updatedDetails);
+                    setFeedback("Delivery time updated!");
+                } else {
+                    throw new Error("Failed to update delivery time");
+                }
+            } catch (error) {
+                console.error(error);
+                setFeedback("Failed to update delivery time");
+            } finally {
+                setTimeout(() => {
+                    setFeedback("")
+                }, 1000);
+            }
+        }
+    }
+    
+    
 
     return ( <Layout>
         <div className={c.homie_profile}>
             <div className={c.homie_profile_kernel}>
-
+                {
+                    feedback?.length > 0 &&                 
+                    <div id={c.modal}>
+                        <h1 style={{color:feedback.includes("updated") ? "green" : "whitesmoke"}}>{feedback}</h1>
+                    </div>
+                }
                 <div className={c.homie_profile_kernel_column}>
                     <div className={c.homie_profile_kernel_column_intro}>
                         <Image src={inn && url ? url : "/login.png"} alt={"sword"} width={30} height={30}/>
                         <h3>Username here</h3>
                         <span>||</span>
-                        <h3>User ID</h3>
+                        <h3>{profile_details ? profile_details.id : "User ID"}</h3>
                     </div>
                     <div className={c.homie_profile_kernel_column_balance}>
                         <h3>Balance</h3>
                         <div id={c.double}>
-                            <h2>$ 45</h2>
+                            <h2>{profile_details ? formatter(profile_details.balance) : ""}</h2>
                             <div>
-                                <div>&#x2729; Frozen: $15</div>
-                                <div>&#x2729; Active: $30</div>
+                                <div>&#x2729; Frozen: $ --</div>
+                                <div>&#x2729; Active: $ --</div>
                             </div>  
                             <div id={c.buts}>
                                 <span>+</span><span>&#8722;</span>
@@ -86,6 +135,26 @@ const Profile = () => {
                             <button>Create KEY</button>
                         </div>
                     </div>
+
+                    <div className={c.homie_profile_kernel_column_API}>
+                        <div style={{display:"flex", columnGap:"10px", alignItems:"center", marginBottom:"10px"}}>
+                            <Image src={"/delivery.png"} alt={"steam"} width={35} height={35}/>
+                            <h4 style={{color:"#FFC300"}}>Delivery Time</h4>
+                        </div>
+                        <span></span>
+                        <div id={c.delivery}>
+                            {
+                                dels.map((e,i)=>
+                                <button onClick={()=>handle_delivery(e)} key={i}>
+                                    {profile_details && profile_details.delivery === e && 
+                                    <span style={{fontSize:"x-large", color:"green"}}> &#10004;</span> } 
+                                    {e}
+                                </button>
+                                )
+                            }
+                        </div>
+                    </div>
+
                 </div>
 
                 <div className={c.homie_profile_kernel_column}>
@@ -120,6 +189,19 @@ const Profile = () => {
                             <Link href={"https://steamcommunity.com/dev/apikey"} target={"_blank"}>Get it</Link>
                         </div>
                     </div>
+
+                    <div className={c.homie_profile_kernel_column_API}>
+                        <div style={{display:"flex", columnGap:"10px", alignItems:"center", marginBottom:"10px"}}>
+                            <Image src={"/at.png"} alt={"steam"} width={30} height={30}/>
+                            <h4 style={{color:"#FFC300"}}>Email (optional)</h4>
+                        </div>
+                        <span></span>
+                        <div>
+                            <input id={c.key} type={"text"} placeholder={"Your email address"} ref={ak}/>
+                            <button>Save</button>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>

@@ -617,6 +617,16 @@
             grid-template-columns: 1fr 1fr;
             column-gap: 20px;
             color: white;
+            #modal{
+                position: fixed;
+                top:70px;
+                left: 0; right: 0; bottom: 0;
+                background-color: rgba($color: #000000, $alpha: 0.8);
+                z-index: 99;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
             &_column{
                 width: 95vw;
                 max-width: 470px;
@@ -680,6 +690,7 @@
                         display: flex;
                         column-gap: 25px;
                         align-items: center;
+                        position: relative;
                         button, a{
                             background: transparent;
                             border: none;
@@ -688,6 +699,11 @@
                             border-radius: 5px;
                             color: #000000;
                             font-size: 15px;
+                            width: 110px;
+                            position: absolute;
+                            right: 30px;
+                            display: flex; 
+                            justify-content: center;
                             &:hover{
                                 background-image: linear-gradient(to left,#FFC300, #a47f02);
                                 color: whitesmoke;
@@ -695,6 +711,25 @@
                         }
                         img{
                             cursor: pointer;
+                        }
+                    }
+                    #delivery{
+                        display: grid;
+                        grid-template-columns: 1fr 1fr;
+                        button{
+                            position: relative;
+                            right: 0;
+                            width: 100%;
+                            background: wheat;
+                            display: flex;
+                            align-items: center;
+                            column-gap: 10px;
+                            height: 35px;
+                            &:hover{
+                                color: black;
+                                background-color: rgb(213, 190, 146);
+                                border: 2px solid silver;
+                            }
                         }
                     }
                     #key, #link{
