@@ -62,12 +62,5 @@ export default async function handler(req:NextApiRequest, res:NextApiResponse) {
                 console.log("mevcut price lı obje gönderildi")
                 res.status(200).json(existingUser[`descriptions_${appId}`]);
             }
-        }
-        else{
-            res.status(404).json({
-                error: 'User not found',
-                message: 'Cant find user'
-            })
-        }
-    
+        }    
 }
