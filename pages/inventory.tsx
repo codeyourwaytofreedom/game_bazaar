@@ -17,25 +17,27 @@ const Inventory = () => {
     const [modal, setModal] = useState<boolean>(false);
     const [chosen, setChosen] = useState<any>();
     const price_input = useRef<HTMLInputElement>(null);
-    const [feedback, setFeedback] = useState<string>();
+    const [feedback, setFeedback] = useState<string>("Inventory loading...");
 
     useEffect(() => {
-        setInventory(null);
-        fetch(`/api/inventory?game=${category}`)
-            .then(response => {
+        const fetchData = async () => {
+            try {
+                setInventory(null);
+                const response = await fetch(`/api/inventory?game=${category}`);
+    
                 if (response.status === 200) {
-                    return response.json();
+                    const data = await response.json();
+                    setInventory(data);
                 } else {
-                    throw new Error('Invalid response status');
+                    const message = await response.json();
+                    setFeedback(message.message)
                 }
-            })
-            .then(data => {
-                console.log(data);
-                setInventory(data);
-            })
-            .catch(error => {
+            } catch (error) {
                 console.error('Error fetching inventory:', error);
-            });
+            }
+        };
+    
+        fetchData();
     }, [category]);
     
 
@@ -167,7 +169,7 @@ const Inventory = () => {
                         )
                         : 
                         <div id={i.tempo}>
-                            Inventory loading...
+                            {feedback && feedback}
                         </div>
                     }
                 </div>

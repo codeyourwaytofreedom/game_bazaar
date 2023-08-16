@@ -52,5 +52,9 @@ export default async function handler(req:NextApiRequest, res:NextApiResponse) {
     }
     else{
         console.log("must login")
+        res.status(401).json({
+            error: 'Unauthorized',
+            message: 'Login Required...'
+        });
     }
 }
