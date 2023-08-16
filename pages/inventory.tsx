@@ -39,7 +39,7 @@ const Inventory = () => {
     }, [category]);
     
 
-    useEffect(() => {
+/*     useEffect(() => {
         if(feedback === "Price updated"){
             setTimeout(() => {
                 setModal(false);
@@ -54,7 +54,7 @@ const Inventory = () => {
                 console.error('Error fetching inventory:', error);
             });
         }
-    }, [feedback]);
+    }, [feedback]); */
 
     const handle_search = () =>{
         if(search.current){
