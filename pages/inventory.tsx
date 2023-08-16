@@ -89,33 +89,18 @@ const Inventory = () => {
         } 
     }
 
-    const formatter = (price:string) =>{
-        if(price.includes(".")){
-            if(price.length > 4 || price.length === 4){
-                return "$" + price.substring(0,5)
-            }
-            if(price.length === 3){
-                return "$" + price + "0"
-            }
-            else{
-                return "$" + price + ".0"
-            }
+    const formatter = (price:string) => {
+        const price_numbered = parseFloat(price);
+        const price_rounded = Math.round(price_numbered * 100) / 100;
+        console.log(price_rounded)
+        if(price_rounded === 0.00){
+            return "--"
         }
         else{
-            if(price.length > 3 || price.length === 3){
-                return "$" + price + ".0"
-            }
-            else{
-                if(price === "0"){
-                    return "-"
-                }
-                else{
-                    return "$" + price + ".00"
-                }
-            }
+            const price_formatted = `$${price_rounded.toFixed(2)}`;
+            return price_formatted;
         }
     }
-
     return ( 
         <Layout>
             <div className={i.inventory}>
@@ -142,15 +127,18 @@ const Inventory = () => {
                         </div>
                         </div>
                     }
-                    <div className={i.inventory_kernel_item} key={98765}>
-                        <input type="text" placeholder={'search...'} onChange={handle_search} ref={search}/>
-                    </div>
+                    {
+                        inventory && 
+                        <div className={i.inventory_kernel_item} key={98765}>
+                            <input type="text" placeholder={'search...'} onChange={handle_search} ref={search}/>
+                        </div>
+                    }
                     {
                         inventory && inventory.filter(e=>e.market_name.toLowerCase().includes(filterVal.toLowerCase())).length === 0 && 
                         <h1>No result found !!!</h1>
                     }
                     {
-                        inventory && inventory.filter(e=>e.market_name.toLowerCase().includes(filterVal.toLowerCase())).map((item,index)=>
+                        inventory ? inventory.filter(e=>e.market_name.toLowerCase().includes(filterVal.toLowerCase())).map((item,index)=>
                         <div className={i.inventory_kernel_item} key={index}
                             style={{backgroundColor:index%2 ? "rgb(40,40,40)" : "rgb(30,30,30)"}}
                         >
@@ -169,6 +157,10 @@ const Inventory = () => {
                             <span><Image alt={"delete steam"} src={index%2 ? "/delete4.png" : "/delete3.png" } width={20} height={20}/></span>
                         </div>
                         )
+                        : 
+                        <div id={i.tempo}>
+                            Inventory loading...
+                        </div>
                     }
                 </div>
             </div>

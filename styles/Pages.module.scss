@@ -146,6 +146,7 @@
         row-gap: 10px;
         padding-top: 20px;
         align-items: center;
+        min-height: calc(100vh - 80px);
         #modal{
             position: fixed;
             top:70px;
@@ -254,14 +255,22 @@
                 }
             }
         }
+        #tempo{
+            width: 90vw;
+            max-width: 500px;
+            aspect-ratio: 1/1;
+            background-color: black;
+            border-radius: 50%;
+            //box-shadow: 0px -2px 2px 0px goldenrod;
+            animation: sunrise 2.5s infinite;
+            display: grid;
+            justify-content: center;
+            align-items: center;
+            color: silver;
+        }
     }
 }
 
-
-@keyframes enlarge {
-    from{width: 0;}
-    to{width: 100%;}
-}
 
 @media (max-width: 575.98px) { 
     .balance{
@@ -280,3 +289,21 @@
         }
     }
  }
+
+
+
+
+@keyframes enlarge {
+    from{width: 0;}
+    to{width: 100%;}
+}
+
+@keyframes sunrise {
+    from{
+        box-shadow: 0px -2px 2px 0px goldenrod;
+        font-size: large;
+    }to{
+        box-shadow: 0px -25px 30px -2px goldenrod;
+        font-size: xx-large;
+    }
+}

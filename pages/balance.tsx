@@ -10,14 +10,12 @@ const Balance = () => {
     const tabs = ["Deposit","Withdraw","Transactions"];
     const balance = useSelector((state:any) => state.loginSlice.balance);
 
-    const formatter = (balance:string) =>{
-        if(!balance.toString().includes(".")){
-            return "$" + balance + ".00"
-        }
-        else{
-            return "$" + balance
-        }
-      }
+    const formatter = (price:string) => {
+        const price_numbered = parseFloat(price);
+        const price_rounded = Math.round(price_numbered * 100) / 100;
+        const price_formatted = `$${price_rounded.toFixed(2)}`;
+        return price_formatted;
+    }
 
 /*     useEffect(()=>{
         fetch('/api/checkout').then(r=> r.text()).then(rt => window.location.href = rt)

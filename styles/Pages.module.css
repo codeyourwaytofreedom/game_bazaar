@@ -148,6 +148,7 @@
   row-gap: 10px;
   padding-top: 20px;
   align-items: center;
+  min-height: calc(100vh - 80px);
 }
 .inventory_kernel #modal {
   position: fixed;
@@ -265,24 +266,20 @@
   height: auto;
   z-index: 3;
 }
-
-@-webkit-keyframes enlarge {
-  from {
-    width: 0;
-  }
-  to {
-    width: 100%;
-  }
+.inventory_kernel #tempo {
+  width: 90vw;
+  max-width: 500px;
+  aspect-ratio: 1/1;
+  background-color: black;
+  border-radius: 50%;
+  -webkit-animation: sunrise 2.5s infinite;
+          animation: sunrise 2.5s infinite;
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  color: silver;
 }
 
-@keyframes enlarge {
-  from {
-    width: 0;
-  }
-  to {
-    width: 100%;
-  }
-}
 @media (max-width: 575.98px) {
   .balance_kernel {
     padding: 20px;
@@ -292,5 +289,41 @@
   }
   .balance_kernel_triple_explain_transactions span {
     font-size: small;
+  }
+}
+@-webkit-keyframes enlarge {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+@keyframes enlarge {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+@-webkit-keyframes sunrise {
+  from {
+    box-shadow: 0px -2px 2px 0px goldenrod;
+    font-size: large;
+  }
+  to {
+    box-shadow: 0px -25px 30px -2px goldenrod;
+    font-size: xx-large;
+  }
+}
+@keyframes sunrise {
+  from {
+    box-shadow: 0px -2px 2px 0px goldenrod;
+    font-size: large;
+  }
+  to {
+    box-shadow: 0px -25px 30px -2px goldenrod;
+    font-size: xx-large;
   }
 }/*# sourceMappingURL=Pages.module.css.map */
