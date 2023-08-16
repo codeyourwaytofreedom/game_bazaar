@@ -8,19 +8,20 @@ const codes = {
 export default async function handler(req:NextApiRequest, res:NextApiResponse) {
     console.log("inventory api endpoint accessed");
     const idCookie = req.cookies.ID;
-
+    console.log(idCookie);
+    
     /* cookie yoksa */
-    if(!idCookie){
+/*     if(!idCookie){
         console.log("must login")
         res.status(401).json({
             error: 'Unauthorized',
             message: 'Login Required...'
         });
-    }
+    } */
 
 
     /* cookie varsa */
-    else{
+
         const client = await connectToDatabase();
         const data_base = client.db('game-bazaar');
         const members = data_base.collection('members');
@@ -68,6 +69,5 @@ export default async function handler(req:NextApiRequest, res:NextApiResponse) {
                 message: 'Cant find user'
             })
         }
-    }
     
 }
