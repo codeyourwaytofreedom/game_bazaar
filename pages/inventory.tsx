@@ -135,11 +135,11 @@ const Inventory = () => {
                         </div>
                     }
                     {
-                        inventory && inventory.filter(e=>e.market_name.toLowerCase().includes(filterVal.toLowerCase())).length === 0 && 
+                        inventory && inventory.filter((e:any)=>e.market_name.toLowerCase().includes(filterVal.toLowerCase())).length === 0 && 
                         <h1>No result found !!!</h1>
                     }
                     {
-                        inventory ? inventory.filter(e=>e.market_name.toLowerCase().includes(filterVal.toLowerCase())).map((item,index)=>
+                        inventory ? inventory.filter((e:any)=>e.market_name.toLowerCase().includes(filterVal.toLowerCase())).map((item:any,index:any)=>
                         <div className={i.inventory_kernel_item} key={index}
                             style={{backgroundColor:index%2 ? "rgb(40,40,40)" : "rgb(30,30,30)"}}
                         >
