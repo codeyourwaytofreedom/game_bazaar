@@ -50,11 +50,12 @@ export default async function handler(req:NextApiRequest, res:NextApiResponse) {
             res.status(200).json(existingUser[`descriptions_${appId}`]);
         }
     }
-    else{
-        console.log("must login")
-        res.status(401).json({
-            error: 'Unauthorized',
-            message: 'Login Required...'
-        });
+
+    if(!idCookie){
+            console.log("must login")
+            res.status(401).json({
+                error: 'Unauthorized',
+                message: 'Login Required...'
+            });
     }
 }
