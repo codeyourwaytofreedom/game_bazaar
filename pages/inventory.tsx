@@ -20,14 +20,16 @@ const Inventory = () => {
     const [feedback, setFeedback] = useState<string>("Inventory loading...");
 
     useEffect(() => {
-        fetch(`/api/inventory?game=${category}`).then(
-            r => {
-                console.log(r);
-                r.json()
-            }).then(rj => {
-                console.log(rj)
+        fetch(`/api/inventory?game=${category}`)
+            .then(r => r.json())
+            .then(data => {
+                console.log(data.message);
             })
+            .catch(error => {
+                console.error("Error fetching data:", error);
+            });
     }, [category]);
+    
     
 
 /*     useEffect(() => {
