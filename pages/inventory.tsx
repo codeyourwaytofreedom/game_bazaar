@@ -22,15 +22,22 @@ const Inventory = () => {
     useEffect(() => {
         setInventory(null);
         fetch(`/api/inventory?game=${category}`)
-            .then(response => response.json())
+            .then(response => {
+                if (response.status === 200) {
+                    return response.json();
+                } else {
+                    throw new Error('Invalid response status');
+                }
+            })
             .then(data => {
                 console.log(data);
-                setInventory(data)
+                setInventory(data);
             })
             .catch(error => {
                 console.error('Error fetching inventory:', error);
             });
     }, [category]);
+    
 
     useEffect(() => {
         if(feedback === "Price updated"){
