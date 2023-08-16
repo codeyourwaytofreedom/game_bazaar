@@ -20,10 +20,10 @@ export default async function handler(req:NextApiRequest, res:NextApiResponse) {
         const existingUser = await members.findOne({steamId:idCookie});
 
         if(existingUser){
-            res.status(200).json({message:"kullanıcı bulundu..."})
+            res.status(200).json({message:idCookie})
         }
         else{
-            res.status(404).json({message:"kullanıcı yok..."})
+            res.status(404).json({message:idCookie})
         }
 }
 
