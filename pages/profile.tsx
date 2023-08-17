@@ -14,7 +14,7 @@ const Profile = () => {
     const ak = useRef<HTMLInputElement>(null);
     const link = useRef<HTMLInputElement>(null);
     const [profile_details, setDetails] = useState<any>();
-    const [feedback, setFeedback] = useState<string>("");
+    const [feedback, setFeedback] = useState<{color:string,content:string}>({color:"whitesmoke",content:""});
 
     const dels = ["12 hr", "15 min"]
 
@@ -69,7 +69,7 @@ const Profile = () => {
     
     const handle_delivery = async (e: any) => {
         if (profile_details && e !== profile_details.delivery && confirm(`Do you want to set delivery time to ${e}?`)) {
-            setFeedback("Updating delivery time...");
+            setFeedback({color:"whitesmoke",content:"Updating delivery time..."});
     
             try {
                 const response = await fetch('/api/profile_update', {
@@ -80,16 +80,16 @@ const Profile = () => {
                 if (response.status === 200) {
                     const updatedDetails = await response.json();
                     setDetails(updatedDetails);
-                    setFeedback("Delivery time updated!");
+                    setFeedback({color:"green",content:"Delivery time updated!"});
                 } else {
                     throw new Error("Failed to update delivery time");
                 }
             } catch (error) {
                 console.error(error);
-                setFeedback("Failed to update delivery time");
+                setFeedback({color:"red",content:"Failed to update delivery time"});
             } finally {
                 setTimeout(() => {
-                    setFeedback("")
+                    setFeedback({color:"whitesmokte", content:""})
                 }, 1000);
             }
         }
@@ -97,7 +97,7 @@ const Profile = () => {
     
     const handle_create_key = async () => {
         try{
-            setFeedback("Generating key...")
+            setFeedback({color:"gold", content:"Generating key..."})
             const response = await fetch('/api/key_generator');
             const resStatus = response.status;
             const resJSON = await response.json();
@@ -105,12 +105,12 @@ const Profile = () => {
                 setFeedback(resJSON.message);
             }
             if(resJSON.updated_user){
-                setFeedback("Key generated !!!");
+                setFeedback({color:"green", content:"Key generated !!!"});
                 setDetails(resJSON.updated_user);
                 navigator.clipboard.writeText("");
             }
             setTimeout(() => {
-                setFeedback("")
+                setFeedback({color:"whitesmoke", content:""})
             }, 1500);
         }
         catch(error){
@@ -122,19 +122,26 @@ const Profile = () => {
         if(profile_details){
             navigator.clipboard.writeText(profile_details.game_bazaar_api_key)
         }
-        setFeedback("Copied");
+        setFeedback({color:"green", content:"Copied"});
         setTimeout(() => {
-            setFeedback("")
+            setFeedback({color:"whitesmoke", content:""})
         }, 900);
     };
+
+
+/*     const colorFormatter = (feedback:string) =>{
+        if(feedback.toLowerCase().includes("C")){
+
+        }
+    } */
 
     return ( <Layout>
         <div className={c.homie_profile}>
             <div className={c.homie_profile_kernel}>
                 {
-                    feedback?.length > 0 &&                 
+                    feedback?.content.length > 0 &&                 
                     <div id={c.modal}>
-                        <h1 style={{color:feedback.includes("updated") ? "green" : "whitesmoke"}}>{feedback}</h1>
+                        <h1 style={{color:feedback.color}}>{feedback.content}</h1>
                     </div>
                 }
                 <div className={c.homie_profile_kernel_column}>
@@ -195,7 +202,7 @@ const Profile = () => {
                     <div className={c.homie_profile_kernel_column_intro}>
                         <Image src={"/steamm.png"} alt={"steam"} width={30} height={30}/>
                         <h3>Steam Account</h3>
-                        <h4 style={{position:"absolute", right:"0"}}>STEAM ID: 987320578264</h4>
+                        <h4 style={{position:"absolute", right:"0"}}>STEAM ID: {profile_details && profile_details.id}</h4>
                     </div>
 
                     <div className={c.homie_profile_kernel_column_API}>
