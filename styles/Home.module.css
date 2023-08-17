@@ -808,6 +808,16 @@
   background-color: black;
   border-radius: 5px;
   color: whitesmoke;
+  overflow: hidden;
+  position: relative;
+}
+.homie_profile_kernel_column_API #key #censor, .homie_profile_kernel_column_API #link #censor {
+  z-index: 1;
+}
+.homie_profile_kernel_column_API #key #actual, .homie_profile_kernel_column_API #link #actual {
+  position: absolute;
+  z-index: 99 !important;
+  color: transparent;
 }
 
 @media (max-width: 991.98px) {

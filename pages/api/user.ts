@@ -19,7 +19,8 @@ export default async function handler(req:NextApiRequest, res:NextApiResponse) {
             id: existingUser.steamId,
             balance: existingUser.balance,
             email:existingUser.email,
-            delivery: existingUser.delivery_time
+            delivery: existingUser.delivery_time,
+            game_bazaar_api_key: existingUser.game_bazaar_api_key
         }
         res.status(200).json(profile_details);
     }

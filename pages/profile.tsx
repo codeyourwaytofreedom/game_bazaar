@@ -117,6 +117,16 @@ const Profile = () => {
         }
     }
 
+    const handleCopy = (event:any) => {
+        if(profile_details){
+            navigator.clipboard.writeText(profile_details.game_bazaar_api_key)
+        }
+        setFeedback("Copied");
+        setTimeout(() => {
+            setFeedback("")
+        }, 900);
+    };
+
     return ( <Layout>
         <div className={c.homie_profile}>
             <div className={c.homie_profile_kernel}>
@@ -150,8 +160,11 @@ const Profile = () => {
                         <h3>Game Bazaar API</h3>
                         <h4>API Key</h4>
                         <div>
-                        <div id={c.key}>{profile_details && profile_details.game_bazaar_api_key}</div>
-                            <Image src={"/copy.png"} width={25} height={25} alt={"copy"}/>
+                            <div id={c.key}>
+                                <div id={c.actual}>{profile_details && profile_details.game_bazaar_api_key}</div>
+                                <div id={c.censor}>{profile_details && profile_details.game_bazaar_api_key.split("").map((e:any) => "x")}</div>
+                            </div>
+                            <Image src={"/copy.png"} width={25} height={25} alt={"copy"} onClick={handleCopy}/>
                             <button onClick={handle_create_key}>Create KEY</button>
                         </div>
                     </div>

@@ -739,6 +739,16 @@
                         background-color: black;
                         border-radius: 5px;
                         color: whitesmoke;
+                        overflow: hidden;
+                        position: relative;
+                        #censor{
+                            z-index: 1;
+                        }
+                        #actual{
+                            position: absolute;
+                            z-index: 99 !important;
+                            color: transparent;
+                        }
                     }
                 }
             }
