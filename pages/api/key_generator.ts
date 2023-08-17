@@ -31,19 +31,51 @@ export default async function handler(req:NextApiRequest, res:NextApiResponse) {
     }
     /* User Logged In */
     else{
-        const client = await connectToDatabase();
-        const database = client.db('game-bazaar');
-        const members = database.collection('members');
-        const existingUser = await members.findOne({ steamId: steamID });
+        try{
+            const client = await connectToDatabase();
+            const database = client.db('game-bazaar');
+            const members = database.collection('members');
+            const existingUser = await members.findOne({ steamId: steamID });
+    
+            if(existingUser){
+                const url = existingUser.profile_img_url;
+                const timeStamp = new Date();
+    
+                const key = keyMaker(steamID, url, timeStamp);
 
-        if(existingUser){
-            const url = existingUser.profile_img_url;
-            const timeStamp = new Date();
+                const result = await members.updateOne(
+                    {steamId:steamID},
+                    {$set:{game_bazaar_api_key:key}}
+                )
 
-            const key = keyMaker(steamID, url, timeStamp);
-            console.log("Key created",key);
+                if (result.matchedCount > 0) {
+                    if (result.modifiedCount > 0) {
+                        console.log("User key updated successfully");
+                        const updated_user = await members.findOne({steamId:steamID});
+                        if(updated_user){
+                            const profile_details = {
+                                id: updated_user.steamId,
+                                balance: updated_user.balance,
+                                email:updated_user.email,
+                                delivery: updated_user.delivery_time,
+                                game_bazaar_api_key:updated_user.game_bazaar_api_key
+                            }
+                            res.status(200).json({updated_user:profile_details});
+                        }
+                    } else {
+                        console.log("No updates were made");
+                        res.status(200).json({ message: "No updates were made" });
+                    }
+                } else {
+                    console.log("User not found");
+                    res.status(404).json({message:"User not found !!!"})
+                }
+            }
         }
-        res.status(200).json({message:"Key Generator Route Working..."});
+        catch(error){
+            console.log("errrrrrrrrr",error);
+            res.status(500).json({ error: "An error occurred while processing the request." });
+        }
     }
 
     console.log(steamID);

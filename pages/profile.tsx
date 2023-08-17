@@ -101,10 +101,16 @@ const Profile = () => {
             const response = await fetch('/api/key_generator');
             const resStatus = response.status;
             const resJSON = await response.json();
-            setFeedback(resJSON.message);
+            if(resJSON.message){
+                setFeedback(resJSON.message);
+            }
+            if(resJSON.updated_user){
+                setFeedback("Key generated !!!");
+                setDetails(resJSON.updated_user);
+            }
             setTimeout(() => {
                 setFeedback("")
-            }, 1000);
+            }, 1500);
         }
         catch(error){
             console.log("Something went wrong...",error)
@@ -144,7 +150,7 @@ const Profile = () => {
                         <h3>Game Bazaar API</h3>
                         <h4>API Key</h4>
                         <div>
-                        <div id={c.key}>--------------------</div>
+                        <div id={c.key}>{profile_details && profile_details.game_bazaar_api_key}</div>
                             <Image src={"/copy.png"} width={25} height={25} alt={"copy"}/>
                             <button onClick={handle_create_key}>Create KEY</button>
                         </div>
