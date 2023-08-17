@@ -25,7 +25,11 @@ const Inventory = () => {
                 if (response.status === 200) {
                     return response.json();
                 } else {
-                    throw new Error(`Response status: ${response.status}`);
+                    return response.json().then(data => {
+                        console.log(data.message);
+                        setFeedback(data.message);
+                        //throw new Error(`Response status: ${response.status}`);
+                    });
                 }
             })
             .then(data => {
@@ -53,7 +57,8 @@ const Inventory = () => {
                 if (response.status === 200) {
                     return response.json();
                 } else {
-                    throw new Error(`Response status: ${response.status}`);
+                    console.log(response.statusText)
+                    //throw new Error(`Response status: ${response.status}`);
                 }
             })
             .then(data => {
