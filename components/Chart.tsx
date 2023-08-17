@@ -5,8 +5,8 @@ import { Dispatch, SetStateAction } from 'react';
 
 
 const Chart = ({item_details}:any) => {
-    const XX = item_details?.XX || []
-    const YY = item_details?.YY || []
+    const XX = ["January", "February","March","April","May","June","July","August","September"];
+    const YY = [6,3,3,4,5,9,3,7,1];
     const pure:any[] = [];
     YY.map((e:any)=>!pure.includes(e) ? pure.push(e) : null);
     const[scr_wid,setScrWd] = useState<number>();

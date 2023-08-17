@@ -66,6 +66,7 @@ const Navbar:NextPage<Navbar_props> = ({alt_bar, setAlt, modalVis, setModalVis})
         <div className={h.homie_banner}>
                 <Link href={"/"}><div><Image src={"/banner_sword.png"} alt={"sword"} width={40} height={40}/></div></Link>
                 <Link href={"/"}><h3>Game Bazaar</h3></Link>
+
                 <div id={h.dropdown} onClick={()=> setModalVis("open")}>
                     <Image src={modalVis === "csgo" ? "/csgo_icon.png" : modalVis === "tm2" ? "/tm2_icn.png" :  "/csgo_icon.png"} 
                         alt={"category"} width={70} height={60} id={h.category}/>
@@ -82,6 +83,8 @@ const Navbar:NextPage<Navbar_props> = ({alt_bar, setAlt, modalVis, setModalVis})
                 </div>
 
                 <Image src={"/srch.png"} alt={"sword"} width={30} height={30} id={h.alt_search} onClick={()=> setAlt(true)}/>
+
+                
                 <div className={h.homie_banner_search2} style={{display:alt_bar ? "grid": "none"}}>
                     <div className={h.homie_banner_search2_kernel}>
                         <Image src={"/srch2.png"} alt={"sword"} width={30} height={30}/>

@@ -83,8 +83,8 @@ const Inventory = () => {
         }
     }
 
-    const handle_item_choose = (item_name:string) =>{
-        router.push(`/market/${category}/${item_name}`);
+    const handle_item_choose = (item:any) =>{
+        router.push(`/market/${category}/${item.market_name}?appid=${item.appid}&classid=${item.classid}`);
     }
 
     const handle_price_editing = (item:any) => {
@@ -174,7 +174,7 @@ const Inventory = () => {
                                 <Image alt={"steam image"} src={`${base_url}${item.icon_url}`} width={90} height={90}/>
                                 <span style={{boxShadow: index%2 ? "0 0 35px 15px whitesmoke" : "0 0 35px 15px gold"}}></span>
                             </span>
-                            <span onClick={() => handle_item_choose(item.market_name)}>{item.market_name}</span>
+                            <span onClick={() => handle_item_choose(item)}>{item.market_name}</span>
                             <span style={{color:item.price === 0 ? "whitesmoke" : "gold"}}>
                                 {   
                                     formatter(item.price.toString())

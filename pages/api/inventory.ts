@@ -28,7 +28,7 @@ export default async function handler(req:NextApiRequest, res:NextApiResponse) {
     }
 
     else{
-            const client = await connectToDatabase();
+        const client = await connectToDatabase();
         const data_base = client.db('game-bazaar');
         const members = data_base.collection('members');
 

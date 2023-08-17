@@ -1,22 +1,56 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
+import {connectToDatabase} from "./db";
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-    const item_details = {
-        item_name:"M4A4 | Urban DDPAT (Field-Tested)",
-        item_quality:"Industrial Grade",
-        item_category:"Normal",
-        item_type:"Rifles",
-        item_price:3.55,
-        XX:["January", "February","March","April","May","June","July","August","September"],
-        YY:[6,3,3,4,5,9,3,7,1],
-        sellers:[
-            {seller:"Seller A",price:3.5},{seller:"Seller B",price:4.5},{seller:"Seller C",price:5.5},
-            {seller:"Seller D",price:6.5},{seller:"Seller E",price:7.5}
-        ]
+
+    const {appid, classid} = req.query;
+
+    if(appid && classid){
+        console.log("Parametera available");
+
+        const client = await connectToDatabase();
+        const data_base = client.db('game-bazaar');
+        const members = data_base.collection('members');
+
+/*         const result = await members.aggregate([
+            {
+              $project: {
+                _id: 0,
+                [`descriptions_${appid}`]: 1,
+                delivery_time:1
+              }
+            }
+          ]).toArray(); */
+
+
+          const result = await members.aggregate([
+            {
+              $project: {
+                _id: 0,
+                steamId:1,
+                filteredDescriptions: {
+                  $filter: {
+                    input: `$descriptions_${appid}`,
+                    as: 'description',
+                    cond: { $eq: ['$$description.classid', classid] }
+                  }
+                },
+                delivery_time: 1
+              }
+            }
+          ]).toArray();
+
+          if(result){
+            res.status(200).json(result)
+          }
+          else{
+            res.status(404).json({message:"Matching items could not be fetched..."})
+          }
     }
-    console.log("Item details to be sent to client");
-    res.status(200).json(item_details)
+    else{
+        res.status(404).json({message:"Item parameters missing !!!"})
+    }
 }
