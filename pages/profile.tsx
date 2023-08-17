@@ -96,8 +96,19 @@ const Profile = () => {
     }
     
     const handle_create_key = async () => {
-        const response = await fetch('/api/key_generator');
-        console.log(response);
+        try{
+            setFeedback("Generating key...")
+            const response = await fetch('/api/key_generator');
+            const resStatus = response.status;
+            const resJSON = await response.json();
+            setFeedback(resJSON.message);
+            setTimeout(() => {
+                setFeedback("")
+            }, 1000);
+        }
+        catch(error){
+            console.log("Something went wrong...",error)
+        }
     }
 
     return ( <Layout>
