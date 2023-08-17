@@ -107,6 +107,7 @@ const Profile = () => {
             if(resJSON.updated_user){
                 setFeedback("Key generated !!!");
                 setDetails(resJSON.updated_user);
+                navigator.clipboard.writeText("");
             }
             setTimeout(() => {
                 setFeedback("")
