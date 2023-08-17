@@ -43,7 +43,7 @@ export default async function handler(req:NextApiRequest, res:NextApiResponse) {
                     if(descriptions){
                         const descriptions_with_prices = descriptions.map((game_item:any) => {return {...game_item, price:0}})
                         await members.updateOne(
-                            { steamId: idCookie },
+                            { steamId: steamID },
                             { $set: { [`descriptions_${appId}`]: descriptions_with_prices } }
                           );
                         res.status(200).json(descriptions_with_prices);

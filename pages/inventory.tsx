@@ -30,6 +30,7 @@ const Inventory = () => {
             })
             .then(data => {
                 if (data) {
+                    console.log(data)
                     setInventory(data);
                     setFeedback("")
                 }
