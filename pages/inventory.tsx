@@ -20,6 +20,8 @@ const Inventory = () => {
     const [feedback, setFeedback] = useState<string>("Inventory loading...");
 
     useEffect(() => {
+        setInventory(null);
+        setFeedback("Inventory loading...")
         fetch(`/api/inventory?game=${category}`)
             .then(response => {
                 if (response.status === 200) {
