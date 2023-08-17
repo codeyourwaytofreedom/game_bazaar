@@ -8,7 +8,7 @@ import { useRouter } from "next/router";
 import Navbar from "./Navbar";
 import Img_slider from "./Img_slider";
 import { useDispatch } from "react-redux";
-import { note_login,note_ppicture, note_balance } from "../redux/loginSlice";
+import { note_login,note_ppicture, note_balance,note_id } from "../redux/loginSlice";
 import Items_holder from "./Items_holder";
 
 
@@ -36,9 +36,12 @@ const Homie = () => {
 
             if(rj){
               dispatch(note_ppicture(rj.url));
-              dispatch(note_balance(rj.balance))
+              dispatch(note_balance(rj.balance));
+              dispatch(note_id(rj.id));
               localStorage.setItem('url',rj.url);
               localStorage.setItem('balance',rj.balance);
+              localStorage.setItem('id',rj.id);
+
             }
           }
         })

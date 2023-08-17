@@ -4,7 +4,8 @@ const initialState = {
   inn: false,
   ppicture:"",
   category:"csgo",
-  balance:0
+  balance:0,
+  id:null
 }
 
 interface LoginState {
@@ -29,9 +30,12 @@ export const loginSlice = createSlice({
     note_balance: (state, action) => {
       state.balance = action.payload;
     },
+    note_id: (state, action) => {
+      state.id = action.payload;
+    },
   },
 });
 
-export const { note_login,note_ppicture,note_category,note_balance} = loginSlice.actions
+export const { note_login,note_ppicture,note_category,note_balance,note_id} = loginSlice.actions
 
 export default loginSlice.reducer
