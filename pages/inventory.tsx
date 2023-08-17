@@ -43,22 +43,31 @@ const Inventory = () => {
     
     
 
-/*     useEffect(() => {
+    useEffect(() => {
         if(feedback === "Price updated"){
             setTimeout(() => {
                 setModal(false);
             }, 1500);
             fetch(`/api/inventory?game=${category}`)
-            .then(response => response.json())
+            .then(response => {
+                if (response.status === 200) {
+                    return response.json();
+                } else {
+                    throw new Error(`Response status: ${response.status}`);
+                }
+            })
             .then(data => {
-                console.log(data);
-                setInventory(data)
+                if (data) {
+                    console.log(data)
+                    setInventory(data);
+                    setFeedback("")
+                }
             })
             .catch(error => {
-                console.error('Error fetching inventory:', error);
+                console.error("Error fetching data:", error);
             });
         }
-    }, [feedback]); */
+    }, [feedback]);
 
     const handle_search = () =>{
         if(search.current){
