@@ -82,9 +82,7 @@ const handle_Logout = async () => {
             query: { ...router.query, search: search_big.current?.value },
           });
         if(search_big.current?.value.length === 0){
-            router.push({
-                pathname: router.pathname,
-              });
+            router.replace("/");
         }
     }
 
