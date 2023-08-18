@@ -403,12 +403,13 @@
 }
 .homie_items_shell_each_details h2 {
   font-weight: 200;
+  font-size: larger;
 }
 .homie_items_shell_each_details h3 {
   padding-top: 10px;
   color: var(--mainColor);
   font-weight: 100;
-  font-size: x-large;
+  font-size: larger;
 }
 .homie_product {
   min-height: 100vh;

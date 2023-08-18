@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { Dispatch, SetStateAction } from 'react';
 import { NextPage } from "next";
 import { useSelector } from "react-redux";
-import { note_login, note_ppicture,note_category,note_balance } from "../redux/loginSlice";
+import { note_login, note_ppicture,note_category,note_balance,note_filterBy, note_scroll } from "../redux/loginSlice";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 
@@ -76,17 +76,25 @@ const handle_Logout = async () => {
     
 
     const handle_URL = () => {
+        dispatch(note_scroll(false))
         if(search_big.current){
+            dispatch(note_filterBy(search_big.current.value))
             setUrl(search_big.current.value);
             console.log(search_big.current.value.length);
         }
         router.replace({
             pathname: router.pathname,
-            query: { ...router.query, search: search_big.current?.value },
+            query: { ...router.query, q: search_big.current?.value },
           });
           if(search_big.current?.value.length === 0){
             router.replace(router.pathname,{})
         }
+    }
+
+    const handle_enter = (e:any) => {
+        if (e.key === 'Enter') {
+            dispatch(note_scroll(true))
+          }
     }
 
     return ( 
@@ -123,7 +131,13 @@ const handle_Logout = async () => {
                 <div className={h.homie_banner_search}>
                     <div className={h.homie_banner_search_kernel}>
                         <Image src={"/srch.png"} alt={"sword"} width={30} height={30}/>
-                        <input type="text" placeholder={"Search for items..."} onChange={handle_URL} ref={search_big} />
+                        <input type="text" 
+                                placeholder={"Search for items..."} 
+                                onChange={handle_URL} 
+                                onKeyDown={handle_enter}
+                                ref={search_big} 
+                        />
+                                
                     </div>
                 </div>
 

@@ -5,7 +5,9 @@ const initialState = {
   ppicture:"",
   category:"csgo",
   balance:0,
-  id:null
+  id:null,
+  filterBy:"",
+  scroll:false,
 }
 
 interface LoginState {
@@ -33,9 +35,15 @@ export const loginSlice = createSlice({
     note_id: (state, action) => {
       state.id = action.payload;
     },
+    note_filterBy: (state, action) => {
+      state.filterBy = action.payload;
+    },
+    note_scroll: (state, action) => {
+      state.scroll = action.payload;
+    },
   },
 });
 
-export const { note_login,note_ppicture,note_category,note_balance,note_id} = loginSlice.actions
+export const { note_login,note_ppicture,note_category,note_balance,note_id,note_filterBy,note_scroll} = loginSlice.actions
 
 export default loginSlice.reducer

@@ -7,7 +7,7 @@ import Items_slider from "./Slider";
 import { useRouter } from "next/router";
 import Navbar from "./Navbar";
 import Img_slider from "./Img_slider";
-import { useDispatch } from "react-redux";
+import { useDispatch,useSelector } from "react-redux";
 import { note_login,note_ppicture, note_balance,note_id } from "../redux/loginSlice";
 import Items_holder from "./Items_holder";
 
@@ -21,7 +21,7 @@ const Homie = () => {
     const [enlarged, setEnlarged] = useState<boolean>(false);
     const [alt_bar, setAlt] = useState<boolean>(false);
     const [modalVis, setModalVis] = useState<string>("default");
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
 
     const csgo_subs = ["Gloves","Heavy","Knife","Pistol","Rifle","SMG","Sticker","Container","Gift","Key","Pass","Tag","Graffiti"];
 
