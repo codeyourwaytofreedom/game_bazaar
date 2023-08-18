@@ -25,8 +25,7 @@ export default async function handler(
         const balance = existingUser.balance;
         const id = existingUser.steamId;
         console.log(balance);
-        
-        res.setHeader('Cache-Control', 'no-store');
+
         res.setHeader('Set-Cookie', `ID=${id}; HttpOnly; Max-Age=${60 * 60}; Path=/; Secure`);
         res.status(200).json({url:url,id:id, balance:balance});
       }
@@ -59,7 +58,6 @@ export default async function handler(
                   { upsert: true }
                 );
 
-                res.setHeader('Cache-Control', 'no-store');
                 res.setHeader('Set-Cookie', `ID=${steamID}; HttpOnly; Max-Age=${60 * 60}; Path=/; Secure`);
                 res.status(200).json({url:profileImage,id:steamID, balance:0});
                 } else {
