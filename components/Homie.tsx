@@ -31,7 +31,7 @@ const Homie = () => {
           if (response.status === 200) {
             dispatch(note_login(true));
             localStorage.setItem('userLoginStatus', 'in');      
-            history.replaceState({}, document.title, "/");
+            router.replace("/");
             const rj = await response.json();
 
             if(rj){

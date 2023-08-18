@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import h from "../styles/Home.module.css";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Dispatch, SetStateAction } from 'react';
 import { NextPage } from "next";
 import { useSelector } from "react-redux";
@@ -25,7 +25,10 @@ const Navbar:NextPage<Navbar_props> = ({alt_bar, setAlt, modalVis, setModalVis})
     const balance = useSelector((state:any) => state.loginSlice.balance);
 
     const [after_login, setAfterLogin] = useState<boolean>(false);
-
+    const [dynamicUrl, setUrl] = useState<string>("");
+    const search_big = useRef<HTMLInputElement>(null);
+    const search_small = useRef<HTMLInputElement>(null);
+    const currentUrl = router.asPath;
 
     const handle_steam = () => {
         window.location.href = '/api/login';
@@ -48,10 +51,9 @@ const handle_Logout = async () => {
         console.log(error)
     })
     if(result){
-        console.log(result);
+        window.location.href = "/";
     }
 }
-
 
     useEffect(()=>{
         if(localStorage.getItem('userLoginStatus')){
@@ -70,6 +72,20 @@ const handle_Logout = async () => {
         const price_rounded = Math.round(price_numbered * 100) / 100;
         const price_formatted = `$${price_rounded.toFixed(2)}`;
         return price_formatted;
+    }
+    const handle_URL = () => {
+        if(search_big.current){
+            setUrl(search_big.current.value)
+        }
+        router.replace({
+            pathname: router.pathname,
+            query: { ...router.query, search: search_big.current?.value },
+          });
+        if(search_big.current?.value.length === 0){
+            router.push({
+                pathname: router.pathname,
+              });
+        }
     }
 
     return ( 
@@ -98,7 +114,7 @@ const handle_Logout = async () => {
                 <div className={h.homie_banner_search2} style={{display:alt_bar ? "grid": "none"}}>
                     <div className={h.homie_banner_search2_kernel}>
                         <Image src={"/srch2.png"} alt={"sword"} width={30} height={30}/>
-                        <input type="text" placeholder={"Search for items..."} />
+                        <input type="text" placeholder={"Search for items..."} onChange={handle_URL}/>
                         <span onClick={()=> setAlt(false)}>X</span>
                     </div>
                 </div>
@@ -106,7 +122,7 @@ const handle_Logout = async () => {
                 <div className={h.homie_banner_search}>
                     <div className={h.homie_banner_search_kernel}>
                         <Image src={"/srch.png"} alt={"sword"} width={30} height={30}/>
-                        <input type="text" placeholder={"Search for items..."} />
+                        <input type="text" placeholder={"Search for items..."} onChange={handle_URL} ref={search_big} />
                     </div>
                 </div>
 
