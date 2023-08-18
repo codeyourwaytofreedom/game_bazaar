@@ -7,6 +7,7 @@ import { NextPage } from "next";
 import { useSelector } from "react-redux";
 import { note_login, note_ppicture,note_category,note_balance } from "../redux/loginSlice";
 import { useDispatch } from "react-redux";
+import { useRouter } from "next/router";
 
 interface Navbar_props {
     setAlt: Dispatch<SetStateAction<boolean>>;
@@ -18,6 +19,7 @@ interface Navbar_props {
 const Navbar:NextPage<Navbar_props> = ({alt_bar, setAlt, modalVis, setModalVis}) => {
 
     const dispatch = useDispatch();
+    const router = useRouter();
     const inn = useSelector((state:any) => state.loginSlice.inn);
     const url = useSelector((state:any) => state.loginSlice.ppicture);
     const balance = useSelector((state:any) => state.loginSlice.balance);
@@ -29,28 +31,27 @@ const Navbar:NextPage<Navbar_props> = ({alt_bar, setAlt, modalVis, setModalVis})
         window.location.href = '/api/login';
     }
 
-    const handle_Logout = async () => {
-        try {
-            const response = await fetch('/api/logout');
-            
-            if (response.status === 200) {
+const handle_Logout = async () => {
+    const result = await fetch('/api/logout').then(
+        (r) =>{
+            if(r.status === 200){
                 localStorage.removeItem('userLoginStatus');
                 localStorage.removeItem('url');
                 localStorage.removeItem('balance');
                 localStorage.removeItem('id');
-                
                 dispatch(note_login(false));
                 dispatch(note_ppicture(""));
-                
-                window.location.href = "/";
-            } else {
-                console.error('Logout request failed with status:', response.status);
+                return true
             }
-        } catch (error) {
-            console.error('Error during logout:', error);
         }
-    };
-    
+    ).catch((error) => {
+        console.log(error)
+    })
+    if(result){
+        console.log(result);
+        router.push("/");        
+    }
+}
 
 
     useEffect(()=>{

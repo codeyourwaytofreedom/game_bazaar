@@ -6,7 +6,7 @@ export default async function handler(
   res: NextApiResponse
 ) {
     console.log("Log out request received");
-    res.setHeader('Set-Cookie', 'ID=; HttpOnly; Max-Age=0; Path=/; Secure');
+    res.setHeader('Set-Cookie', 'ID=""; HttpOnly; Max-Age=0; Path=/; Secure');
     res.status(200).send('OK');
 
 }
