@@ -32,7 +32,7 @@ const Navbar:NextPage<Navbar_props> = ({alt_bar, setAlt, modalVis, setModalVis})
     }
 
 const handle_Logout = async () => {
-    const result = await fetch('/api/logout').then(
+    const result = await fetch('/api/logout',{method:"POST"}).then(
         (r) =>{
             if(r.status === 200){
                 localStorage.removeItem('userLoginStatus');
