@@ -24,24 +24,28 @@ const Navbar:NextPage<Navbar_props> = ({alt_bar, setAlt, modalVis, setModalVis})
 
     const [after_login, setAfterLogin] = useState<boolean>(false);
 
+
     const handle_steam = () => {
         window.location.href = '/api/login';
     }
 
-    const handle_Logout = () => {
-        fetch('/api/logout').then(
-            (r) =>{
-                if(r.status === 200){
-                    localStorage.removeItem('userLoginStatus');
-                    localStorage.removeItem('url');
-                    localStorage.removeItem('balance');
-
-                    dispatch(note_login(false));
-                    dispatch(note_ppicture(""));
-                }
+const handle_Logout = () => {
+    fetch('/api/logout').then(
+        (r) =>{
+            if(r.status === 200){
+                localStorage.removeItem('userLoginStatus');
+                localStorage.removeItem('url');
+                localStorage.removeItem('balance');
+                localStorage.removeItem('id');
             }
-        ).then(()=>window.location.href = "/")
-    }
+        }
+    ).then(() => {
+        dispatch(note_login(false));
+        dispatch(note_ppicture(""));
+        window.location.href = "/";
+    });
+}
+
 
     useEffect(()=>{
         if(localStorage.getItem('userLoginStatus')){

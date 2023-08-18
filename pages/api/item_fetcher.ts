@@ -15,17 +15,6 @@ export default async function handler(
         const data_base = client.db('game-bazaar');
         const members = data_base.collection('members');
 
-/*         const result = await members.aggregate([
-            {
-              $project: {
-                _id: 0,
-                [`descriptions_${appid}`]: 1,
-                delivery_time:1
-              }
-            }
-          ]).toArray(); */
-
-
           const result = await members.aggregate([
             {
               $project: {
