@@ -73,16 +73,18 @@ const handle_Logout = async () => {
         const price_formatted = `$${price_rounded.toFixed(2)}`;
         return price_formatted;
     }
+    
     const handle_URL = () => {
         if(search_big.current){
-            setUrl(search_big.current.value)
+            setUrl(search_big.current.value);
+            console.log(search_big.current.value.length)
         }
         router.replace({
             pathname: router.pathname,
             query: { ...router.query, search: search_big.current?.value },
           });
         if(search_big.current?.value.length === 0){
-            router.replace("/");
+            router.push("/",{});
         }
     }
 
