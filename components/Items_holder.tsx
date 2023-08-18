@@ -83,6 +83,9 @@ const Items_holder = () => {
                             </Link>
                         )
                     }
+                    {inventory && inventory.filter((e:any)=>e.market_name.toLowerCase().includes(filterBy.toLowerCase())).length === 0 &&
+                        <h1 style={{color:"white"}}>No matching item !!!</h1>
+                    }
                 </div>
             </div>
      );
