@@ -49,7 +49,6 @@ const handle_Logout = async () => {
     })
     if(result){
         console.log(result);
-        router.push("/");        
     }
 }
 
