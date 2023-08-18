@@ -493,7 +493,6 @@
                             grid-template-columns: 1fr 3fr;
                             column-gap: 20px;
                             font-size: large !important;
-                            background-color: rgba($color: black, $alpha: 0.65);
                             div{
                                 padding: 5px 10px;
                             }
@@ -519,7 +518,7 @@
                             div{
                                 display: flex;
                                 align-items: center;
-                                padding: 5px 20px;
+                                padding: 7px 20px;
                                 height: fit-content;
                                 align-self: center;
                                 }
@@ -531,7 +530,7 @@
                                 background-color: rgba($color: black, $alpha: 0.65);
                                 img{
                                     object-fit: contain;
-                                    width: auto;height: 100%;
+                                    width: 100%;height: 100%;
                                     z-index: 5;
                                 }
                                 span{
@@ -572,28 +571,13 @@
                                         background-color: rgba($color: gold, $alpha: 0.3);
                                         font-size: large;
                                         height: fit-content;
-                                        border: 2px solid black;
                                         color: whitesmoke;
                                         &:hover{
-                                            box-shadow: 0 0 3px 1px whitesmoke;
                                             color: #FFC300;
                                         }
                                     }
                                 }
                             }
-/*                             div:nth-child(4){
-                                justify-content: center;
-                                background-color: transparent;
-                                padding: 0;
-                                button{
-                                    width: 100%; 
-                                    padding: 5px 10px;
-                                    background-color: transparent;
-                                    color: #FFC300;
-                                    font-size: large;
-                                    height: fit-content;
-                                }
-                            } */
                         }
                     }
                     &_chart{
@@ -917,6 +901,21 @@
                         }
                         &_options{
                             padding: 10px;
+                            &_option{
+                                grid-template-columns: 1fr 2fr;
+                                #triple{
+                                    padding: 3px;
+                                    grid-template-areas: "id id"
+                                                         "price buy";
+                                    div{font-size: small !important;}
+                                    div:nth-child(3){
+                                        button{
+                                            font-size: small !important;
+                                            margin-left: 3px;
+                                        }
+                                    }
+                                }
+                            }
                         }
                         &_chart{
                             display: flex;
