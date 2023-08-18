@@ -116,18 +116,27 @@ const Item_details = () => {
 
                                 <div className={i.homie_product_holder_orders_kernel_options}>
                                     <div id={i.titles}>
-                                        <div>Items</div><div>Seller</div><div>Price</div>
+                                        <div>Items</div>
+                                        <div>
+                                            <div>Seller</div><div>Price</div>
+                                        </div>
                                     </div>
                                     {
                                        item_details &&  item_details.map((e,index)=>
                                        e.filteredDescriptions[0].price ?
                                     <div className={i.homie_product_holder_orders_kernel_options_option} key={index}>
-                                        <div><Image src={`${base_url}${e.filteredDescriptions[0].icon_url}`} alt={"item"} width={200} height={200} /></div>
-                                        <div>
-                                            ID:{e.steamId.slice(-4)} &nbsp;&nbsp;&nbsp; 
-                                            <span style={{color:"crimson", textDecoration:"underline"}}>{e.delivery_time}</span></div>
-                                        <div>{formatter(e.filteredDescriptions[0].price)}</div>
-                                        <div><button>{chosen === 0 ? "Buy" : "Sell"}</button></div>
+                                        <div id={i.image}>
+                                            <span></span>
+                                            <Image src={`${base_url}${e.filteredDescriptions[0].icon_url}`} alt={"item"} width={200} height={200} />
+                                        </div>
+                                        <div id={i.triple}>
+                                            <div>
+                                                ID:{e.steamId.slice(-4)} &nbsp;&nbsp;&nbsp; 
+                                                <span style={{color:"red", textDecoration:"underline"}}>{e.delivery_time}</span>
+                                            </div>
+                                            <div>{formatter(e.filteredDescriptions[0].price)}</div>
+                                            <div><button>{chosen === 0 ? "Buy" : "Sell"}</button></div>
+                                        </div>
                                     </div> : null
                                         )
                                     }

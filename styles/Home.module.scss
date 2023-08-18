@@ -490,46 +490,110 @@
                         row-gap: 5px;
                         #titles{
                             display: grid;
-                            grid-template-columns: 1fr 1fr 1fr 1fr;
+                            grid-template-columns: 1fr 3fr;
                             column-gap: 20px;
+                            font-size: large !important;
+                            background-color: rgba($color: black, $alpha: 0.65);
                             div{
                                 padding: 5px 10px;
-                                background-color: rgba($color: black, $alpha: 0.65);
-                                font-size: larger;
+                            }
+                            :nth-child(1){
+                                display: grid;
+                                justify-items: center;
+                            }
+                            :nth-child(2){
+                                display: grid;
+                                grid-template-columns: 1fr 1fr;
+                                div{
+                                    display: grid;
+                                    justify-content: center;
+                                    justify-items: center;
+                                }
                             }
                             margin-bottom: 10px;
                         }
                         &_option{
                             display: grid;
-                            grid-template-columns: 1fr 1fr 1fr 1fr;
+                            grid-template-columns: 1fr 3fr;
                             column-gap: 1vw;
                             div{
                                 display: flex;
                                 align-items: center;
-                                background-color: rgba($color: black, $alpha: 0.65);
-                                padding: 5px 10px;
-                                font-size: larger;
+                                padding: 5px 20px;
+                                height: fit-content;
+                                align-self: center;
                                 }
-                            div:nth-child(1){
+                            #image{
                                 //background-color: red;
+                                position: relative;
                                 justify-content: center;
+                                height: 100px;
+                                background-color: rgba($color: black, $alpha: 0.65);
                                 img{
-                                    object-fit: cover;
-                                    width: 100%;height: auto;
+                                    object-fit: contain;
+                                    width: auto;height: 100%;
+                                    z-index: 5;
+                                }
+                                span{
+                                    position: absolute;
+                                    display: flex;
+                                    display: block;
+                                    left: 50%;
+                                    box-shadow: 0 0 80px 20px whitesmoke;
+                                    z-index: 3 !important;
                                 }
                             }
-                            div:nth-child(4){
+                            #triple{
+                                display: grid;
+                                grid-template-areas: "id price"
+                                                     "buy buy";
+                                height: 100px;
+                                background-color: rgba($color: black, $alpha: 0.65);
+                                div:nth-child(1){
+                                    grid-area: id;
+                                    background-color: rgba($color: whitesmoke, $alpha: 0.3);
+                                    border-right: 2px solid black;
+                                    justify-content: center;
+                                }
+                                div:nth-child(2){
+                                    grid-area: price;
+                                    background-color: rgba($color: whitesmoke, $alpha: 0.3);
+                                    border-left: 2px solid black;
+                                    justify-content: center;
+                                }
+                                div:nth-child(3){
+                                    grid-area: buy;
+                                    justify-content: center;
+                                    background-color: transparent;
+                                    padding: 0;
+                                    button{
+                                        width: 100%; 
+                                        padding: 5px 10px;
+                                        background-color: rgba($color: gold, $alpha: 0.3);
+                                        font-size: large;
+                                        height: fit-content;
+                                        border: 2px solid black;
+                                        color: whitesmoke;
+                                        &:hover{
+                                            box-shadow: 0 0 3px 1px whitesmoke;
+                                            color: #FFC300;
+                                        }
+                                    }
+                                }
+                            }
+/*                             div:nth-child(4){
                                 justify-content: center;
                                 background-color: transparent;
                                 padding: 0;
                                 button{
                                     width: 100%; 
-                                    padding: 10px;
+                                    padding: 5px 10px;
                                     background-color: transparent;
                                     color: #FFC300;
                                     font-size: large;
+                                    height: fit-content;
                                 }
-                            }
+                            } */
                         }
                     }
                     &_chart{

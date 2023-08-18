@@ -541,49 +541,116 @@
 }
 .homie_product_holder_orders_kernel_options #titles {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 3fr;
   -moz-column-gap: 20px;
        column-gap: 20px;
+  font-size: large !important;
+  background-color: rgba(0, 0, 0, 0.65);
   margin-bottom: 10px;
 }
 .homie_product_holder_orders_kernel_options #titles div {
   padding: 5px 10px;
-  background-color: rgba(0, 0, 0, 0.65);
-  font-size: larger;
+}
+.homie_product_holder_orders_kernel_options #titles :nth-child(1) {
+  display: grid;
+  justify-items: center;
+}
+.homie_product_holder_orders_kernel_options #titles :nth-child(2) {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.homie_product_holder_orders_kernel_options #titles :nth-child(2) div {
+  display: grid;
+  justify-content: center;
+  justify-items: center;
 }
 .homie_product_holder_orders_kernel_options_option {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 3fr;
   -moz-column-gap: 1vw;
        column-gap: 1vw;
+  /*                             div:nth-child(4){
+                                  justify-content: center;
+                                  background-color: transparent;
+                                  padding: 0;
+                                  button{
+                                      width: 100%; 
+                                      padding: 5px 10px;
+                                      background-color: transparent;
+                                      color: #FFC300;
+                                      font-size: large;
+                                      height: fit-content;
+                                  }
+                              } */
 }
 .homie_product_holder_orders_kernel_options_option div {
   display: flex;
   align-items: center;
-  background-color: rgba(0, 0, 0, 0.65);
-  padding: 5px 10px;
-  font-size: larger;
+  padding: 5px 20px;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  align-self: center;
 }
-.homie_product_holder_orders_kernel_options_option div:nth-child(1) {
+.homie_product_holder_orders_kernel_options_option #image {
+  position: relative;
+  justify-content: center;
+  height: 100px;
+  background-color: rgba(0, 0, 0, 0.65);
+}
+.homie_product_holder_orders_kernel_options_option #image img {
+  -o-object-fit: contain;
+     object-fit: contain;
+  width: auto;
+  height: 100%;
+  z-index: 5;
+}
+.homie_product_holder_orders_kernel_options_option #image span {
+  position: absolute;
+  display: flex;
+  display: block;
+  left: 50%;
+  box-shadow: 0 0 80px 20px whitesmoke;
+  z-index: 3 !important;
+}
+.homie_product_holder_orders_kernel_options_option #triple {
+  display: grid;
+  grid-template-areas: "id price" "buy buy";
+  height: 100px;
+  background-color: rgba(0, 0, 0, 0.65);
+}
+.homie_product_holder_orders_kernel_options_option #triple div:nth-child(1) {
+  grid-area: id;
+  background-color: rgba(245, 245, 245, 0.3);
+  border-right: 2px solid black;
   justify-content: center;
 }
-.homie_product_holder_orders_kernel_options_option div:nth-child(1) img {
-  -o-object-fit: cover;
-     object-fit: cover;
-  width: 100%;
-  height: auto;
+.homie_product_holder_orders_kernel_options_option #triple div:nth-child(2) {
+  grid-area: price;
+  background-color: rgba(245, 245, 245, 0.3);
+  border-left: 2px solid black;
+  justify-content: center;
 }
-.homie_product_holder_orders_kernel_options_option div:nth-child(4) {
+.homie_product_holder_orders_kernel_options_option #triple div:nth-child(3) {
+  grid-area: buy;
   justify-content: center;
   background-color: transparent;
   padding: 0;
 }
-.homie_product_holder_orders_kernel_options_option div:nth-child(4) button {
+.homie_product_holder_orders_kernel_options_option #triple div:nth-child(3) button {
   width: 100%;
-  padding: 10px;
-  background-color: transparent;
-  color: #FFC300;
+  padding: 5px 10px;
+  background-color: rgba(255, 215, 0, 0.3);
   font-size: large;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  border: 2px solid black;
+  color: whitesmoke;
+}
+.homie_product_holder_orders_kernel_options_option #triple div:nth-child(3) button:hover {
+  box-shadow: 0 0 3px 1px whitesmoke;
+  color: #FFC300;
 }
 .homie_product_holder_orders_kernel_chart {
   width: 100%;
