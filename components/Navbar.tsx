@@ -29,22 +29,28 @@ const Navbar:NextPage<Navbar_props> = ({alt_bar, setAlt, modalVis, setModalVis})
         window.location.href = '/api/login';
     }
 
-const handle_Logout = () => {
-    fetch('/api/logout').then(
-        (r) =>{
-            if(r.status === 200){
+    const handle_Logout = async () => {
+        try {
+            const response = await fetch('/api/logout');
+            
+            if (response.status === 200) {
                 localStorage.removeItem('userLoginStatus');
                 localStorage.removeItem('url');
                 localStorage.removeItem('balance');
                 localStorage.removeItem('id');
+                
+                dispatch(note_login(false));
+                dispatch(note_ppicture(""));
+                
+                window.location.href = "/";
+            } else {
+                console.error('Logout request failed with status:', response.status);
             }
+        } catch (error) {
+            console.error('Error during logout:', error);
         }
-    ).then(() => {
-        dispatch(note_login(false));
-        dispatch(note_ppicture(""));
-        window.location.href = "/";
-    });
-}
+    };
+    
 
 
     useEffect(()=>{
