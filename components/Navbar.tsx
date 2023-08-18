@@ -74,6 +74,11 @@ const handle_Logout = async () => {
         return price_formatted;
     }
     
+    useEffect(()=>{
+        if(search_big.current?.value.length === 0){
+            router.push("/",{});
+        }
+    },[search_big.current?.value])
     const handle_URL = () => {
         if(search_big.current){
             setUrl(search_big.current.value);
@@ -83,9 +88,6 @@ const handle_Logout = async () => {
             pathname: router.pathname,
             query: { ...router.query, search: search_big.current?.value },
           });
-        if(search_big.current?.value.length === 0){
-            router.push("/",{});
-        }
     }
 
     return ( 
