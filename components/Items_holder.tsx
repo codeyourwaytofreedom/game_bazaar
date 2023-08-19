@@ -4,6 +4,7 @@ import h from "../styles/Home.module.css";
 import Link from "next/link";
 import { useRouter } from 'next/router';
 import { useSelector, useDispatch } from "react-redux";
+import { note_filterBy, note_scroll } from "../redux/loginSlice";
 
 const Items_holder = () => {
     const category = useSelector((state:any) => state.loginSlice.category);
@@ -16,6 +17,8 @@ const Items_holder = () => {
     const [inventory, setInventory] = useState<any>();
     const [feedback, setFeedback] = useState<string>("Inventory loading...");
     const container = useRef<HTMLDivElement>(null);
+    const dispatch = useDispatch();
+    const router = useRouter();
 
     const formatter = (price:string) => {
         const price_numbered = parseFloat(price);
@@ -60,15 +63,29 @@ const Items_holder = () => {
         if(scroll){
             container.current?.scrollIntoView();
         }
-    },[scroll])
+        if(filterBy.length === 0){
+            dispatch(note_scroll(false));
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    },[scroll]);
+
+    const handle_item_choose = (item:any) =>{
+        router.push(`/market/${category}/${item.market_name}?appid=${item.appid}&classid=${item.classid}`);
+    }
+
+    useEffect(()=>{
+        history.replaceState({}, document.title, window.location.pathname);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        dispatch(note_filterBy(""));
+    },[])
 
     return ( 
         <div className={h.homie_items} ref={container}>
                 <div className={h.homie_items_shell}>
                     {
                         inventory && inventory.filter((e:any)=>e.market_name.toLowerCase().includes(filterBy.toLowerCase())).map((item:any,index:any)=>
-                            <Link href={`market/${category}/${index}_item`} key={index}>
-                                <div className={h.homie_items_shell_each}>
+                           /*  <Link href={`market/${category}/${index}_item`} key={index}> */
+                                <div className={h.homie_items_shell_each} key={index} onClick={()=>handle_item_choose(item)}>
                                     <div id={h.icon}>
                                         <Image src={"/item_icon.png"} alt={"sword"} width={30} height={30}/>
                                     </div>
@@ -80,7 +97,7 @@ const Items_holder = () => {
                                         <h3>$ {formatter(item.price)}</h3>
                                     </div>
                                 </div>
-                            </Link>
+                            /* </Link> */
                         )
                     }
                     {inventory && inventory.filter((e:any)=>e.market_name.toLowerCase().includes(filterBy.toLowerCase())).length === 0 &&

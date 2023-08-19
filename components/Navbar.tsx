@@ -29,6 +29,7 @@ const Navbar:NextPage<Navbar_props> = ({alt_bar, setAlt, modalVis, setModalVis})
     const search_big = useRef<HTMLInputElement>(null);
     const search_small = useRef<HTMLInputElement>(null);
     const currentUrl = router.asPath;
+    const scroll = useSelector((state:any) => state.loginSlice.scroll);
 
     const handle_steam = () => {
         window.location.href = '/api/login';
@@ -76,24 +77,28 @@ const handle_Logout = async () => {
     
 
     const handle_URL = () => {
-        dispatch(note_scroll(false))
+        dispatch(note_scroll(false));
+        setTimeout(() => {
+            dispatch(note_scroll(true));
+        }, 400);
         if(search_big.current){
             dispatch(note_filterBy(search_big.current.value))
             setUrl(search_big.current.value);
             console.log(search_big.current.value.length);
         }
-        router.replace({
+        router.push({
             pathname: router.pathname,
             query: { ...router.query, q: search_big.current?.value },
           });
           if(search_big.current?.value.length === 0){
-            router.replace(router.pathname,{})
+            router.push(router.pathname,{});
+            dispatch(note_scroll(false));
         }
     }
 
     const handle_enter = (e:any) => {
         if (e.key === 'Enter') {
-            dispatch(note_scroll(true))
+            dispatch(note_scroll(true));
           }
     }
 
@@ -137,7 +142,7 @@ const handle_Logout = async () => {
                                 onKeyDown={handle_enter}
                                 ref={search_big} 
                         />
-                                
+                             <span>{scroll ? "scroll" : ""}</span>   
                     </div>
                 </div>
 
