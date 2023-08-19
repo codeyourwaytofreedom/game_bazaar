@@ -74,7 +74,10 @@ const Items_holder = () => {
     }
 
     useEffect(()=>{
-        history.replaceState({}, document.title, window.location.pathname);
+        //history.replaceState({}, document.title, window.location.pathname);
+        if(router.query.q){
+            router.push(router.pathname,{});
+        }
         window.scrollTo({ top: 0, behavior: 'smooth' });
         dispatch(note_filterBy(""));
     },[])
