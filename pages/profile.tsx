@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useSelector } from "react-redux";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
-import { note_login, note_ppicture } from "../redux/loginSlice";
+import { note_balance, note_login, note_ppicture, note_universal_feedback } from "../redux/loginSlice";
 import Link from "next/link";
 
 const Profile = () => {
@@ -52,13 +52,17 @@ const Profile = () => {
         }
     
     useEffect(()=>{
-        if(localStorage.getItem('userLoginStatus')){
-            dispatch(note_login(true));
+        if(profile_details){
+            if(profile_details.balance.toString() !== localStorage.getItem('balance')!){
+                dispatch(note_universal_feedback({message:"Funds successfully added", color:"green"}));
+                dispatch(note_balance(profile_details.balance));
+                localStorage.setItem("balance", profile_details.balance);
+                setTimeout(() => {
+                    dispatch(note_universal_feedback({message:"", color:"green"}));
+                }, 1000);
+            }
         }
-        if(localStorage.getItem('url')){
-            dispatch(note_ppicture(localStorage.getItem('url')))
-        }
-      },[]);
+      },[profile_details]);
 
       const formatter = (price:string) => {
         const price_numbered = parseFloat(price);
@@ -127,13 +131,6 @@ const Profile = () => {
             setFeedback({color:"whitesmoke", content:""})
         }, 900);
     };
-
-
-/*     const colorFormatter = (feedback:string) =>{
-        if(feedback.toLowerCase().includes("C")){
-
-        }
-    } */
 
     return ( <Layout>
         <div className={c.homie_profile}>

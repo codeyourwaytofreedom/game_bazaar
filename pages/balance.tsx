@@ -2,9 +2,10 @@ import Layout from "../components/Layout";
 import b from "../styles/Pages.module.css";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import { useSelector } from "react-redux";
-
+import { useSelector,useDispatch } from "react-redux";
+import { note_universal_feedback } from "../redux/loginSlice";
 const Balance = () => {
+    const dispatch = useDispatch();
     const [chosen, setChosen] = useState<number>(0);
     const tabs = ["Deposit","Withdraw","Transactions"];
     const balance = useSelector((state:any) => state.loginSlice.balance);
@@ -19,8 +20,8 @@ const Balance = () => {
     }
 
     const checkOut = async () => {
-        setFeedback({message:"Adding funds to balance", color:"gold"})
         if(depo_amount.current && depo_amount.current.value.length !== 0){
+            dispatch(note_universal_feedback({message:"Adding funds to balance",color:"gold"}))
             try{
                 const response = await fetch('/api/checkout',{
                     method:"POST", body:depo_amount.current?.value
@@ -34,12 +35,18 @@ const Balance = () => {
                 }
                 else{
                     console.log(status, "Sorun var!!! Ama halledilir");
-                    setFeedback(resJson.message)
+                    dispatch(note_universal_feedback({message:resJson.message,color:"red"}))
                 }
             }
             catch(error){
                 console.log(error)
             }
+        }
+        else{
+            dispatch(note_universal_feedback({message:"No valid input !!!",color:"red"}));
+            setTimeout(() => {
+                dispatch(note_universal_feedback({message:"",color:"red"}));
+            }, 1000);
         }
     }
 
@@ -58,7 +65,6 @@ const Balance = () => {
                     </div>
 
                     <div className={b.balance_kernel_triple}>
-
                         <div className={b.balance_kernel_triple_buts}>
                                 {
                                     tabs.map((e,i)=>

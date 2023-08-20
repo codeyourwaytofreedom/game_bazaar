@@ -8,6 +8,7 @@ const initialState = {
   id:null,
   filterBy:"",
   scroll:false,
+  universal_feedback:{message:"",color:"whitesmoke"}
 }
 
 interface LoginState {
@@ -41,9 +42,12 @@ export const loginSlice = createSlice({
     note_scroll: (state, action) => {
       state.scroll = action.payload;
     },
+    note_universal_feedback: (state, action) => {
+      state.universal_feedback = action.payload;
+    },
   },
 });
 
-export const { note_login,note_ppicture,note_category,note_balance,note_id,note_filterBy,note_scroll} = loginSlice.actions
+export const { note_login,note_ppicture,note_category,note_balance,note_id,note_filterBy,note_scroll,note_universal_feedback} = loginSlice.actions
 
 export default loginSlice.reducer
