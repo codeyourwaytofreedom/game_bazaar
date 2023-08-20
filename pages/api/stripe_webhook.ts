@@ -11,14 +11,13 @@ const cors = Cors({
 
 cors(handler as any);
 
-const base_url = process.env.NODE_ENV === "development" ? 'http://localhost:3000' : "https://game-bazaar.vercel.app";
 
 export const config = {
   api: {
     bodyParser: false,
   },
 }
-const webhookSecret: string = process.env.STRIPE_WEBHOOK_SECRET!
+const webhookSecret: string = process.env.SECRETKEY_WEBHOOK!
 
 export default async function handler(req:NextApiRequest, res:NextApiResponse) {
   if (req.method === 'POST') {
@@ -26,8 +25,8 @@ export default async function handler(req:NextApiRequest, res:NextApiResponse) {
     const buf = await buffer(req);
 
     try {
-    const stripe = await require("stripe")(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
-     const event = await stripe.webhooks.constructEvent(buf.toString(), sig, webhookSecret);
+    const stripe = await require("stripe")(process.env.STRIPE_SECRET_KEY!);
+    const event = await stripe.webhooks.constructEvent(buf.toString(), sig, webhookSecret);
       if(event.type === 'checkout.session.completed'){
           const session = event.data.object;
           const steamId = session.client_reference_id;

@@ -1,12 +1,10 @@
 
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-
 const base_url = process.env.NODE_ENV === "development" ? 'http://localhost:3000' : "https://game-bazaar.vercel.app";
 
 
 export default async function handler(req:NextApiRequest, res:NextApiResponse) {
-  //console.log("Checkout route accessed");
   const idCookie = req.cookies.ID;
   let steamID;
 
@@ -25,8 +23,8 @@ export default async function handler(req:NextApiRequest, res:NextApiResponse) {
   const amount_cent = Math.floor(amount*100);  
 
   try {
-    const stripe = await require("stripe")(process.env.STRIPE_SECRET_KEY);
-    const session = await stripe.checkout.sessions.create({
+    const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY!);
+    const session = await stripe?.checkout.sessions.create({
       "payment_method_types": [
         "card"
       ],
@@ -48,7 +46,8 @@ export default async function handler(req:NextApiRequest, res:NextApiResponse) {
       }
     });
     res.status(200).json(session.url);
-  } catch {
+  } catch(error) {
+    console.log(error)
     res.status(500).json({message:"Oops! Something went wrong.."});
   }
 }
