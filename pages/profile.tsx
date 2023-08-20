@@ -59,7 +59,7 @@ const Profile = () => {
                 localStorage.setItem("balance", profile_details.balance);
                 setTimeout(() => {
                     dispatch(note_universal_feedback({message:"", color:"green"}));
-                }, 1000);
+                }, 2000);
             }
         }
       },[profile_details]);
