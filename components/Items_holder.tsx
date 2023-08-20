@@ -74,7 +74,6 @@ const Items_holder = () => {
     }
 
     useEffect(()=>{
-        //history.replaceState({}, document.title, window.location.pathname);
         if(router.query.q){
             router.push(router.pathname,{});
         }
@@ -87,7 +86,6 @@ const Items_holder = () => {
                 <div className={h.homie_items_shell}>
                     {
                         inventory && inventory.filter((e:any)=>e.market_name.toLowerCase().includes(filterBy.toLowerCase())).map((item:any,index:any)=>
-                           /*  <Link href={`market/${category}/${index}_item`} key={index}> */
                                 <div className={h.homie_items_shell_each} key={index} onClick={()=>handle_item_choose(item)}>
                                     <div id={h.icon}>
                                         <Image src={"/item_icon.png"} alt={"sword"} width={30} height={30}/>
@@ -100,7 +98,6 @@ const Items_holder = () => {
                                         <h3>$ {formatter(item.price)}</h3>
                                     </div>
                                 </div>
-                            /* </Link> */
                         )
                     }
                     {inventory && inventory.filter((e:any)=>e.market_name.toLowerCase().includes(filterBy.toLowerCase())).length === 0 &&

@@ -1,14 +1,15 @@
 import Layout from "../components/Layout";
 import b from "../styles/Pages.module.css";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
-
 
 const Balance = () => {
     const [chosen, setChosen] = useState<number>(0);
     const tabs = ["Deposit","Withdraw","Transactions"];
     const balance = useSelector((state:any) => state.loginSlice.balance);
+    const depo_amount = useRef<HTMLInputElement>(null);
+    const [feedback, setFeedback] = useState<{message:string, color:string}>({message:"", color:"whitesmoke"});
 
     const formatter = (price:string) => {
         const price_numbered = parseFloat(price);
@@ -17,9 +18,31 @@ const Balance = () => {
         return price_formatted;
     }
 
-/*     useEffect(()=>{
-        fetch('/api/checkout').then(r=> r.text()).then(rt => window.location.href = rt)
-    },[]) */
+    const checkOut = async () => {
+        setFeedback({message:"Adding funds to balance", color:"gold"})
+        if(depo_amount.current && depo_amount.current.value.length !== 0){
+            try{
+                const response = await fetch('/api/checkout',{
+                    method:"POST", body:depo_amount.current?.value
+                });
+                const status = response.status;
+                const resJson = await response.json();
+                if(status === 200){
+                    if(resJson){
+                        window.location.href = resJson;
+                    }
+                }
+                else{
+                    console.log(status, "Sorun var!!! Ama halledilir");
+                    setFeedback(resJson.message)
+                }
+            }
+            catch(error){
+                console.log(error)
+            }
+        }
+    }
+
     return ( 
         <Layout>
             <div className={b.balance}>
@@ -52,9 +75,10 @@ const Balance = () => {
                         {
                             chosen === 0 || chosen === 1 ? 
                             <div className={b.balance_kernel_triple_explain}>
+                                <h3 style={{color:feedback.color}}>{feedback.message}</h3>
                             <div className={b.balance_kernel_triple_explain_amount}>
                                 <div>{chosen === 0 ? "Deposit" : "Withdraw"}  amount</div>
-                                <input type={"number"} placeholder={"000"} min={1}/>
+                                <input type={"number"} placeholder={"000"} min={1} ref={depo_amount}/>
                             </div>
                             <div className={b.balance_kernel_triple_explain_amount}>
                                 <div>{chosen === 0 ? "Deposit" : "Withdraw"} method</div>
@@ -67,7 +91,7 @@ const Balance = () => {
                             </div>
                             <div className={b.balance_kernel_triple_explain_amount}>
                                 <div></div>
-                                <button>
+                                <button onClick={checkOut}>
                                     <span style={{fontSize:"14px", width:"70px", padding:"3px"}}>Confirm</span>
                                 </button>
                             </div>

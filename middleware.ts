@@ -3,7 +3,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 
 
 export async function middleware(req: NextApiRequest) {
-  console.log("middleware working");
+  console.log("middleware working", req.cookies);
 /*   try {
     const referringURL = request.headers.referer;
     const queryParams = new URLSearchParams(referringURL);
