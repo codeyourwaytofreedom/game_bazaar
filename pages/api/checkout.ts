@@ -7,12 +7,22 @@ const base_url = process.env.NODE_ENV === "development" ? 'http://localhost:3000
 
 export default async function handler(req:NextApiRequest, res:NextApiResponse) {
   //console.log("Checkout route accessed");
-  //console.log(req.cookies.ID)
-  const amount = parseFloat(req.body)*(1.029) + 0.3;
-  const amount_cent = Math.floor(amount*100);
+  const idCookie = req.cookies.ID;
+  let steamID;
 
-  //console.log(amount_cent)
-  
+  if(idCookie){
+      const isSteamOpenIDURL = idCookie.includes("https://steamcommunity.com/openid/id/");
+      if(isSteamOpenIDURL){
+          const parts = idCookie.split("/");
+          steamID = parts[parts.length - 1];
+      }
+      else {
+          steamID = idCookie;
+      }
+  }
+
+  const amount = parseFloat(req.body)*(1.029) + 0.3;
+  const amount_cent = Math.floor(amount*100);  
 
   try {
     const session = await stripe.checkout.sessions.create({
@@ -31,6 +41,10 @@ export default async function handler(req:NextApiRequest, res:NextApiResponse) {
         }],
       "success_url": `${base_url}/profile`,
       "cancel_url": `${base_url}/`,
+      "client_reference_id": steamID,
+      "metadata": {
+        "amount_to_balance": parseFloat(req.body),
+      }
     });
     res.status(200).json(session.url);
   } catch {
