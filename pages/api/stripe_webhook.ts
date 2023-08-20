@@ -18,6 +18,7 @@ export const config = {
     bodyParser: false,
   },
 }
+const webhookSecret: string = process.env.STRIPE_WEBHOOK_SECRET!
 
 export default async function handler(req:NextApiRequest, res:NextApiResponse) {
   if (req.method === 'POST') {
@@ -26,7 +27,7 @@ export default async function handler(req:NextApiRequest, res:NextApiResponse) {
 
     try {
     const stripe = await require("stripe")(process.env.PAYMENT_KEY);
-     const event = await stripe.webhooks.constructEvent(buf.toString(), sig, process.env.SECRETKEY_WEBHOOK);
+     const event = await stripe.webhooks.constructEvent(buf.toString(), sig, webhookSecret);
       if(event.type === 'checkout.session.completed'){
           const session = event.data.object;
           const steamId = session.client_reference_id;

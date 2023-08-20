@@ -1,7 +1,7 @@
 
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-const stripe = require("stripe")(process.env.PAYMENT_KEY);
+
 const base_url = process.env.NODE_ENV === "development" ? 'http://localhost:3000' : "https://game-bazaar.vercel.app";
 
 
@@ -25,6 +25,7 @@ export default async function handler(req:NextApiRequest, res:NextApiResponse) {
   const amount_cent = Math.floor(amount*100);  
 
   try {
+    const stripe = await require("stripe")(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
     const session = await stripe.checkout.sessions.create({
       "payment_method_types": [
         "card"
