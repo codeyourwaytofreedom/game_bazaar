@@ -34,7 +34,7 @@ export default async function handler(req:NextApiRequest, res:NextApiResponse) {
       "line_items": [{
           price_data: {
             currency: "usd",
-            product_data: { name: "Auction Attendance Fee" },
+            product_data: { name: "Skin Bazaar Balance" },
             unit_amount: amount_cent
           },
           quantity: 1

@@ -53,14 +53,8 @@ const Profile = () => {
     
     useEffect(()=>{
         if(profile_details){
-            if(profile_details.balance.toString() !== localStorage.getItem('balance')!){
-                dispatch(note_universal_feedback({message:"Funds successfully added", color:"green"}));
                 dispatch(note_balance(profile_details.balance));
                 localStorage.setItem("balance", profile_details.balance);
-                setTimeout(() => {
-                    dispatch(note_universal_feedback({message:"", color:"green"}));
-                }, 2000);
-            }
         }
       },[profile_details]);
 
