@@ -11,7 +11,6 @@ const cors = Cors({
 
 cors(handler as any);
 
-const stripe = require("stripe")(process.env.PAYMENT_KEY);
 const base_url = process.env.NODE_ENV === "development" ? 'http://localhost:3000' : "https://game-bazaar.vercel.app";
 
 export const config = {
@@ -26,6 +25,7 @@ export default async function handler(req:NextApiRequest, res:NextApiResponse) {
     const buf = await buffer(req);
 
     try {
+    const stripe = await require("stripe")(process.env.PAYMENT_KEY);
      const event = await stripe.webhooks.constructEvent(buf.toString(), sig, process.env.SECRETKEY_WEBHOOK);
       if(event.type === 'checkout.session.completed'){
           const session = event.data.object;
