@@ -25,7 +25,7 @@ export default async function handler(req:NextApiRequest, res:NextApiResponse) {
   const amount_cent = Math.floor(amount*100);  
 
   try {
-    const stripe = await require("stripe")(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
+    const stripe = await require("stripe")(process.env.STRIPE_SECRET_KEY);
     const session = await stripe.checkout.sessions.create({
       "payment_method_types": [
         "card"

@@ -26,7 +26,7 @@ export default async function handler(req:NextApiRequest, res:NextApiResponse) {
     const buf = await buffer(req);
 
     try {
-    const stripe = await require("stripe")(process.env.PAYMENT_KEY);
+    const stripe = await require("stripe")(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
      const event = await stripe.webhooks.constructEvent(buf.toString(), sig, webhookSecret);
       if(event.type === 'checkout.session.completed'){
           const session = event.data.object;
