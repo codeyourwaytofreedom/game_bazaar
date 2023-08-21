@@ -137,7 +137,10 @@ const Item_details = () => {
                                 <div className={i.homie_product_holder_details_price}>
                                     <span>Price :</span><span>{active && formatter(active.price)}</span>
                                 </div>
-                                <div className={i.homie_product_holder_details_buts}><button>Sell</button><button>Buy</button></div>
+                                <div className={i.homie_product_holder_details_buts}>
+                                    <button onClick={()=>router.push(`/inventory?classid=${classid}`)}>Sell</button>
+                                    <button>Buy</button>
+                                </div>
                             </div>
                             </>
                         }

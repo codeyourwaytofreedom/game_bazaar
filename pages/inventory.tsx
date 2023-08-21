@@ -20,6 +20,8 @@ const Inventory = () => {
     const [feedback, setFeedback] = useState<string>("Inventory loading...");
     const [popup, setPopup] = useState<number>(0);
     const [hoverDeetails, setHoverDetails] = useState<any>();
+    const {classid} = router.query; 
+
     useEffect(() => {
         setInventory(null);
         setFeedback("Inventory loading...")
@@ -47,6 +49,18 @@ const Inventory = () => {
             });
     }, [category]);
     
+    useEffect(()=>{
+        if(classid && inventory && search.current){
+            console.log("Class id available")
+            console.log(classid);
+            console.log(inventory.find((e:any)=> e.classid === classid))
+            search.current.value =  inventory.find((e:any)=> e.classid === classid).market_hash_name;
+            setTimeout(() => {
+                setFilterVal(inventory.find((e:any)=> e.classid === classid).market_hash_name);
+            }, 300);
+        }
+        router.replace(router.asPath, {});
+    },[inventory])
     
     
 
