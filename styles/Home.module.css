@@ -613,6 +613,24 @@
   box-shadow: 0 0 80px 20px whitesmoke;
   z-index: 3 !important;
 }
+.homie_product_holder_orders_kernel_options_option #image #popup {
+  position: absolute;
+  right: -200px;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  width: 200px;
+  min-height: 100px;
+  background-color: silver;
+  -webkit-animation: popup 0.1s 1;
+          animation: popup 0.1s 1;
+  transition: height 0.1s ease-in-out;
+  padding: 10px;
+  color: black;
+  display: grid;
+  align-content: center;
+  z-index: 999 !important;
+}
 .homie_product_holder_orders_kernel_options_option #triple {
   display: grid;
   grid-template-areas: "id price" "buy buy";

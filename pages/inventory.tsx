@@ -18,7 +18,8 @@ const Inventory = () => {
     const [chosen, setChosen] = useState<any>();
     const price_input = useRef<HTMLInputElement>(null);
     const [feedback, setFeedback] = useState<string>("Inventory loading...");
-
+    const [popup, setPopup] = useState<number>(0);
+    const [hoverDeetails, setHoverDetails] = useState<any>();
     useEffect(() => {
         setInventory(null);
         setFeedback("Inventory loading...")
@@ -36,7 +37,7 @@ const Inventory = () => {
             })
             .then(data => {
                 if (data) {
-                    console.log(data)
+                    //console.log(data)
                     setInventory(data);
                     setFeedback("")
                 }
@@ -120,7 +121,7 @@ const Inventory = () => {
     const formatter = (price:string) => {
         const price_numbered = parseFloat(price);
         const price_rounded = Math.round(price_numbered * 100) / 100;
-        console.log(price_rounded)
+        //console.log(price_rounded)
         if(price_rounded === 0.00){
             return "--"
         }
@@ -128,6 +129,45 @@ const Inventory = () => {
             const price_formatted = `$${price_rounded.toFixed(2)}`;
             return price_formatted;
         }
+    }
+
+    const handle_popup = (item:any) =>{
+        let level;
+        let paint;
+        let craftable;
+        let spell;
+        let sheen;
+        if(item.type){
+             level = item.type;
+        }
+        if (item.descriptions) {
+            item.descriptions.map((i:any) => {
+                if (i.value.toLowerCase().includes("effect")) {
+                    //console.log(i)
+                }
+                if (i.value.toLowerCase().includes("✔") && i.value.toLowerCase().includes("paint")) {
+                    paint = i.color;
+                }
+                if (i.value.includes("Usable in Crafting")) {
+                    craftable = "Craftable - " + item.market_hash_name;
+                }
+                if (i.value.toLowerCase().includes("spell")) {
+                    spell = i.value;
+                }
+                if (i.value.toLowerCase().includes("sheen")) {
+                    sheen = i.value;
+                }
+            });
+        }
+
+        setHoverDetails({
+            level:level, paint:paint, craftable:craftable, spell:spell, sheen:sheen
+        })
+        if(!level && !paint && !craftable && !spell && !sheen){
+            setHoverDetails(null)
+        }
+        
+
     }
     return ( 
         <Layout>
@@ -171,8 +211,23 @@ const Inventory = () => {
                             style={{backgroundColor:index%2 ? "rgb(40,40,40)" : "rgb(30,30,30)"}}
                         >
                             <span id={i.icon}>
-                                <Image alt={"steam image"} src={`${base_url}${item.icon_url}`} width={90} height={90}/>
+                                <Image alt={"steam image"} src={`${base_url}${item.icon_url}`} width={90} height={90} 
+                                    onMouseEnter={()=> {category === "tm2" && handle_popup(item); setPopup(index)}}
+                                    onMouseLeave={()=> category === "tm2" && setPopup(-1)}
+                                />
                                 <span style={{boxShadow: index%2 ? "0 0 35px 15px whitesmoke" : "0 0 35px 15px gold"}}></span>
+                                {popup === index && hoverDeetails &&
+                                    <div id={i.popup}>
+                                        {
+                                            <>
+                                            <p>{hoverDeetails.level && hoverDeetails.level }</p>
+                                            <p>{hoverDeetails.craftable && hoverDeetails.craftable }</p>
+                                            <p>{hoverDeetails.paint && hoverDeetails.paint }</p>
+                                            <p>{hoverDeetails.sheen && hoverDeetails.sheen }</p>
+                                            <p>{hoverDeetails.spell && hoverDeetails.spell }</p>
+                                            </>
+                                        }
+                                    </div>} 
                             </span>
                             <span onClick={() => handle_item_choose(item)}>{item.market_name}</span>
                             <span style={{color:item.price === 0 ? "whitesmoke" : "gold"}}>
