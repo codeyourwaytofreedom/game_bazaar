@@ -127,22 +127,37 @@ const Item_details = () => {
             bmodal.current.scrollIntoView({behavior:"smooth"});
         }
       };
-      const handle_place_order = () => {
+
+      const handle_place_order = async () => {
         if(price.current && quantity.current){
             if(price.current.value !== "" && quantity.current.value !== ""){
+                dispatch(note_universal_feedback({message:"Placing order...", color:"gold"}));
                 const priceFloat = parseFloat(price.current.value);
-                const quantityFloat = parseFloat(quantity.current.value);
-                const balanceEnough = parseFloat(balance) > priceFloat * quantityFloat;
+                const quantityInt = parseInt(quantity.current.value);
+                const balanceEnough = parseFloat(balance) > priceFloat * quantityInt;
                 if(balanceEnough){
-                    dispatch(note_universal_feedback({message:"Placing order...", color:"gold"}));
-                    setTimeout(() => {
-                        dispatch(note_universal_feedback({message:"Order placed...", color:"green"}))
-                    }, 1000);
-                    setTimeout(() => {
-                        dispatch(note_universal_feedback({message:"", color:"green"}));
-                        quantity.current!.value = "";
-                        price.current!.value = "";
-                    }, 2000);
+                    const response = await fetch('/api/place_order',{
+                        method:'POST',
+                        body:JSON.stringify({price:price.current.value,quantity:quantity.current.value})
+                    });
+                    const status = response.status;
+                    const resJson = await response.json();
+                    if(status === 200){
+                        dispatch(note_universal_feedback({message:"Order placed...", color:resJson.color}));
+                        setTimeout(() => {
+                            dispatch(note_universal_feedback({message:"", color:"green"}));
+                            quantity.current!.value = "";
+                            price.current!.value = "";
+                        }, 2000);
+                        setTimeout(() => {
+                            setBuymodal(false)
+                        }, 2100);
+                    }else{
+                        dispatch(note_universal_feedback({message:"Not enough balance !", color:resJson.color}));
+                        setTimeout(() => {
+                            dispatch(note_universal_feedback({message:"", color:resJson.color}))
+                        }, 1000);
+                    }
                 }else{
                     dispatch(note_universal_feedback({message:"Not enough balance !", color:"red"}));
                     setTimeout(() => {
@@ -209,6 +224,7 @@ const Item_details = () => {
                                 <div className={i.homie_product_holder_orders_kernel_options}>
                                     
                                     <div id={i.buypopup} ref={bmodal} style={{visibility:buymodal ? "visible" : "hidden"}}>
+                                        <button id={i.close} onClick={()=>setBuymodal(false)}>X</button>
                                         <div id={i.kernel}>
                                             <div>
                                                 <span>Quantity</span><br />

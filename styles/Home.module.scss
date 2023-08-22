@@ -508,6 +508,23 @@
                             display: grid;
                             justify-content: center;
                             align-items: center;
+                            #close{
+                                position: absolute;
+                                background: silver;
+                                right: 10px;
+                                top:10px;
+                                width: 30px; height: 30px;
+                                border-radius: 50%;
+                                font-weight: bold;
+                                border: 2px solid gray;
+                                font-size: large;
+                                background-color: black;
+                                color: gold;
+                                &:hover{
+                                    color: red;
+                                    border: 2px solid red;
+                                }
+                            }
                             #kernel{
                                 width: 90vw;
                                 max-width: 450px;
