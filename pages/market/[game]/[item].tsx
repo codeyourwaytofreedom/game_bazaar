@@ -139,7 +139,9 @@ const Item_details = () => {
                         dispatch(note_universal_feedback({message:"Order placed...", color:"green"}))
                     }, 1000);
                     setTimeout(() => {
-                        dispatch(note_universal_feedback({message:"", color:"green"}))
+                        dispatch(note_universal_feedback({message:"", color:"green"}));
+                        quantity.current!.value = "";
+                        price.current!.value = "";
                     }, 2000);
                 }else{
                     dispatch(note_universal_feedback({message:"Not enough balance !", color:"red"}));
