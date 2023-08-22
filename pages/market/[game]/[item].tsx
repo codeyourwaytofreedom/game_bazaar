@@ -1,10 +1,11 @@
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Chart from "../../../components/Chart";
 import Layout from "../../../components/Layout";
 import i from "../../../styles/Home.module.css";
 import { useRouter } from 'next/router';
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { note_universal_feedback } from "../../../redux/loginSlice";
 
 
 type item_details = [
@@ -39,6 +40,12 @@ const Item_details = () => {
     const [popup, setPopup] = useState<number>(0);
     const [hoverDeetails, setHoverDetails] = useState<any>();
     const category = useSelector((state:any) => state.loginSlice.category);
+    const balance = useSelector((state:any) => state.loginSlice.balance);
+    const [buymodal, setBuymodal] = useState(false);
+    const bmodal = useRef<HTMLDivElement>(null);
+    const quantity = useRef<HTMLInputElement>(null);
+    const price = useRef<HTMLInputElement>(null);
+    const dispatch = useDispatch();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -114,6 +121,41 @@ const Item_details = () => {
         }
     }
 
+    const handleBuyClick = () => {
+        setBuymodal(true);
+        if (bmodal.current) {
+            bmodal.current.scrollIntoView({behavior:"smooth"});
+        }
+      };
+      const handle_place_order = () => {
+        if(price.current && quantity.current){
+            if(price.current.value !== "" && quantity.current.value !== ""){
+                const priceFloat = parseFloat(price.current.value);
+                const quantityFloat = parseFloat(quantity.current.value);
+                const balanceEnough = parseFloat(balance) > priceFloat * quantityFloat;
+                if(balanceEnough){
+                    dispatch(note_universal_feedback({message:"Placing order...", color:"gold"}));
+                    setTimeout(() => {
+                        dispatch(note_universal_feedback({message:"Order placed...", color:"green"}))
+                    }, 1000);
+                    setTimeout(() => {
+                        dispatch(note_universal_feedback({message:"", color:"green"}))
+                    }, 2000);
+                }else{
+                    dispatch(note_universal_feedback({message:"Not enough balance !", color:"red"}));
+                    setTimeout(() => {
+                        dispatch(note_universal_feedback({message:"", color:"red"}))
+                    }, 1000);
+                }
+            }
+            else{
+                dispatch(note_universal_feedback({message:"Invalid input !", color:"red"}))
+                setTimeout(() => {
+                    dispatch(note_universal_feedback({message:"", color:"red"}))
+                }, 1000);
+            }
+        }
+      }
 
     return ( 
         <Layout>
@@ -139,13 +181,13 @@ const Item_details = () => {
                                 </div>
                                 <div className={i.homie_product_holder_details_buts}>
                                     <button onClick={()=>router.push(`/inventory?classid=${classid}`)}>Sell</button>
-                                    <button>Buy</button>
+                                    <button onClick={handleBuyClick}>Buy</button>
                                 </div>
                             </div>
                             </>
                         }
 
-                        <div className={i.homie_product_holder_orders}>
+                        <div className={i.homie_product_holder_orders} style={{visibility:!buymodal ? "visible" : "hidden"}}>
                             <div className={i.homie_product_holder_orders_kernel}>
                                 <div className={i.homie_product_holder_orders_kernel_tabs}>
                                 {
@@ -163,6 +205,21 @@ const Item_details = () => {
                                     chosen === 0 || chosen === 1 ? 
 
                                 <div className={i.homie_product_holder_orders_kernel_options}>
+                                    
+                                    <div id={i.buypopup} ref={bmodal} style={{visibility:buymodal ? "visible" : "hidden"}}>
+                                        <div id={i.kernel}>
+                                            <div>
+                                                <span>Quantity</span><br />
+                                                <input type="number" min={1} max={10} ref={quantity} />
+                                            </div>
+                                            <div>
+                                                <span>Buy at ($)</span><br />
+                                                <input type="number" min={0.1} max={100000} ref={price}/>
+                                            </div>
+                                            <button onClick={handle_place_order}>Place Order</button>
+                                        </div>
+                                    </div>
+                                    
                                     <div id={i.titles}>
                                         <div>Items</div>
                                         <div>
