@@ -20,6 +20,7 @@ export default async function order_handle(req:NextApiRequest, res:NextApiRespon
     const order_details = JSON.parse(req.body);
     const price = parseFloat(order_details.price);
     const quantity = parseInt(order_details.quantity);
+    const name = order_details.name;
 
     console.log(steamID, price, quantity);
 
@@ -33,7 +34,7 @@ export default async function order_handle(req:NextApiRequest, res:NextApiRespon
         const balanceEnough = parseFloat(balance) > price*quantity;
         if(balanceEnough){
             const result = await members.updateOne({steamId:steamID},{
-                $push:{orders:[{orderedItem:"MP-9",orderedQuantity:quantity, orderedPrice:price}]}
+                $push:{orders:[{orderedItem:name,orderedQuantity:quantity, orderedPrice:price}]}
             })
             if (result.modifiedCount > 0 || result.upsertedCount > 0) {
                 console.log('Update was successful.');

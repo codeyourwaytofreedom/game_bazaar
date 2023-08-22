@@ -80,7 +80,14 @@ const Item_details = () => {
                 console.log(type, category,quality,price)
             }
         }
-    },[item_details])
+    },[item_details]);
+
+    useEffect(()=>{
+        const fetch_orders = async () => {
+            const response = await fetch('/api/orders');
+        }
+        fetch_orders();
+    },[])
 
     const handle_popup = (item:any) =>{
         console.log("pop up function working");
@@ -129,6 +136,7 @@ const Item_details = () => {
       };
 
       const handle_place_order = async () => {
+        console.log(item_details![0].filteredDescriptions[0].market_hash_name)
         if(price.current && quantity.current){
             if(price.current.value !== "" && quantity.current.value !== ""){
                 dispatch(note_universal_feedback({message:"Placing order...", color:"gold"}));
@@ -138,7 +146,11 @@ const Item_details = () => {
                 if(balanceEnough){
                     const response = await fetch('/api/place_order',{
                         method:'POST',
-                        body:JSON.stringify({price:price.current.value,quantity:quantity.current.value})
+                        body:JSON.stringify({
+                            price:price.current.value,
+                            quantity:quantity.current.value,
+                            name:item_details![0].filteredDescriptions[0].market_hash_name
+                        })
                     });
                     const status = response.status;
                     const resJson = await response.json();

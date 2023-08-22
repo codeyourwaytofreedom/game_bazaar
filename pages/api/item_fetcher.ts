@@ -9,8 +9,7 @@ export default async function handler(
     const {appid, classid} = req.query;
 
     if(appid && classid){
-        console.log("Parametera available");
-
+        //console.log("Parameters available");
         const client = await connectToDatabase();
         const data_base = client.db('game-bazaar');
         const members = data_base.collection('members');
