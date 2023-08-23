@@ -84,6 +84,8 @@ const Item_details = () => {
         }
     },[item_details]);
 
+
+
     useEffect(()=>{
         const fetch_orders = async () => {
             if(item_details){
@@ -92,8 +94,34 @@ const Item_details = () => {
                 const status = response.status;
                 const resJson = await response.json();
                 if(status === 200){
-                    console.log(resJson);
-                    setOrders(resJson);
+                    let pool:any = [];
+                    resJson.forEach((element:any) => {
+                        const orders = element.matchingOrders;
+                        orders.forEach((order:any) => {
+                            const each_order = {
+                                id:element.steamId,
+                                orderedItem: order.orderedItem,
+                                orderedQuantity: order.orderedQuantity,
+                                orderedPrice: order.orderedPrice
+                            }
+                            pool.push(each_order)
+                        });
+                    });
+                    pool.sort((a:any, b:any) => {
+                        const priceA = a.orderedPrice;
+                        const priceB = b.orderedPrice;
+                    
+                        // Compare prices and return -1, 0, or 1 based on the comparison
+                        if (priceA < priceB) {
+                            return -1;
+                        } else if (priceA > priceB) {
+                            return 1;
+                        } else {
+                            return 0;
+                        }
+                    });
+                    //console.log(resJson);
+                    setOrders(pool);
                 }else{
                     console.log("Could not fetch orders")
                 }
@@ -314,17 +342,15 @@ const Item_details = () => {
 { 
                                     chosen === 1 &&
                                     buyOrders &&  buyOrders.map((e:any,index:any)=>
-                                    e.matchingOrders ?
                                     
-                                    (e.matchingOrders).map((order:any, ind:any)=>
                                     <div className={i.homie_product_holder_orders_kernel_options_option} key={index}>
                                     <div id={i.image}>
                                         <span></span>
                                         <Image src={`${base_url}${item_details![0].filteredDescriptions[0].icon_url}`} alt={"item"} width={200} height={200} 
-                                            onMouseEnter={()=> {category === "tm2" && handle_popup(item_details![0]); setPopup(ind)}}
+                                            onMouseEnter={()=> {category === "tm2" && handle_popup(item_details![0]); setPopup(index)}}
                                             onMouseLeave={()=> category === "tm2" && setPopup(-1)}
                                         />
-                                            {popup === ind && hoverDeetails &&
+                                            {popup === index && hoverDeetails &&
                                             <div id={i.popup}>
                                                 {
                                                     <>
@@ -337,23 +363,18 @@ const Item_details = () => {
                                                 }
                                             </div>
                                             } 
-
                                     </div>
                                     <div id={i.triple}>
                                         <div>
-                                            ID:{e.steamId.slice(-4)} &nbsp;&nbsp;&nbsp; 
+                                            ID:{e.id.slice(-4)} &nbsp;&nbsp;&nbsp; 
                                            {/*  <span style={{color:"red", textDecoration:"underline"}}>{e.delivery_time}</span> */}
                                         </div>
-                                        <div>{formatter(order.orderedPrice)} / {order.orderedQuantity} pcs</div>
+                                        <div>{formatter(e.orderedPrice)} / {e.orderedQuantity} pcs</div>
                                         <div><button>Sell</button></div>
                                     </div>
                                 </div> 
-                                    )
-                                    
-                                    : null
                                         )
                                     }
-
                                 </div>
 
                                 : chosen === 2 ? 
