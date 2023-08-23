@@ -113,9 +113,9 @@ const Item_details = () => {
                     
                         // Compare prices and return -1, 0, or 1 based on the comparison
                         if (priceA < priceB) {
-                            return -1;
-                        } else if (priceA > priceB) {
                             return 1;
+                        } else if (priceA > priceB) {
+                            return -1;
                         } else {
                             return 0;
                         }
