@@ -46,6 +46,8 @@ const Item_details = () => {
     const quantity = useRef<HTMLInputElement>(null);
     const price = useRef<HTMLInputElement>(null);
     const dispatch = useDispatch();
+    const [buyOrders, setOrders] = useState<any>();
+    const [triggerUpdate, setTrigger] = useState(false);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -87,10 +89,19 @@ const Item_details = () => {
             if(item_details){
                 const item_name = item_details[0].filteredDescriptions[0].market_hash_name;
                 const response = await fetch(`/api/orders?item=${item_name}`);
+                const status = response.status;
+                const resJson = await response.json();
+                if(status === 200){
+                    console.log(resJson);
+                    setOrders(resJson);
+                }else{
+                    console.log("Could not fetch orders")
+                }
+
             }
         }
         fetch_orders();
-    },[item_details])
+    },[item_details,triggerUpdate])
 
     const handle_popup = (item:any) =>{
         console.log("pop up function working");
@@ -100,7 +111,7 @@ const Item_details = () => {
         let craftable;
         let spell;
         let sheen;
-        if(item.filteredDescriptions[0]){
+        if(item.filteredDescriptions){
              level = item.filteredDescriptions[0].type;
         }
         if (item.filteredDescriptions) {
@@ -133,6 +144,7 @@ const Item_details = () => {
 
     const handleBuyClick = () => {
         setBuymodal(true);
+        setTrigger(false);
         if (bmodal.current) {
             bmodal.current.scrollIntoView({behavior:"smooth"});
         }
@@ -158,6 +170,7 @@ const Item_details = () => {
                     const status = response.status;
                     const resJson = await response.json();
                     if(status === 200){
+                        setTrigger(true);
                         dispatch(note_universal_feedback({message:"Order placed...", color:resJson.color}));
                         setTimeout(() => {
                             dispatch(note_universal_feedback({message:"", color:"green"}));
@@ -256,10 +269,12 @@ const Item_details = () => {
                                     <div id={i.titles}>
                                         <div>Items</div>
                                         <div>
-                                            <div>Seller</div><div>Price</div>
+                                            <div>{chosen === 0 ? "Seller" : "Buyer"}</div><div>Price</div>
                                         </div>
                                     </div>
-                                    {
+
+                                    { 
+                                        chosen === 0 &&
                                        item_details &&  item_details.map((e,index)=>
                                        e.filteredDescriptions[0].price ?
                                     <div className={i.homie_product_holder_orders_kernel_options_option} key={index}>
@@ -295,6 +310,50 @@ const Item_details = () => {
                                     </div> : null
                                         )
                                     }
+
+{ 
+                                    chosen === 1 &&
+                                    buyOrders &&  buyOrders.map((e:any,index:any)=>
+                                    e.matchingOrders ?
+                                    
+                                    (e.matchingOrders).map((order:any, ind:any)=>
+                                    <div className={i.homie_product_holder_orders_kernel_options_option} key={index}>
+                                    <div id={i.image}>
+                                        <span></span>
+                                        <Image src={`${base_url}${item_details![0].filteredDescriptions[0].icon_url}`} alt={"item"} width={200} height={200} 
+                                            onMouseEnter={()=> {category === "tm2" && handle_popup(item_details![0]); setPopup(ind)}}
+                                            onMouseLeave={()=> category === "tm2" && setPopup(-1)}
+                                        />
+                                            {popup === ind && hoverDeetails &&
+                                            <div id={i.popup}>
+                                                {
+                                                    <>
+                                                    <p>{hoverDeetails.level && hoverDeetails.level }</p>
+                                                    <p>{hoverDeetails.craftable && hoverDeetails.craftable }</p>
+                                                    <p>{hoverDeetails.paint && hoverDeetails.paint }</p>
+                                                    <p>{hoverDeetails.sheen && hoverDeetails.sheen }</p>
+                                                    <p>{hoverDeetails.spell && hoverDeetails.spell }</p>
+                                                    </>
+                                                }
+                                            </div>
+                                            } 
+
+                                    </div>
+                                    <div id={i.triple}>
+                                        <div>
+                                            ID:{e.steamId.slice(-4)} &nbsp;&nbsp;&nbsp; 
+                                           {/*  <span style={{color:"red", textDecoration:"underline"}}>{e.delivery_time}</span> */}
+                                        </div>
+                                        <div>{formatter(order.orderedPrice)} / {order.orderedQuantity} pcs</div>
+                                        <div><button>Sell</button></div>
+                                    </div>
+                                </div> 
+                                    )
+                                    
+                                    : null
+                                        )
+                                    }
+
                                 </div>
 
                                 : chosen === 2 ? 
