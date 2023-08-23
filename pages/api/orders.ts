@@ -5,6 +5,7 @@ export default async function orders_fetcher (req:NextApiRequest, res:NextApiRes
     console.log("Orders fetcher endpoint accessed...");
 
     const idCookie = req.cookies.ID;
+    const item = req.query.item
     let steamID;
 
     if(idCookie){
@@ -18,7 +19,15 @@ export default async function orders_fetcher (req:NextApiRequest, res:NextApiRes
         }
     }
 
+    console.log(item);
+    console.log(steamID);
 
+    if(steamID && item){
+        const client = await connectToDatabase();
+        const db = client.db('game-bazaar');
+        const members = db.collection('members');
+
+    }
 
     res.send("ok");
 }

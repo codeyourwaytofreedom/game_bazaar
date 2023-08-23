@@ -33,9 +33,18 @@ export default async function order_handle(req:NextApiRequest, res:NextApiRespon
         const balance = existingUser.balance;
         const balanceEnough = parseFloat(balance) > price*quantity;
         if(balanceEnough){
-            const result = await members.updateOne({steamId:steamID},{
-                $push:{orders:[{orderedItem:name,orderedQuantity:quantity, orderedPrice:price}]}
-            })
+            const result = await members.updateOne(
+                { steamId: steamID },
+                {
+                    $push: {
+                        orders: {
+                            orderedItem: name,
+                            orderedQuantity: quantity,
+                            orderedPrice: price
+                        }
+                    }
+                }
+            );
             if (result.modifiedCount > 0 || result.upsertedCount > 0) {
                 console.log('Update was successful.');
                 res.status(200).json({message:"Orders placed !!!", color:"green"});

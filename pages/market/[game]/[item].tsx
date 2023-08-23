@@ -84,10 +84,13 @@ const Item_details = () => {
 
     useEffect(()=>{
         const fetch_orders = async () => {
-            const response = await fetch('/api/orders');
+            if(item_details){
+                const item_name = item_details[0].filteredDescriptions[0].market_hash_name;
+                const response = await fetch(`/api/orders?item=${item_name}`);
+            }
         }
         fetch_orders();
-    },[])
+    },[item_details])
 
     const handle_popup = (item:any) =>{
         console.log("pop up function working");
@@ -199,7 +202,7 @@ const Item_details = () => {
                             <>
                             <Image id={i.item} src={`${base_url}${item_details[0].filteredDescriptions[0].icon_url}`}  alt={"item"} width={300} height={300} />
                             <div className={i.homie_product_holder_details}>
-                                <div className={i.homie_product_holder_details_title}>{item_details[0].filteredDescriptions[0].market_name}</div>
+                                <div className={i.homie_product_holder_details_title}>{item_details[0].filteredDescriptions[0].market_hash_name}</div>
                                 <div className={i.homie_product_holder_details_explain}>
                                     <div><span>Quality :</span><span> {active && active.quality}</span></div>
                                     <div><span>Category :</span><span> {active && active.category}</span></div>
