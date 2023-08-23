@@ -126,7 +126,7 @@ const Profile = () => {
         }, 900);
     };
 
-    return ( <Layout>
+    return ( <Layout searchbox={false}>
         <div className={c.homie_profile}>
             <div className={c.homie_profile_kernel}>
                 {

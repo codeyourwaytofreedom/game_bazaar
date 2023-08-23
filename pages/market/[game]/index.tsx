@@ -6,7 +6,7 @@ import m from "../../../styles/Home.module.css";
 
 const Market = () => {
     return ( <>  
-    <Layout>
+    <Layout searchbox={false}>
         <Items_holder/>
     </Layout>
     </> );

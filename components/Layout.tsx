@@ -6,10 +6,11 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
 type Layout_props = {
-    children:ReactNode
+    children:ReactNode,
+    searchbox:boolean
 }
 
-const Layout = ({children}:Layout_props) => {
+const Layout = ({children,searchbox}:Layout_props) => {
     const [alt_bar, setAlt] = useState<boolean>(false);
     const [modalVis, setModalVis] = useState<string>("default");
     const universal_feedback = useSelector((state:any)=>state.loginSlice.universal_feedback);
@@ -25,7 +26,7 @@ const Layout = ({children}:Layout_props) => {
 
     return ( <>
         <div className={h.homie}>
-            <Navbar alt_bar={alt_bar} setAlt={setAlt} modalVis={modalVis} setModalVis={setModalVis}/>
+            <Navbar alt_bar={alt_bar} setAlt={setAlt} modalVis={modalVis} setModalVis={setModalVis} searchbox={searchbox}/>
             {children}
             {
                 universal_feedback && universal_feedback.message.length > 0 && 

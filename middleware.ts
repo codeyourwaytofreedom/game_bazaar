@@ -2,8 +2,8 @@ import { NextResponse,NextRequest } from 'next/server';
 import { NextApiRequest, NextApiResponse } from 'next';
 
 
-export async function middleware(req: NextApiRequest) {
-  console.log("middleware working", req.cookies);
+export async function middleware(req: NextApiRequest, res:NextApiResponse) {
+  //console.log("middleware working", req.cookies);
 /*   try {
     const referringURL = request.headers.referer;
     const queryParams = new URLSearchParams(referringURL);

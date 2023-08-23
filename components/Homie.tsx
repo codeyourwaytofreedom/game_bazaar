@@ -98,7 +98,7 @@ const Homie = () => {
             <Img_slider/>
             <Items_slider/>
             {/* <div className={h.homie_wallpaper}></div> */}
-            <Navbar alt_bar={alt_bar} setAlt={setAlt} modalVis={modalVis} setModalVis={setModalVis}/>
+            <Navbar alt_bar={alt_bar} setAlt={setAlt} modalVis={modalVis} setModalVis={setModalVis} searchbox={true}/>
 {/*             <div className={h.homie_categories}>
                 <div className={h.homie_categories_each} onClick={()=>router.push("/market/tm2")}>
                     <h3>Team Fortress 2</h3>

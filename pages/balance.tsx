@@ -51,7 +51,7 @@ const Balance = () => {
     }
 
     return ( 
-        <Layout>
+        <Layout searchbox={false}>
             <div className={b.balance}>
                 <div className={b.balance_kernel}>
                     <div className={b.balance_kernel_tabs}>

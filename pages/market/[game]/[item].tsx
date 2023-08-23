@@ -231,7 +231,7 @@ const Item_details = () => {
       }
 
     return ( 
-        <Layout>
+        <Layout searchbox={false}>
             <>
                 <div className={i.homie_product}>
                     <div id={i.blacken}></div>

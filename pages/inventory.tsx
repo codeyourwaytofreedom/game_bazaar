@@ -184,7 +184,7 @@ const Inventory = () => {
 
     }
     return ( 
-        <Layout>
+        <Layout searchbox={false}>
             <div className={i.inventory}>
                 <div className={i.inventory_kernel}>
                     {

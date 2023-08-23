@@ -13,6 +13,8 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     if (!user) {
       return res.status(401).json({ error: 'Unauthorized' });
     }
+    console.log('Request object after authentication:', req);
+
     return res.status(200).json({ message: 'Authentication successful', user });
   })(req, res);
 }

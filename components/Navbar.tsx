@@ -13,10 +13,11 @@ interface Navbar_props {
     setAlt: Dispatch<SetStateAction<boolean>>;
     alt_bar:boolean,
     setModalVis:Dispatch<SetStateAction<string>>,
-    modalVis:string
+    modalVis:string,
+    searchbox:boolean
   }
 
-const Navbar:NextPage<Navbar_props> = ({alt_bar, setAlt, modalVis, setModalVis}) => {
+const Navbar:NextPage<Navbar_props> = ({alt_bar, setAlt, modalVis, setModalVis,searchbox}) => {
 
     const dispatch = useDispatch();
     const router = useRouter();
@@ -125,6 +126,9 @@ const handle_Logout = async () => {
                 <Image src={"/srch.png"} alt={"sword"} width={30} height={30} id={h.alt_search} onClick={()=> setAlt(true)}/>
 
                 
+                {
+                    searchbox &&
+                    <>
                 <div className={h.homie_banner_search2} style={{display:alt_bar ? "grid": "none"}}>
                     <div className={h.homie_banner_search2_kernel}>
                         <Image src={"/srch2.png"} alt={"sword"} width={30} height={30}/>
@@ -145,6 +149,8 @@ const handle_Logout = async () => {
                              <span>{scroll ? "scroll" : ""}</span>   
                     </div>
                 </div>
+                    </>
+                }
 
                 <div id={h.login} onClick={inn ? ()=> setTimeout(() => {setAfterLogin(after_login=>!after_login)}, 50) : handle_steam}
                         onBlur={()=> setTimeout(() => {setAfterLogin(false)}, 300)}>
