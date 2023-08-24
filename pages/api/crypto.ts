@@ -26,7 +26,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         requestBody.append('lastname', 'lastname');
         requestBody.append('amount', '10');
         requestBody.append('currency', 'BTC');
-        requestBody.append('MerchantId', '0xMR9663343');
+        requestBody.append('MerchantId', ---);
         requestBody.append('ClientId', '1000');
         requestBody.append('BillingId', '13304');
         requestBody.append('ReturnUrl', 'true');
