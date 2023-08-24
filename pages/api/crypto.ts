@@ -1,17 +1,24 @@
 
 import type { NextApiRequest, NextApiResponse } from 'next';
-import Cors from 'micro-cors';
-
-
-const cors = Cors({
-    allowMethods: ['POST', 'HEAD'],
-  });
-  
-cors(handler as any);
+import fetch from 'node-fetch';
+import { HttpsProxyAgent } from 'https-proxy-agent';
 
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+
+    console.log("Function started");
+    const agent = new HttpsProxyAgent('http://144.49.99.18:8080');
+    
     try {
+        const response = await fetch('http://httpbin.org/ip', { agent });
+        const body = await response.text();
+        console.log(body);
+    } catch (error) {
+        console.log('error', error);
+    }
+    res.send("OK");
+
+/*     try {
         const requestBody = new URLSearchParams();
         requestBody.append('test', 'false');
         requestBody.append('email', 'test@test.com');
@@ -34,9 +41,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
         const resjson = await response.json();
         console.log(resjson)
-        res.send("ok");
+        res.status(200).json(resjson);
     } catch (error) {
         console.error(error);
         res.status(500).send("Internal Server Error");
-    }
+    } */
 }
