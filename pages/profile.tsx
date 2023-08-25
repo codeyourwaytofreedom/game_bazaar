@@ -15,6 +15,12 @@ const Profile = () => {
     const link = useRef<HTMLInputElement>(null);
     const [profile_details, setDetails] = useState<any>();
     const [feedback, setFeedback] = useState<{color:string,content:string}>({color:"whitesmoke",content:""});
+    const list_items = useRef<HTMLButtonElement>(null);
+    const [showItems, setShowItems] = useState(true);
+    const [modal, setModal] = useState<boolean>(false);
+    const [chosen, setChosen] = useState<any>();
+    const price_input = useRef<HTMLInputElement>(null);
+    const [fBack, setfBack] = useState<string>("Inventory loading...");
 
     const dels = ["12 hr", "15 min"]
 
@@ -126,6 +132,64 @@ const Profile = () => {
         }, 900);
     };
 
+    const handle_list_items = async () => {
+        dispatch(note_universal_feedback({message:"Loading items...", color:"gold"}))
+        try {
+            const response = await fetch('/api/list_items');
+            const status = response.status;
+            if(status === 200){
+                const rejson = await response.json();
+                console.log(rejson);
+                dispatch(note_universal_feedback({message:"", color:"gold"}))
+            }
+            else{
+                console.log("Unintented response code");
+            }
+        } catch (error) {
+            console.log("Fetch problem", error)
+        }
+
+/*         if(list_items.current){
+            if(showItems){
+                list_items.current.scrollIntoView({behavior:"smooth"});
+            }
+            else{
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+        setShowItems(!showItems) */
+    }
+
+    const handle_update = (e:any) => {
+        let ready:boolean = false;
+        console.log(typeof chosen.price);
+        if(price_input.current){
+            ready = price_input.current.value.length > 0 && 
+            parseFloat(price_input.current.value) > 0 &&
+            price_input.current.value !== chosen.price
+        }
+        if(!ready){setfBack("Enter a valid number different from current price!!!")}
+        if(ready){
+            setfBack("Updating price...");
+            fetch('/api/price_update',{
+                method:'POST',
+                body:JSON.stringify(
+                    {
+                        classid:chosen.classid,
+                        price:price_input.current!.value, 
+                        appId:chosen.appid
+                    }
+                )
+            }).then(r=> r.text()).then(rt => setfBack(rt))
+        } 
+    }
+
+    const handle_price_editing = (item:any) => {
+        setChosen(item);
+        setModal(true);
+        console.log(item);
+    }
+
     return ( <Layout searchbox={false}>
         <div className={c.homie_profile}>
             <div className={c.homie_profile_kernel}>
@@ -236,6 +300,50 @@ const Profile = () => {
 
                 </div>
             </div>
+            <button onClick={handle_list_items} ref={list_items} id={c.list_items}>{showItems ? "Show my items" : "Hide items"}</button>
+
+            <div className={c.homie_profile_items} style={{visibility:showItems ? "visible" : "hidden"}}>
+                {
+                    [...Array(4)].map((item,index)=>
+                    <div className={c.homie_profile_items_item} 
+                         style={{backgroundColor:index%2 ? "rgb(40,40,40)" : "rgb(30,30,30)"}} 
+                         key={index}>
+                        <span id={c.icon}>
+                            <Image alt={"steam image"} src={"/3.png"} width={90} height={90}/>
+                            <span style={{boxShadow: index%2 ? "0 0 35px 15px whitesmoke" : "0 0 35px 15px gold"}}></span>
+                        </span>
+                        <span>Name</span>
+                        <span style={{color:"gold"}}>
+                            {   
+                                formatter("5.88")
+                            }
+                        </span>
+                        <button onClick={handle_price_editing}>Edit Price</button>
+                        <span><Image alt={"delete steam"} src={index%2 ? "/delete4.png" : "/delete3.png" } width={20} height={20}/></span>
+                    </div>
+                    )
+                }
+            </div>
+                    {
+                        modal && 
+                        
+                        <div id={c.modal}>
+                        <div className={c.homie_profile_items_item} key={999} id={c.chosen}
+                        >
+                            <h1 style={{
+                                color:fBack?.includes("Updating")? "whitesmoke" : fBack?.includes("updated") ? "gold" : "red"
+                                }}>{fBack && fBack}</h1>
+                            <span id={c.icon}>
+                                <Image alt={"steam image"} src={"/3.png"} width={90} height={90}/>
+                                <span style={{boxShadow: 0%2 ? "0 0 35px 15px whitesmoke" : "0 0 35px 15px gold"}}></span>
+                            </span>
+                            <span>{chosen.market_name}</span>
+                            <span> $<input ref={price_input} type="number" placeholder={chosen.price ? chosen.price : "0"} /></span>
+                            <button onClick={handle_update}>Save</button>
+                            <button id={c.close} onClick={()=> {setModal(false); setfBack("")}}>X</button>
+                        </div>
+                        </div>
+                    }
         </div>
     </Layout> );
 }

@@ -11,6 +11,7 @@ const Balance = () => {
     const balance = useSelector((state:any) => state.loginSlice.balance);
     const depo_amount = useRef<HTMLInputElement>(null);
     const [feedback, setFeedback] = useState<{message:string, color:string}>({message:"", color:"whitesmoke"});
+    const [method, setMethod] = useState<string>("card");
 
     const formatter = (price:string) => {
         const price_numbered = parseFloat(price);
@@ -19,7 +20,11 @@ const Balance = () => {
         return price_formatted;
     }
 
-    const checkOut = async () => {
+/*     useEffect(()=>{
+        fetch('/api/rot').then(r=>console.log(r))
+    },[]) */
+
+    const checkOutCard = async () => {
         if(depo_amount.current && depo_amount.current.value.length !== 0){
             dispatch(note_universal_feedback({message:"Adding funds to balance",color:"gold"}))
             try{
@@ -36,6 +41,40 @@ const Balance = () => {
                 else{
                     console.log(status, "Sorun var!!! Ama halledilir");
                     dispatch(note_universal_feedback({message:resJson.message,color:"red"}))
+                }
+            }
+            catch(error){
+                console.log(error)
+            }
+        }
+        else{
+            dispatch(note_universal_feedback({message:"No valid input !!!",color:"red"}));
+            setTimeout(() => {
+                dispatch(note_universal_feedback({message:"",color:"red"}));
+            }, 1000);
+        }
+    }
+
+    const checkOutCrypto = async () => {
+        if(depo_amount.current && depo_amount.current.value.length !== 0){
+            dispatch(note_universal_feedback({message:"Adding funds to balance",color:"gold"}))
+            try{
+                const response = await fetch('/api/crypto',{
+                    method:"GET", /* body:depo_amount.current?.value */
+                });
+                const status = response.status;
+                const resJson = await response.json();
+                if(status === 200){
+                    if(resJson){
+                        window.location.href = resJson;
+                    }
+                }
+                else{
+                    console.log(status, "Sorun var!!! Ama halledilir");
+                    dispatch(note_universal_feedback({message:resJson.message,color:"red"}))
+                    setTimeout(() => {
+                        dispatch(note_universal_feedback({message:"",color:"red"}))
+                    }, 2000);
                 }
             }
             catch(error){
@@ -88,16 +127,18 @@ const Balance = () => {
                             </div>
                             <div className={b.balance_kernel_triple_explain_amount}>
                                 <div>{chosen === 0 ? "Deposit" : "Withdraw"} method</div>
-                                <button>                    
-                                    <Image src={"/bitcoin.png"} alt={"bitcoin"} width={30} height={30}/> <span>Crypto</span>
-                                </button>
-                                <button>
+                                <button  onClick={()=>setMethod("card")}>
+                                    <span id={b.active} style={{color:"green", display:method === "card" ? "block" : "none"}}>&#9660;</span>
                                     <Image src={"/debit.png"} alt={"bitcoin"} width={30} height={30}/> <span>Debit Card</span>
+                                </button>
+                                <button onClick={()=>setMethod("crypto")}>            
+                                    <span id={b.active} style={{color:"green", display:method === "crypto" ? "block" : "none"}}>&#9660;</span>
+                                    <Image src={"/bitcoin.png"} alt={"bitcoin"} width={30} height={30}/> <span>Crypto</span>
                                 </button>
                             </div>
                             <div className={b.balance_kernel_triple_explain_amount}>
                                 <div></div>
-                                <button onClick={checkOut}>
+                                <button onClick={method === "card" ? checkOutCard : checkOutCrypto}>
                                     <span style={{fontSize:"14px", width:"70px", padding:"3px"}}>Confirm</span>
                                 </button>
                             </div>

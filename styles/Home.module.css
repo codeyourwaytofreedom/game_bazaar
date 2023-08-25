@@ -808,8 +808,7 @@
 .homie_profile {
   display: grid;
   justify-content: center;
-  align-items: center;
-  min-height: 600px;
+  padding-top: 40px;
 }
 .homie_profile_kernel {
   display: grid;
@@ -962,6 +961,146 @@
   position: absolute;
   z-index: 99 !important;
   color: transparent;
+}
+.homie_profile #list_items {
+  background-color: black;
+  border: 2px solid gray;
+  margin-top: 20px;
+  padding: 5px 0;
+  max-width: 90vw;
+  width: calc(100% - 20px);
+  display: grid;
+  justify-self: center;
+  font-size: large;
+  border-radius: 5px;
+  color: gold;
+}
+.homie_profile #list_items:hover {
+  background-color: #FFC300;
+  color: black;
+}
+.homie_profile_items {
+  margin-top: 20px;
+  display: grid;
+  row-gap: 5px;
+  padding: 5px 10px;
+}
+.homie_profile_items_item {
+  display: grid;
+  grid-template-columns: 2fr 6fr 2fr 2fr 50px;
+}
+.homie_profile_items_item input {
+  background-color: transparent;
+  border: 2px solid silver;
+  border-radius: 5px;
+  padding: 3px 5px;
+  outline: none;
+  font-size: large;
+  color: whitesmoke;
+}
+.homie_profile_items_item input:focus {
+  border: 2px solid gold;
+}
+.homie_profile_items_item button {
+  border: none;
+  background: transparent;
+  color: whitesmoke;
+}
+.homie_profile_items_item button:hover {
+  text-decoration: underline;
+  color: gold;
+}
+.homie_profile_items_item span {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding-left: 5px;
+}
+.homie_profile_items_item span:nth-child(1) {
+  justify-content: center;
+  padding-left: 0;
+}
+.homie_profile_items_item span:nth-child(2) {
+  padding-left: 10px;
+  color: whitesmoke;
+}
+.homie_profile_items_item span:nth-child(2):hover {
+  text-decoration: underline;
+  color: gold;
+}
+.homie_profile_items_item #icon {
+  display: grid;
+  justify-content: center;
+  position: relative;
+  padding: 5px;
+}
+.homie_profile_items_item #icon span {
+  width: 0;
+  height: 0;
+  position: absolute;
+  left: calc(50% - 5px);
+  border-radius: 50%;
+  box-shadow: 0 0 35px 15px gold;
+}
+.homie_profile_items_item #icon img {
+  width: 70px;
+  height: auto;
+  z-index: 3;
+}
+.homie_profile #modal {
+  position: fixed;
+  top: 70px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.9);
+  z-index: 99;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.homie_profile #modal #chosen {
+  align-items: center;
+  background-color: gray !important;
+  box-shadow: 0 0 9px 2px whitesmoke;
+  grid-template-columns: 2fr 6fr 2fr 2fr 1fr;
+  position: relative;
+  width: 90vw;
+  max-width: 1000px;
+}
+.homie_profile #modal #chosen h1 {
+  position: absolute;
+  color: white;
+  top: -70px;
+  display: grid;
+  justify-self: center;
+}
+.homie_profile #modal #chosen input {
+  height: 35px;
+  width: 100%;
+  margin-left: 3px;
+}
+.homie_profile #modal #chosen input::-moz-placeholder {
+  color: whitesmoke;
+}
+.homie_profile #modal #chosen input:-ms-input-placeholder {
+  color: whitesmoke;
+}
+.homie_profile #modal #chosen input::placeholder {
+  color: whitesmoke;
+}
+.homie_profile #modal #chosen button {
+  font-size: large;
+}
+.homie_profile #modal #chosen #close {
+  width: 35px;
+  height: 35px;
+  border: 2px solid silver;
+  border-radius: 50%;
+}
+.homie_profile #modal #chosen #close:hover {
+  background-color: black;
+  color: crimson;
 }
 
 @media (max-width: 991.98px) {

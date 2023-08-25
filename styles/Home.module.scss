@@ -738,8 +738,7 @@
     &_profile{
         display: grid;
         justify-content: center;
-        align-items: center;
-        min-height: 600px;
+        padding-top: 40px;
         &_kernel{
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -877,6 +876,137 @@
                             z-index: 99 !important;
                             color: transparent;
                         }
+                    }
+                }
+            }
+        }
+        #list_items{
+            background-color: black;
+            border: 2px solid gray;
+            margin-top: 20px;
+            padding: 5px 0;
+            max-width: 90vw;
+            width: calc(100% - 20px);
+            display: grid;
+            justify-self: center;
+            font-size: large;
+            border-radius: 5px;
+            color: gold;
+            &:hover{
+                background-color: #FFC300;
+                color: black;
+            }
+        }
+        &_items{
+            margin-top: 20px;
+            display: grid;
+            row-gap: 5px;
+            padding: 5px 10px;
+            &_item{
+                display: grid;
+                grid-template-columns: 2fr 6fr 2fr 2fr 50px;
+                input{
+                    background-color: transparent;
+                    border: 2px solid silver;
+                    border-radius: 5px;
+                    padding: 3px 5px;
+                    outline: none;
+                    font-size: large;
+                    color: whitesmoke;
+                    &:focus{
+                        border: 2px solid gold;
+                    }
+                }
+                button{
+                    border: none;
+                    background:transparent;
+                    color: whitesmoke;
+                    &:hover{
+                        text-decoration: underline;
+                        color: gold;
+                    }
+                }
+                span{
+                    display: flex;
+                    justify-content: flex-start;
+                    align-items: center;
+                    padding-left: 5px;
+                    &:nth-child(1){
+                        justify-content: center;
+                        padding-left: 0;
+                    }
+                    &:nth-child(2){
+                        padding-left: 10px;
+                        color: whitesmoke;
+                        &:hover{
+                            text-decoration: underline;
+                            color: gold;
+                        }
+                    }
+                }
+                #icon{
+                    display: grid;
+                    justify-content: center;
+                    position: relative;
+                    padding: 5px;
+                    span{
+                        width: 0;
+                        height: 0;
+                        position: absolute;
+                        left: calc(50% - 5px);
+                        border-radius: 50%;
+                        box-shadow: 0 0 35px 15px gold;
+                    }
+                    img{
+                        width: 70px;
+                        height: auto;
+                        z-index: 3;
+                    }
+                }
+            }
+        }
+        #modal{
+            position: fixed;
+            top:70px;
+            left: 0; right: 0; bottom: 0;
+            background-color: rgba($color: #000000, $alpha: 0.9);
+            z-index: 99;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            #chosen{
+                align-items: center;
+                background-color: gray !important;
+                box-shadow: 0 0 9px 2px whitesmoke;
+                grid-template-columns: 2fr 6fr 2fr 2fr 1fr;
+                position: relative;
+                width: 90vw;
+                max-width: 1000px;
+                h1{
+                    position: absolute;
+                    color: white;
+                    top:-70px;
+                    display: grid;
+                    justify-self: center;
+                }
+                input{
+                    height: 35px;
+                    width: 100%;
+                    margin-left: 3px;
+                    &::placeholder{
+                        color: whitesmoke;
+                    }
+                }
+                button{
+                    font-size: large;
+                }
+                #close{
+                    width: 35px; height: 35px;
+                    border: 2px solid silver;
+                    border-radius: 50%;
+                    &:hover{
+                        background-color: black;
+                        color: crimson;
                     }
                 }
             }

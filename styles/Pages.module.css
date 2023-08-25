@@ -110,6 +110,7 @@
   align-items: center;
   font-size: 14px !important;
   height: 35px;
+  position: relative;
 }
 .balance_kernel_triple_explain_amount button:hover {
   border: 1px solid whitesmoke;
