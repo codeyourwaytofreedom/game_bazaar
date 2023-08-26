@@ -220,6 +220,38 @@ const Profile = () => {
         setfBack("")
     }
 
+    const handle_remove_from_sale = async (item:any) => {
+        if(confirm("Are you sure that you want to remove this item from sale?")){
+            dispatch(note_universal_feedback({message:"Removing item from sale...", color:"gold"}))
+            const response = await fetch('/api/remove_from_sale',{
+                method:"POST",
+                body:JSON.stringify(
+                    {
+                        classid:item.classid,
+                        appId:item.appid
+                    })
+            })
+            const status = response.status;
+            if(status === 200){
+                dispatch(note_universal_feedback({message:"Item removed from sale...", color:"green"}));
+                setmyItems((prevItems:any) => {
+                    const updatedItems = prevItems.filter((el:any) => el.market_name !== item.market_name);
+                    return updatedItems;
+                  });                
+                  setTimeout(() => {
+                    dispatch(note_universal_feedback({message:"", color:"green"}));
+                }, 1500);
+            }
+            else{
+                const text = await response.text();
+                dispatch(note_universal_feedback({message:text, color:"red"}));
+                setTimeout(() => {
+                    dispatch(note_universal_feedback({message:"", color:"red"}));
+                }, 1500);
+            }
+        }
+    }
+
     return ( <Layout searchbox={false}>
         <div className={c.homie_profile}>
             <div className={c.homie_profile_kernel}>
@@ -349,7 +381,7 @@ const Profile = () => {
                             }
                         </span>
                         <button onClick={()=>handle_price_editing(item)}>Edit Price</button>
-                        <span><Image alt={"delete steam"} src={index%2 ? "/delete4.png" : "/delete3.png" } width={20} height={20}/></span>
+                        <span><Image onClick={()=>handle_remove_from_sale(item)} alt={"delete steam"} src={index%2 ? "/delete4.png" : "/delete3.png" } width={20} height={20}/></span>
                     </div>
                     )
                 }
