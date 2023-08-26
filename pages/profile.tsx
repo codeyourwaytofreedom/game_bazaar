@@ -147,7 +147,7 @@ const Profile = () => {
                     let separated_items:any = [];
                     rejson.map((e:any) => e.map((ee:any)=> separated_items.push(ee)));
                     setmyItems(separated_items);
-    
+                    console.log(separated_items);
                     dispatch(note_universal_feedback({message:"", color:"gold"}))
                 }
                 else{
@@ -168,7 +168,7 @@ const Profile = () => {
         setShowItems(!showItems) */
     }
 
-    const handle_update = (e:any) => {
+    const handle_update = async (e:any) => {
         let ready:boolean = false;
         console.log(typeof chosen.price);
         if(price_input.current){
@@ -179,7 +179,7 @@ const Profile = () => {
         if(!ready){setfBack("Enter a valid number different from current price!!!")}
         if(ready){
             setfBack("Updating price...");
-            fetch('/api/price_update',{
+            const response = await fetch('/api/price_update',{
                 method:'POST',
                 body:JSON.stringify(
                     {
@@ -188,7 +188,28 @@ const Profile = () => {
                         appId:chosen.appid
                     }
                 )
-            }).then(r=> r.text()).then(rt => setfBack(rt))
+            })
+            const status = response.status;
+            if(status === 200){
+
+                setmyItems((prevItems:any) => {
+                    const updatedItems = prevItems.map((item:any) => {
+                      if (item.market_name === chosen.market_name) {
+                        return { ...item, price: price_input.current?.value };
+                      }
+                      return item;
+                    });
+                    return updatedItems;
+                  });
+
+
+                const text = await response.text();
+                setfBack(text);
+                setTimeout(() => {
+                    setModal(false);
+                    setfBack("");
+                }, 1500);
+            }
         } 
     }
 
