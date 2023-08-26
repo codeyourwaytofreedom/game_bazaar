@@ -16,11 +16,14 @@ const Profile = () => {
     const [profile_details, setDetails] = useState<any>();
     const [feedback, setFeedback] = useState<{color:string,content:string}>({color:"whitesmoke",content:""});
     const list_items = useRef<HTMLButtonElement>(null);
-    const [showItems, setShowItems] = useState(true);
+    const [showItems, setShowItems] = useState(false);
     const [modal, setModal] = useState<boolean>(false);
     const [chosen, setChosen] = useState<any>();
     const price_input = useRef<HTMLInputElement>(null);
     const [fBack, setfBack] = useState<string>("Inventory loading...");
+    const [myItems, setmyItems] = useState<any>();
+    const base_url = "https://community.cloudflare.steamstatic.com/economy/image/";
+
 
     const dels = ["12 hr", "15 min"]
 
@@ -133,22 +136,27 @@ const Profile = () => {
     };
 
     const handle_list_items = async () => {
-        dispatch(note_universal_feedback({message:"Loading items...", color:"gold"}))
-        try {
-            const response = await fetch('/api/list_items');
-            const status = response.status;
-            if(status === 200){
-                const rejson = await response.json();
-                console.log(rejson);
-                dispatch(note_universal_feedback({message:"", color:"gold"}))
+        setShowItems(!showItems);
+        if(!myItems){
+            dispatch(note_universal_feedback({message:"Loading items...", color:"gold"}))
+            try {
+                const response = await fetch('/api/list_items');
+                const status = response.status;
+                if(status === 200){
+                    const rejson = await response.json();
+                    let separated_items:any = [];
+                    rejson.map((e:any) => e.map((ee:any)=> separated_items.push(ee)));
+                    setmyItems(separated_items);
+    
+                    dispatch(note_universal_feedback({message:"", color:"gold"}))
+                }
+                else{
+                    console.log("Unintented response code");
+                }
+            } catch (error) {
+                console.log("Fetch problem", error)
             }
-            else{
-                console.log("Unintented response code");
-            }
-        } catch (error) {
-            console.log("Fetch problem", error)
         }
-
 /*         if(list_items.current){
             if(showItems){
                 list_items.current.scrollIntoView({behavior:"smooth"});
@@ -188,6 +196,7 @@ const Profile = () => {
         setChosen(item);
         setModal(true);
         console.log(item);
+        setfBack("")
     }
 
     return ( <Layout searchbox={false}>
@@ -300,25 +309,25 @@ const Profile = () => {
 
                 </div>
             </div>
-            <button onClick={handle_list_items} ref={list_items} id={c.list_items}>{showItems ? "Show my items" : "Hide items"}</button>
+            <button onClick={handle_list_items} ref={list_items} id={c.list_items}>{!showItems ? "Show my items" : "Hide items"}</button>
 
             <div className={c.homie_profile_items} style={{visibility:showItems ? "visible" : "hidden"}}>
                 {
-                    [...Array(4)].map((item,index)=>
+                    myItems && myItems.map((item:any,index:number)=>
                     <div className={c.homie_profile_items_item} 
                          style={{backgroundColor:index%2 ? "rgb(40,40,40)" : "rgb(30,30,30)"}} 
                          key={index}>
                         <span id={c.icon}>
-                            <Image alt={"steam image"} src={"/3.png"} width={90} height={90}/>
+                            <Image alt={"steam image"} src={`${base_url}${item.icon_url}`} width={90} height={90}/>
                             <span style={{boxShadow: index%2 ? "0 0 35px 15px whitesmoke" : "0 0 35px 15px gold"}}></span>
                         </span>
-                        <span>Name</span>
+                        <span>{item.market_name}</span>
                         <span style={{color:"gold"}}>
                             {   
-                                formatter("5.88")
+                                formatter(item.price)
                             }
                         </span>
-                        <button onClick={handle_price_editing}>Edit Price</button>
+                        <button onClick={()=>handle_price_editing(item)}>Edit Price</button>
                         <span><Image alt={"delete steam"} src={index%2 ? "/delete4.png" : "/delete3.png" } width={20} height={20}/></span>
                     </div>
                     )
@@ -334,7 +343,7 @@ const Profile = () => {
                                 color:fBack?.includes("Updating")? "whitesmoke" : fBack?.includes("updated") ? "gold" : "red"
                                 }}>{fBack && fBack}</h1>
                             <span id={c.icon}>
-                                <Image alt={"steam image"} src={"/3.png"} width={90} height={90}/>
+                                <Image alt={"steam image"} src={`${base_url}${chosen.icon_url}`} width={90} height={90}/>
                                 <span style={{boxShadow: 0%2 ? "0 0 35px 15px whitesmoke" : "0 0 35px 15px gold"}}></span>
                             </span>
                             <span>{chosen.market_name}</span>
