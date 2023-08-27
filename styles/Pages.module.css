@@ -298,6 +298,63 @@
   color: silver;
 }
 
+.trades {
+  height: 600px;
+  color: whitesmoke;
+  padding: 30px 2vw;
+}
+.trades_titles {
+  display: flex;
+  -moz-column-gap: 5vw;
+       column-gap: 5vw;
+  align-items: center;
+  padding-left: 1vw;
+}
+.trades_titles span {
+  display: grid;
+  justify-items: center;
+  align-items: center;
+  font-size: medium;
+  cursor: pointer;
+}
+.trades_titles span :nth-child(1) {
+  font-size: xx-large;
+  display: flex;
+  align-content: flex-end;
+}
+.trades_all {
+  padding-top: 30px;
+  display: grid;
+  row-gap: 10px;
+}
+.trades_all_each {
+  padding: 5px 1vw;
+  display: grid;
+  -moz-column-gap: 30px;
+       column-gap: 30px;
+  grid-template-columns: 20px 5fr 3fr 3fr;
+  align-items: center;
+}
+.trades_all_each img {
+  -o-object-fit: contain;
+     object-fit: contain;
+  width: 60px;
+  height: auto;
+}
+.trades_all_each #name {
+  display: grid;
+  justify-items: center;
+}
+.trades_all_each #image {
+  position: relative;
+}
+.trades_all_each #image span {
+  position: absolute;
+  left: 35px;
+  top: 50%;
+  z-index: 1 !important;
+}
+
 @media (max-width: 575.98px) {
   .balance_kernel {
     padding: 20px;

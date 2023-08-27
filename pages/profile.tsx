@@ -381,7 +381,8 @@ const Profile = () => {
                             }
                         </span>
                         <button onClick={()=>handle_price_editing(item)}>Edit Price</button>
-                        <span><Image onClick={()=>handle_remove_from_sale(item)} alt={"delete steam"} src={index%2 ? "/delete4.png" : "/delete3.png" } width={20} height={20}/></span>
+                        <span><Image onClick={()=>handle_remove_from_sale(item)} alt={"delete steam"} style={{cursor:"pointer"}} 
+                            src={index%2 ? "/delete4.png" : "/delete3.png" } width={20} height={20}/></span>
                     </div>
                     )
                 }
