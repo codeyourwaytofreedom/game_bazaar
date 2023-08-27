@@ -2,8 +2,12 @@ import { useEffect } from "react";
 
 const Test = () => {
     useEffect(()=>{
-        //fetch('/api/crypto').then(r => r.json()).then(rj => window.location.href = rj.redirectUrl)
-        fetch('/api/crypto')
+        try{
+            fetch('https://fastapi-xi.vercel.app/api/pyt').then(r=>console.log(r))
+        }catch(error){
+            console.log(error)
+        }
+        
     },[])
     return ( <>
     <div style={{background:"white", height:"100vh"}}>
