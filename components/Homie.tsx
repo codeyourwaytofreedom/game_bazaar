@@ -113,6 +113,10 @@ const Homie = () => {
             </div> */}
             <Items_holder />
             <br />
+            <div className={h.banner}>
+                <Link href={"/profile"}> <span style={{fontSize:"21px"}}>☎ </span> Contact</Link>
+                <Link href={"/api/doc/doc"}> <span style={{fontSize:"21px"}}>✎ </span> Doc</Link>
+            </div>
         </div>
     </> );
 }
