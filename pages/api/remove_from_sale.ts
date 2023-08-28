@@ -2,6 +2,33 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import {connectToDatabase} from "./db";
 
 
+/**
+ * @swagger
+ * /api/remove_from_sale:
+ *   post:
+ *     description: Removes item from sale...
+ *     parameters:
+ *       - name: classid
+ *         in: body
+ *         description: ID of the class to identify the item.
+ *         required: true
+ *         schema:
+ *           type: string
+ *       - name: appId
+ *         in: body
+ *         description: ID of the application to identify the item.
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         feedback: "Price updated"
+ *       404:
+ *          feedback: "Document Not Found"
+ *       401:
+ *          feedback: "Unauthorized: Login Required"
+ */
+
 export default async function handler(req:NextApiRequest, res:NextApiResponse) {
 
     const idCookie = req.cookies.ID;
