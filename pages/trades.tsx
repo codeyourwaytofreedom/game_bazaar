@@ -16,7 +16,7 @@ const Trades = () => {
             return price_formatted;
         }
     }
-    const [chosen, setChosen] = useState(-1);
+    const [chosen, setChosen] = useState(0);
     const [transactions, setTransactions] = useState<any>();
 
     const tabs = ["All transactions", "Completed", "Pending", "Failed"]
@@ -27,10 +27,11 @@ const Trades = () => {
                         {status:"Failed", icon:"☓", color:"crimson",date:"06.09.2023 14:47"}
                     ]
 
-    let dummy:any = [];
-    [...Array(15)].map(e=> dummy.push(actions.slice(1,4)[Math.floor(Math.random() * 3)]));
+
 
     useEffect(()=>{
+        let dummy:any = [];
+        [...Array(15)].map(e=> dummy.push(actions.slice(1,4)[Math.floor(Math.random() * 3)]));
         if(chosen === 0){
             setTransactions(dummy)
         }
