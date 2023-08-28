@@ -1,6 +1,35 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import {connectToDatabase} from "./db";
 
+
+/**
+ * @swagger
+ * /api/list_items:
+ *   get:
+ *     description: Fetches items listed by the authenticated user.
+ *     responses:
+ *       200:
+ *         description: Items listed by the user retrieved successfully.
+ *         content:
+ *           application/json:
+ *             example:
+ *               - item1
+ *               - item2
+ *               - item3
+ *       401:
+ *         description: Not authorized. User is not authenticated.
+ *         content:
+ *           application/json:
+ *             example:
+ *               message: Not authorized XXX
+ *       404:
+ *         description: User not found.
+ *         content:
+ *           application/json:
+ *             example:
+ *               message: Not found XXX
+ */
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse

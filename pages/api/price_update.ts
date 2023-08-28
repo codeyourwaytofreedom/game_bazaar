@@ -3,7 +3,7 @@ import {connectToDatabase} from "./db";
 
 /**
  * @swagger
- * /api/update_price:
+ * /api/price_update:
  *   post:
  *     description: Update item price for a user.
  *     parameters:

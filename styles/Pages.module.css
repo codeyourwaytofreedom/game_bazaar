@@ -355,6 +355,40 @@
   z-index: 1 !important;
 }
 
+.docs {
+  padding: 20px;
+  padding-top: 50px;
+  display: grid;
+  row-gap: 10px;
+  color: whitesmoke;
+}
+.docs button {
+  width: 100%;
+  padding: 5px;
+  display: flex;
+  justify-content: flex-start;
+  -moz-column-gap: 10px;
+       column-gap: 10px;
+  background-color: #3b5a6e;
+  font-size: large;
+  align-items: center;
+  color: whitesmoke;
+}
+.docs button :nth-child(1) {
+  background-color: black;
+  padding: 5px 15px;
+  font-size: medium;
+}
+.docs button h3 {
+  color: gold;
+}
+.docs_each {
+  background-color: rgb(77, 75, 75);
+  font-weight: 300;
+  padding-left: 10%;
+  line-height: 1.2;
+}
+
 @media (max-width: 575.98px) {
   .balance_kernel {
     padding: 20px;
