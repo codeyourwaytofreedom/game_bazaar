@@ -1,6 +1,38 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import {connectToDatabase} from "./db";
 
+/**
+ * @swagger
+ * /api/update_price:
+ *   post:
+ *     description: Update item price for a user.
+ *     parameters:
+ *       - name: body
+ *         in: body
+ *         description: JSON object containing item details.
+ *         required: true
+ *         schema:
+ *           type: object
+ *           properties:
+ *             classid:
+ *               type: string
+ *               description: ID of the item class.
+ *             price:
+ *               type: number
+ *               description: New price of the item.
+ *             appId:
+ *               type: string
+ *               description: ID of the application.
+ *     responses:
+ *       200:
+ *         description: Price updated successfully.
+ *       404:
+ *         description: Document Not Found.
+ *       401:
+ *         description: Unauthorized Login Required.
+ *       500:
+ *         description: An error occurred while processing the request.
+ */
 
 export default async function handler(req:NextApiRequest, res:NextApiResponse) {
 
