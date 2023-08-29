@@ -25,6 +25,9 @@ import {connectToDatabase} from "./db";
  *             appId:
  *               type: string
  *               description: ID of the application.
+ *             KEY:
+ *               type: string
+ *               description: Game Bazaar API KEY.
  *     responses:
  *       200:
  *         description: Price updated successfully.
@@ -39,7 +42,7 @@ import {connectToDatabase} from "./db";
 
 export default async function handler(req:NextApiRequest, res:NextApiResponse) {
 
-    const idCookie = req.cookies.ID;
+/*     const idCookie = req.cookies.ID;
     let steamID;
 
     if(idCookie){
@@ -52,20 +55,21 @@ export default async function handler(req:NextApiRequest, res:NextApiResponse) {
             steamID = idCookie;
             console.log("direk id")
         }
-    }
+    } */
 
     const client = await connectToDatabase();
     const data_base = client.db('game-bazaar');
     const members = data_base.collection('members');
 
-    const existingUser = await members.findOne({steamId:steamID});
-
     const client_input = JSON.parse(req.body)
     const item_classid = client_input.classid;
     const item_new_price = client_input.price; 
     const item_group = client_input.appId;
+    const KEY = client_input.KEY;
 
     console.log(client_input);
+
+    const existingUser = await members.findOne({game_bazaar_api_key:KEY});
     
     if(existingUser){
         if(item_new_price){
@@ -75,7 +79,7 @@ export default async function handler(req:NextApiRequest, res:NextApiResponse) {
             
             if(itemToUpdate){
                 const updateQuery = {
-                    steamId: steamID,
+                    game_bazaar_api_key: KEY,
                     [`descriptions_${item_group}.classid`]: item_classid
                   };
               

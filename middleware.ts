@@ -24,5 +24,5 @@ export async function middleware(req: NextApiRequest, res:NextApiResponse) {
 }
 
 export const config = {
-  matcher: '/',
+  matcher: '/:path*',
 }

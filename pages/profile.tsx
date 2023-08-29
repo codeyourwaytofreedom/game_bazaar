@@ -140,7 +140,12 @@ const Profile = () => {
         if(!myItems){
             dispatch(note_universal_feedback({message:"Loading items...", color:"gold"}))
             try {
-                const response = await fetch('/api/list_items');
+                const response = await fetch('/api/list_items',{
+                    method:"POST",
+                    body:JSON.stringify({
+                        KEY:profile_details.game_bazaar_api_key
+                    })
+                });
                 const status = response.status;
                 if(status === 200){
                     const rejson = await response.json();
@@ -185,7 +190,8 @@ const Profile = () => {
                     {
                         classid:chosen.classid,
                         price:price_input.current!.value, 
-                        appId:chosen.appid
+                        appId:chosen.appid,
+                        KEY:profile_details.game_bazaar_api_key
                     }
                 )
             })
@@ -228,7 +234,8 @@ const Profile = () => {
                 body:JSON.stringify(
                     {
                         classid:item.classid,
-                        appId:item.appid
+                        appId:item.appid,
+                        KEY:profile_details.game_bazaar_api_key
                     })
             })
             const status = response.status;

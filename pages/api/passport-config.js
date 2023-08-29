@@ -19,10 +19,17 @@ passport.use(
       realm: base_url,
       apiKey: process.env.STEAM,
     },
-    (identifier, profile, done) => {
-      process.nextTick(() => {
-        profile.identifier = identifier;
-        return done(null, profile);
+    function(identifier, profile, done) {
+      User.findByOpenID({ openId: identifier }, function (err, user) {
+        if (err) {
+          return done(err);
+        }
+        if (!user) {
+          return done(null, false);
+        }
+        user.profile = profile; // Attach the profile information to the user object
+
+        return done(null, user);
       });
     }
   )

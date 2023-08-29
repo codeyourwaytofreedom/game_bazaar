@@ -9,6 +9,18 @@ import {connectToDatabase} from "./db";
  *     tags:
  *       - Items
  *     description: Fetches items listed by the authenticated user.
+ *     parameters:
+ *      - name: KEY
+ *        in: body
+ *        required: true
+ *        content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               KEY:
+ *                 type: string
+ *                 description: The API key of the authenticated user.
  *     responses:
  *       200:
  *         description: Items listed by the user retrieved successfully.
@@ -32,12 +44,13 @@ import {connectToDatabase} from "./db";
  *               message: Not found XXX
  */
 
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
     console.log("List my items endpoint accessed");
-    const idCookie = req.cookies.ID;
+/*     const idCookie = req.cookies.ID;
     let steamID;
 
     if(idCookie){
@@ -49,13 +62,19 @@ export default async function handler(
         else {
             steamID = idCookie;
         }
-    }
-    if(steamID){
+    } */
+
+    const client_input = JSON.parse(req.body)
+    const KEY = client_input.KEY;
+    console.log(KEY)
+
+
+    if(KEY){
         const client = await connectToDatabase();
         const data_base = client.db('game-bazaar');
         const members = data_base.collection('members');
 
-        const existingUser = await members.findOne({steamId:steamID});
+        const existingUser = await members.findOne({game_bazaar_api_key:KEY});
         if(existingUser){
             const descriptions = Object.keys(existingUser).filter(property => property.includes("descriptions"));
             let listed_items:any = [];

@@ -22,6 +22,12 @@ import {connectToDatabase} from "./db";
  *         required: true
  *         schema:
  *           type: string
+ *       - name: KEY
+ *         in: body
+ *         description: Game Bazaar API KEY
+ *         required: true
+ *         schema:
+ *           type: string
  *     responses:
  *       200:
  *         description: "Price updated"
@@ -33,10 +39,10 @@ import {connectToDatabase} from "./db";
 
 export default async function handler(req:NextApiRequest, res:NextApiResponse) {
 
-    const idCookie = req.cookies.ID;
-    let steamID;
+/*     const idCookie = req.cookies.ID;
+    let steamID; */
 
-    if(idCookie){
+/*     if(idCookie){
         const isSteamOpenIDURL = idCookie.includes("https://steamcommunity.com/openid/id/");
         if(isSteamOpenIDURL){
             const parts = idCookie.split("/");
@@ -46,19 +52,20 @@ export default async function handler(req:NextApiRequest, res:NextApiResponse) {
             steamID = idCookie;
             console.log("direk id")
         }
-    }
+    } */
 
     const client = await connectToDatabase();
     const data_base = client.db('game-bazaar');
     const members = data_base.collection('members');
 
-    const existingUser = await members.findOne({steamId:steamID});
-
     const client_input = JSON.parse(req.body)
     const item_classid = client_input.classid;
     const item_group = client_input.appId;
+    const KEY = client_input.KEY;
 
     console.log(client_input);
+
+    const existingUser = await members.findOne({game_bazaar_api_key:KEY});
     
     if(existingUser){
             const inventory = await existingUser[`descriptions_${item_group}`];
@@ -67,7 +74,7 @@ export default async function handler(req:NextApiRequest, res:NextApiResponse) {
             
             if(itemToUpdate){
                 const updateQuery = {
-                    steamId: steamID,
+                    game_bazaar_api_key:KEY,
                     [`descriptions_${item_group}.classid`]: item_classid
                   };
               

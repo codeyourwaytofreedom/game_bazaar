@@ -8,6 +8,18 @@ import {connectToDatabase} from "./db";
  *     tags:
  *       - User Details
  *     description: Get user profile details.
+ *     parameters:
+ *      - name: KEY
+ *        in: body
+ *        required: true
+ *        content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               KEY:
+ *                 type: string
+ *                 description: The API key of the authenticated user.
  *     responses:
  *       200:
  *         description: User profile details retrieved successfully.
