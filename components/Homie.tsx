@@ -25,7 +25,7 @@ const Homie = () => {
 
     const csgo_subs = ["Gloves","Heavy","Knife","Pistol","Rifle","SMG","Sticker","Container","Gift","Key","Pass","Tag","Graffiti"];
 
-    useEffect(()=>{
+/*     useEffect(()=>{
       const test = async () => {
         const response = await fetch('/api/fetch_inventory',{
           method:"POST",
@@ -33,7 +33,7 @@ const Homie = () => {
         })
       }
       test();
-    },[])
+    },[]) */
 
     useEffect(() => {
       fetch('/api/ins')

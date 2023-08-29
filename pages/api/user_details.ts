@@ -4,22 +4,19 @@ import {connectToDatabase} from "./db";
 /**
  * @swagger
  * /api/user_details:
- *   get:
+ *   post:
  *     tags:
  *       - User Details
- *     description: Get user profile details.
- *     parameters:
- *      - name: KEY
- *        in: body
- *        required: true
- *        content:
+ *     summary: Fetches the square of a number.
+ *     requestBody:
+ *       required: true
+ *       content:
  *         application/json:
  *           schema:
  *             type: object
  *             properties:
  *               KEY:
  *                 type: string
- *                 description: The API key of the authenticated user.
  *     responses:
  *       200:
  *         description: User profile details retrieved successfully.
@@ -44,8 +41,7 @@ export default async function handler(req:NextApiRequest, res:NextApiResponse) {
     const data_base = client.db('game-bazaar');
     const members = data_base.collection('members');
 
-    const client_input = JSON.parse(req.body)
-    const KEY = client_input.KEY;
+    const KEY = typeof req.body !== "object" ? JSON.parse(req.body).KEY : req.body.KEY;
 
     const existingUser = await members.findOne({game_bazaar_api_key:KEY});
 
