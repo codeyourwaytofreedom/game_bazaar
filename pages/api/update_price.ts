@@ -1,9 +1,48 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import {connectToDatabase} from "./db";
 
+/**
+ * @swagger
+ * /api/update_price:
+ *   post:
+ *     tags:
+ *       - Price
+ *     description: Update item price for a user.
+ *     parameters:
+ *       - name: body
+ *         in: body
+ *         description: JSON object containing item details.
+ *         required: true
+ *         schema:
+ *           type: object
+ *           properties:
+ *             classid:
+ *               type: string
+ *               description: ID of the item class.
+ *             price:
+ *               type: number
+ *               description: New price of the item.
+ *             appId:
+ *               type: string
+ *               description: ID of the application.
+ *             KEY:
+ *               type: string
+ *               description: Game Bazaar API KEY.
+ *     responses:
+ *       200:
+ *         description: Price updated successfully.
+ *       404:
+ *         description: Document Not Found.
+ *       401:
+ *         description: Unauthorized Login Required.
+ *       500:
+ *         description: An error occurred while processing the request.
+ */
+
+
 export default async function handler(req:NextApiRequest, res:NextApiResponse) {
 
-    const idCookie = req.cookies.ID;
+/*     const idCookie = req.cookies.ID;
     let steamID;
 
     if(idCookie){
@@ -16,7 +55,7 @@ export default async function handler(req:NextApiRequest, res:NextApiResponse) {
             steamID = idCookie;
             console.log("direk id")
         }
-    }
+    } */
 
     const client = await connectToDatabase();
     const data_base = client.db('game-bazaar');
@@ -30,7 +69,7 @@ export default async function handler(req:NextApiRequest, res:NextApiResponse) {
 
     console.log(client_input);
 
-    const existingUser = await members.findOne({steamId:steamID});
+    const existingUser = await members.findOne({game_bazaar_api_key:KEY});
     
     if(existingUser){
         if(item_new_price){
@@ -40,7 +79,7 @@ export default async function handler(req:NextApiRequest, res:NextApiResponse) {
             
             if(itemToUpdate){
                 const updateQuery = {
-                    steamId:steamID,
+                    game_bazaar_api_key: KEY,
                     [`descriptions_${item_group}.classid`]: item_classid
                   };
               

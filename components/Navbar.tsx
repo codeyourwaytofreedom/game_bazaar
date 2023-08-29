@@ -32,7 +32,7 @@ const Navbar:NextPage<Navbar_props> = ({alt_bar, setAlt, modalVis, setModalVis,s
     const currentUrl = router.asPath;
     const scroll = useSelector((state:any) => state.loginSlice.scroll);
 
-    const handle_steam = () => {
+    const handle_steam = async () => {
         window.location.href = '/api/login';
     }
 
