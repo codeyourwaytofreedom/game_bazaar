@@ -5,6 +5,8 @@ import {connectToDatabase} from "./db";
  * @swagger
  * /api/price_update:
  *   post:
+ *     tags:
+ *       - Price
  *     description: Update item price for a user.
  *     parameters:
  *       - name: body
@@ -33,6 +35,7 @@ import {connectToDatabase} from "./db";
  *       500:
  *         description: An error occurred while processing the request.
  */
+
 
 export default async function handler(req:NextApiRequest, res:NextApiResponse) {
 

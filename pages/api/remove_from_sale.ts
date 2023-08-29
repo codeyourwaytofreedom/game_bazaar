@@ -6,6 +6,8 @@ import {connectToDatabase} from "./db";
  * @swagger
  * /api/remove_from_sale:
  *   post:
+ *     tags:
+ *       - Price
  *     description: Removes item from sale...
  *     parameters:
  *       - name: classid
@@ -22,11 +24,11 @@ import {connectToDatabase} from "./db";
  *           type: string
  *     responses:
  *       200:
- *         feedback: "Price updated"
+ *         description: "Price updated"
  *       404:
- *          feedback: "Document Not Found"
+ *          description: "Document Not Found"
  *       401:
- *          feedback: "Unauthorized: Login Required"
+ *          description: "Unauthorized: Login Required"
  */
 
 export default async function handler(req:NextApiRequest, res:NextApiResponse) {

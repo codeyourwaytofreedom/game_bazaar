@@ -6,6 +6,8 @@ import {connectToDatabase} from "./db";
  * @swagger
  * /api/list_items:
  *   get:
+ *     tags:
+ *       - Items
  *     description: Fetches items listed by the authenticated user.
  *     responses:
  *       200:

@@ -5,6 +5,8 @@ import {connectToDatabase} from "./db";
  * @swagger
  * /api/user:
  *   get:
+ *     tags:
+ *       - User Details
  *     description: Get user profile details.
  *     responses:
  *       200:

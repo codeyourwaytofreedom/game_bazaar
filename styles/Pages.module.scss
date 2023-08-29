@@ -316,7 +316,7 @@
             padding: 5px 1vw;
             display: grid;
             column-gap: 30px;
-            grid-template-columns: 20px 5fr 3fr 3fr;
+            grid-template-columns: 20px 5fr 3fr 3fr 1fr;
             align-items: center;
             img{
                 object-fit: contain;
@@ -339,40 +339,6 @@
         }
     }
 }
-
-.docs{
-    padding: 20px;
-    padding-top: 50px;
-    display: grid;
-    row-gap: 10px;
-    color: whitesmoke;
-    button{
-        width: 100%;
-        padding: 5px;
-        display: flex;
-        justify-content: flex-start;
-        column-gap: 10px;
-        background-color: #3b5a6e;
-        font-size: large;
-        align-items: center;
-        color: whitesmoke;
-        :nth-child(1){
-            background-color: black;
-            padding: 5px 15px;
-            font-size: medium;
-        }
-        h3{
-            color: gold;
-        }
-    }
-    &_each{
-        background-color: rgb(77, 75, 75);
-        font-weight: 300;
-        padding-left: 10%;
-        line-height: 1.2;
-    }
-}
-
 
 @media (max-width: 575.98px) { 
     .balance{

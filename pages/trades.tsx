@@ -67,7 +67,7 @@ const Trades = () => {
                                
                                
                                <span style={{color:e.color}}>{e.status}</span>
-                               <span></span>
+                               <span style={{color:e.color}}>{e.status !== "Pending" && e.status !== "Failed" && "$50"} </span>
                             </div>
                         )
                     }
