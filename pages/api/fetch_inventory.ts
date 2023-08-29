@@ -1,14 +1,14 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import {connectToDatabase} from "./db";
 
-import Cors from 'micro-cors';
+/* import Cors from 'micro-cors';
 
 
 const cors = Cors({
     origin: "*"
   });
 
-cors(handler as any);
+cors(handler as any); */
 
 
 export default async function handler(req:NextApiRequest, res:NextApiResponse) {
