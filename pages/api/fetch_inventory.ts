@@ -52,7 +52,7 @@ cors(handler as any);
          const int_input = parseInt(input);
          const square = int_input * int_input;
  
-         console.log(square);
+         console.log(square,777);
  
          res.status(200).json({ result: square });
      } catch (error) {
