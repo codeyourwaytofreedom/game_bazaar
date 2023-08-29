@@ -2,25 +2,33 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import {connectToDatabase} from "./db";
 
 
+import Cors from 'micro-cors';
+
+
+const cors = Cors({
+    origin: "*",
+    allowMethods: ["POST"]
+  });
+  
+
+cors(handler as any);
+
 /**
  * @swagger
  * /api/list_items:
- *   get:
+ *   post:
  *     tags:
  *       - Items
  *     description: Fetches items listed by the authenticated user.
- *     parameters:
- *      - name: KEY
- *        in: body
- *        required: true
- *        content:
+ *     requestBody:
+ *       required: true
+ *       content:
  *         application/json:
  *           schema:
  *             type: object
  *             properties:
  *               KEY:
  *                 type: string
- *                 description: The API key of the authenticated user.
  *     responses:
  *       200:
  *         description: Items listed by the user retrieved successfully.
@@ -50,23 +58,8 @@ export default async function handler(
   res: NextApiResponse
 ) {
     console.log("List my items endpoint accessed");
-/*     const idCookie = req.cookies.ID;
-    let steamID;
 
-    if(idCookie){
-        const isSteamOpenIDURL = idCookie.includes("https://steamcommunity.com/openid/id/");
-        if(isSteamOpenIDURL){
-            const parts = idCookie.split("/");
-            steamID = parts[parts.length - 1];
-        }
-        else {
-            steamID = idCookie;
-        }
-    } */
-
-    const client_input = JSON.parse(req.body)
-    const KEY = client_input.KEY;
-    console.log(KEY)
+    const KEY  = typeof req.body !== "object" ? JSON.parse(req.body).KEY : req.body.KEY;
 
 
     if(KEY){
