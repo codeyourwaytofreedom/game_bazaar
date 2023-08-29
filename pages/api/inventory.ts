@@ -1,10 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import {connectToDatabase} from "./db";
 
-const baseUrl = "https://community.cloudflare.steamstatic.com/economy/image";
-const codes = {
-    csgo:"730", tm2:"440"
-}
 export default async function handler(req:NextApiRequest, res:NextApiResponse) {
 
     console.log("inventory api endpoint accessed");
