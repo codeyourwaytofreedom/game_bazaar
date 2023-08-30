@@ -6,31 +6,28 @@ import {connectToDatabase} from "./db";
  * /api/update_price:
  *   post:
  *     tags:
- *       - Price
- *     description: Update item price for a user.
- *     parameters:
- *       - name: body
- *         in: body
- *         description: JSON object containing item details.
- *         required: true
- *         schema:
- *           type: object
- *           properties:
- *             classid:
- *               type: string
- *               description: ID of the item class.
- *             price:
- *               type: number
- *               description: New price of the item.
- *             appId:
- *               type: string
- *               description: ID of the application.
- *             KEY:
- *               type: string
- *               description: Game Bazaar API KEY.
+ *       - Price update
+ *     summary: Updates item price...
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               classid:
+ *                 type: string
+ *               appId:
+ *                 type: string
+ *               price:
+ *                 type: number
+ *               KEY:
+ *                 type: string
  *     responses:
  *       200:
  *         description: Price updated successfully.
+ *       400:
+ *         description: Invalid input. Check your request data.
  *       404:
  *         description: Document Not Found.
  *       401:
@@ -61,7 +58,9 @@ export default async function handler(req:NextApiRequest, res:NextApiResponse) {
     const data_base = client.db('game-bazaar');
     const members = data_base.collection('members');
 
-    const client_input = JSON.parse(req.body)
+    const client_input = typeof req.body !== "object" ? JSON.parse(req.body) : (req.body);
+
+    //const client_input = JSON.parse(req.body)
     const item_classid = client_input.classid;
     const item_new_price = client_input.price; 
     const item_group = client_input.appId;
@@ -103,7 +102,7 @@ export default async function handler(req:NextApiRequest, res:NextApiResponse) {
             }
         }
         else{
-            console.log("invalid input coming")
+            res.status(400).json({message:"Invalid Input"});
         }
     }
     else{

@@ -18,7 +18,7 @@ cors(handler as any);
  * /api/list_items:
  *   post:
  *     tags:
- *       - Items
+ *       - List Items
  *     description: Fetches items listed by the authenticated user.
  *     requestBody:
  *       required: true

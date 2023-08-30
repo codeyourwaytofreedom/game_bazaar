@@ -7,7 +7,7 @@ import {connectToDatabase} from "./db";
  *   post:
  *     tags:
  *       - User Details
- *     summary: Fetches the square of a number.
+ *     summary: Fetches user details.
  *     requestBody:
  *       required: true
  *       content:

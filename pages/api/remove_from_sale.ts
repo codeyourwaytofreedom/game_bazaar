@@ -7,27 +7,21 @@ import {connectToDatabase} from "./db";
  * /api/remove_from_sale:
  *   post:
  *     tags:
- *       - Price
- *     description: Removes item from sale...
- *     parameters:
- *       - name: classid
- *         in: body
- *         description: ID of the class to identify the item.
- *         required: true
- *         schema:
- *           type: string
- *       - name: appId
- *         in: body
- *         description: ID of the application to identify the item.
- *         required: true
- *         schema:
- *           type: string
- *       - name: KEY
- *         in: body
- *         description: Game Bazaar API KEY
- *         required: true
- *         schema:
- *           type: string
+ *       - Remove from Sale
+ *     summary: Removes item from sale...
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               classid:
+ *                 type: string
+ *               appId:
+ *                 type: string
+ *               KEY:
+ *                 type: string
  *     responses:
  *       200:
  *         description: "Price updated"
@@ -58,7 +52,9 @@ export default async function handler(req:NextApiRequest, res:NextApiResponse) {
     const data_base = client.db('game-bazaar');
     const members = data_base.collection('members');
 
-    const client_input = JSON.parse(req.body)
+    const client_input = typeof req.body !== "object" ? JSON.parse(req.body) : (req.body);
+
+    //const client_input = JSON.parse(req.body)
     const item_classid = client_input.classid;
     const item_group = client_input.appId;
     const KEY = client_input.KEY;
