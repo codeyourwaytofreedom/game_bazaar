@@ -44,9 +44,7 @@ const Profile = () => {
             }
             
         }
-        setTimeout(() => {
-            fetch_user();
-        }, 300);
+        fetch_user();
     },[])
 
     const handle_ak = () => {
