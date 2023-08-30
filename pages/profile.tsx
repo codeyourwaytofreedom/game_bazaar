@@ -28,7 +28,23 @@ const Profile = () => {
     const dels = ["12 hr", "15 min"]
 
     useEffect(()=>{
-        fetch('/api/user').then(r=> r.json()).then(rj => setDetails(rj))
+        const fetch_user = async () => {
+            try{
+                const response = await fetch('/api/user');
+                const status = response.status;
+                if(status === 200){
+                    const resJson = await response.json();
+                    setDetails(resJson);
+                }
+                else{
+                    console.log(response);
+                }
+            }catch(err){
+                console.log(err);
+            }
+            
+        }
+        fetch_user();
     },[])
 
     const handle_ak = () => {
