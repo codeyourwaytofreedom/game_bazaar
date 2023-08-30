@@ -23,7 +23,7 @@ export default async function handler(req:NextApiRequest, res:NextApiResponse) {
     const members = data_base.collection('members');
 
     const client_input = JSON.parse(req.body)
-    const item_classid = client_input.classid;
+    const item_assetid = client_input.assetid;
     const item_new_price = client_input.price; 
     const item_group = client_input.appId;
     const KEY = client_input.KEY;
@@ -35,13 +35,13 @@ export default async function handler(req:NextApiRequest, res:NextApiResponse) {
     if(existingUser){
         if(item_new_price){
             const inventory = await existingUser[`descriptions_${item_group}`];
-            const itemToUpdate = inventory.find((item:any) => item.classid === item_classid);
+            const itemToUpdate = inventory.find((item:any) => item.assetid === item_assetid);
             console.log(itemToUpdate);
             
             if(itemToUpdate){
                 const updateQuery = {
                     steamId:steamID,
-                    [`descriptions_${item_group}.classid`]: item_classid
+                    [`descriptions_${item_group}.assetid`]: item_assetid
                   };
               
                 const updateOperation = {

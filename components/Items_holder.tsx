@@ -70,7 +70,7 @@ const Items_holder = () => {
     },[scroll]);
 
     const handle_item_choose = (item:any) =>{
-        router.push(`/market/${category}/${item.market_name}?appid=${item.appid}&classid=${item.classid}`);
+        router.push(`/market/${category}/${item.market_name}?appid=${item.appid}&assetid=${item.assetid}`);
     }
 
     useEffect(()=>{

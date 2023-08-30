@@ -6,9 +6,9 @@ export default async function handler(
   res: NextApiResponse
 ) {
 
-    const {appid, classid} = req.query;
-
-    if(appid && classid){
+    const {appid, assetid} = req.query;
+  
+    if(appid && assetid){
         //console.log("Parameters available");
         const client = await connectToDatabase();
         const data_base = client.db('game-bazaar');
@@ -23,7 +23,7 @@ export default async function handler(
                   $filter: {
                     input: `$descriptions_${appid}`,
                     as: 'description',
-                    cond: { $eq: ['$$description.classid', classid] }
+                    cond: { $eq: ['$$description.assetid', assetid] }
                   }
                 },
                 delivery_time: 1

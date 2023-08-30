@@ -15,7 +15,7 @@ import {connectToDatabase} from "./db";
  *           schema:
  *             type: object
  *             properties:
- *               classid:
+ *               assetid:
  *                 type: string
  *               appId:
  *                 type: string

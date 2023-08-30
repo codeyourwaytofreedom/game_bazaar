@@ -36,7 +36,7 @@ const Item_details = () => {
     const base_url = "https://community.cloudflare.steamstatic.com/economy/image/";
     const [active, setActive] = useState<any>();
     const router = useRouter();
-    const {appid,classid} = router.query;
+    const {appid,assetid} = router.query;
     const [popup, setPopup] = useState<number>(0);
     const [hoverDeetails, setHoverDetails] = useState<any>();
     const category = useSelector((state:any) => state.loginSlice.category);
@@ -51,9 +51,9 @@ const Item_details = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-          if (appid && classid) {
+          if (appid && assetid) {
             try {
-              const response = await fetch(`/api/item_fetcher/?appid=${appid}&classid=${classid}`);
+              const response = await fetch(`/api/item_fetcher/?appid=${appid}&assetid=${assetid}`);
               const data = await response.json();
               console.log(data)
               setDetails(data);
@@ -64,7 +64,7 @@ const Item_details = () => {
         };
       
         fetchData();
-      }, [appid, classid]);
+      }, [appid, assetid]);
       
     useEffect(()=>{
         if(item_details){
@@ -97,15 +97,17 @@ const Item_details = () => {
                     let pool:any = [];
                     resJson.forEach((element:any) => {
                         const orders = element.matchingOrders;
-                        orders.forEach((order:any) => {
-                            const each_order = {
-                                id:element.steamId,
-                                orderedItem: order.orderedItem,
-                                orderedQuantity: order.orderedQuantity,
-                                orderedPrice: order.orderedPrice
-                            }
-                            pool.push(each_order)
-                        });
+                        if(orders){
+                            orders.forEach((order:any) => {
+                                const each_order = {
+                                    id:element.steamId,
+                                    orderedItem: order.orderedItem,
+                                    orderedQuantity: order.orderedQuantity,
+                                    orderedPrice: order.orderedPrice
+                                }
+                                pool.push(each_order)
+                            });
+                        }
                     });
                     pool.sort((a:any, b:any) => {
                         const priceA = a.orderedPrice;
@@ -253,7 +255,7 @@ const Item_details = () => {
                                     <span>Price :</span><span>{active && formatter(active.price)}</span>
                                 </div>
                                 <div className={i.homie_product_holder_details_buts}>
-                                    <button onClick={()=>router.push(`/inventory?classid=${classid}`)}>Sell</button>
+                                    <button onClick={()=>router.push(`/inventory?assetid=${assetid}`)}>Sell</button>
                                     <button onClick={handleBuyClick}>Buy</button>
                                 </div>
                             </div>

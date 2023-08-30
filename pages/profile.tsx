@@ -188,7 +188,7 @@ const Profile = () => {
                 method:'POST',
                 body:JSON.stringify(
                     {
-                        classid:chosen.classid,
+                        assetid:chosen.assetid,
                         price:price_input.current!.value, 
                         appId:chosen.appid,
                         KEY:profile_details.game_bazaar_api_key
@@ -233,7 +233,7 @@ const Profile = () => {
                 method:"POST",
                 body:JSON.stringify(
                     {
-                        classid:item.classid,
+                        assetid:item.assetid,
                         appId:item.appid,
                         KEY:profile_details.game_bazaar_api_key
                     })

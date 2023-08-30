@@ -16,7 +16,7 @@ import {connectToDatabase} from "./db";
  *           schema:
  *             type: object
  *             properties:
- *               classid:
+ *               assetid:
  *                 type: string
  *               appId:
  *                 type: string
@@ -55,7 +55,7 @@ export default async function handler(req:NextApiRequest, res:NextApiResponse) {
     const client_input = typeof req.body !== "object" ? JSON.parse(req.body) : (req.body);
 
     //const client_input = JSON.parse(req.body)
-    const item_classid = client_input.classid;
+    const item_assetid = client_input.assetid;
     const item_group = client_input.appId;
     const KEY = client_input.KEY;
 
@@ -65,13 +65,13 @@ export default async function handler(req:NextApiRequest, res:NextApiResponse) {
     
     if(existingUser){
             const inventory = await existingUser[`descriptions_${item_group}`];
-            const itemToUpdate = inventory.find((item:any) => item.classid === item_classid);
+            const itemToUpdate = inventory.find((item:any) => item.assetid === item_assetid);
             console.log(itemToUpdate);
             
             if(itemToUpdate){
                 const updateQuery = {
                     game_bazaar_api_key:KEY,
-                    [`descriptions_${item_group}.classid`]: item_classid
+                    [`descriptions_${item_group}.assetid`]: item_assetid
                   };
               
                 const updateOperation = {

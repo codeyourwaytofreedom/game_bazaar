@@ -32,8 +32,6 @@ export default async function handler(req:NextApiRequest, res:NextApiResponse) {
 
         const existingUser = await members.findOne({steamId:steamID});
 
-
-
         if(existingUser){
             const existing_inventory = existingUser[`descriptions_${appId}`];
             if(!existing_inventory){
@@ -43,6 +41,19 @@ export default async function handler(req:NextApiRequest, res:NextApiResponse) {
                     const response = await fetch(url);
                     const data = await response.json();
                     const descriptions = data.response.descriptions;
+                    const assets = data.response.assets;
+
+                    //console.log(descriptions.length, assets.length)
+
+                    assets.forEach((asset:any,assetInd:any) => {
+                        descriptions.forEach((desc:any, descInd:any) => {
+                            //console.log(asset.classid === desc.classid, asset.instanceid === desc.instanceid);
+                            if(asset.classid === desc.classid && asset.instanceid === desc.instanceid){
+                                descriptions[descInd].assetid = asset.assetid
+                            }
+                        });
+                    });
+
                     if(descriptions){
                         const descriptions_with_prices = descriptions.map((game_item:any) => {return {...game_item, price:0}})
                         await members.updateOne(

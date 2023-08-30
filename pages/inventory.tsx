@@ -20,7 +20,7 @@ const Inventory = () => {
     const [feedback, setFeedback] = useState<string>("Inventory loading...");
     const [popup, setPopup] = useState<number>(0);
     const [hoverDeetails, setHoverDetails] = useState<any>();
-    const {classid} = router.query; 
+    const {assetid} = router.query; 
 
     useEffect(() => {
         setInventory(null);
@@ -39,7 +39,7 @@ const Inventory = () => {
             })
             .then(data => {
                 if (data) {
-                    //console.log(data)
+                    console.log(data)
                     setInventory(data);
                     setFeedback("")
                 }
@@ -50,13 +50,13 @@ const Inventory = () => {
     }, [category]);
     
     useEffect(()=>{
-        if(classid && inventory && search.current){
-            console.log("Class id available")
-            console.log(classid);
-            console.log(inventory.find((e:any)=> e.classid === classid))
-            search.current.value =  inventory.find((e:any)=> e.classid === classid).market_hash_name;
+        if(assetid && inventory && search.current){
+            console.log("assetid available")
+            console.log(assetid);
+            console.log(inventory.find((e:any)=> e.assetid === assetid))
+            search.current.value =  inventory.find((e:any)=> e.assetid === assetid).market_hash_name;
             setTimeout(() => {
-                setFilterVal(inventory.find((e:any)=> e.classid === classid).market_hash_name);
+                setFilterVal(inventory.find((e:any)=> e.assetid === assetid).market_hash_name);
             }, 300);
         }
         router.replace(router.asPath, {});
@@ -99,7 +99,7 @@ const Inventory = () => {
     }
 
     const handle_item_choose = (item:any) =>{
-        router.push(`/market/${category}/${item.market_name}?appid=${item.appid}&classid=${item.classid}`);
+        router.push(`/market/${category}/${item.market_name}?appid=${item.appid}&assetid=${item.assetid}`);
     }
 
     const handle_price_editing = (item:any) => {
@@ -123,7 +123,7 @@ const Inventory = () => {
                 method:'POST',
                 body:JSON.stringify(
                     {
-                        classid:chosen.classid,
+                        assetid:chosen.assetid,
                         price:price_input.current!.value, 
                         appId:chosen.appid
                     }
