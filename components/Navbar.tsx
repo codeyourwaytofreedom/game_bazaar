@@ -152,7 +152,7 @@ const handle_Logout = async () => {
                     </>
                 }
 
-                <div id={h.login} onClick={inn ? ()=> setTimeout(() => {setAfterLogin(after_login=>!after_login)}, 50) : handle_steam}
+                <div id={h.login} onClick={inn ? ()=> setTimeout(() => {setAfterLogin(after_login=>!after_login)}, 200) : handle_steam}
                         onBlur={()=> setTimeout(() => {setAfterLogin(false)}, 300)}>
                     {inn && <Image id={h.w} src={"/w.png"} alt={"sword"} width={25} height={25}/>}
                     <span>{inn ? formatter(balance) : "Steam"}</span>
