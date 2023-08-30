@@ -22,5 +22,5 @@ export async function middleware(req: NextRequest, res:NextResponse) {
 }
 
 export const config = {
-  matcher: '/(inventory|balance|profile|trades|market/:path*)',
+  matcher: '/(inventory|balance|trades|market/:path*)',
 };

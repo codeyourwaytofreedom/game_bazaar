@@ -27,7 +27,7 @@ const Profile = () => {
 
     const dels = ["12 hr", "15 min"]
 
-/*     useEffect(()=>{
+    useEffect(()=>{
         const fetch_user = async () => {
             try{
                 const response = await fetch('/api/user');
@@ -45,7 +45,7 @@ const Profile = () => {
             
         }
         fetch_user();
-    },[]) */
+    },[])
 
     const handle_ak = () => {
         if(ak.current && ak.current.value.length === 32){
