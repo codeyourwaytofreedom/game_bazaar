@@ -9,7 +9,21 @@ export default async function handler(req:NextApiRequest, res:NextApiResponse) {
     const data_base = client.db('game-bazaar');
     const members = data_base.collection('members');
 
-    const steamID = req.cookies.ID;
+    //const steamID = req.cookies.ID;
+    const idCookie = req.cookies.ID;
+    let steamID;
+
+    if(idCookie){
+        const isSteamOpenIDURL = idCookie.includes("https://steamcommunity.com/openid/id/");
+        if(isSteamOpenIDURL){
+            const parts = idCookie.split("/");
+            steamID = parts[parts.length - 1];
+        }
+        else {
+            steamID = idCookie;
+            console.log("direk id")
+        }
+    }
     const existingUser = await members.findOne({steamId:steamID});
 
     if (existingUser) {
