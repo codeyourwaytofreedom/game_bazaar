@@ -6,7 +6,9 @@ export async function middleware(req: NextRequest, res:NextResponse) {
   try {
     const ID = req.cookies.get('ID')?.value;
     if(!ID){
-      return NextResponse.redirect(new URL("/", req.url));
+      const redirectUrl = new URL("/", req.url);
+      redirectUrl.searchParams.append('feedback', "login required");
+      return NextResponse.redirect(redirectUrl);
     }
 
   } catch (error) {
@@ -14,11 +16,11 @@ export async function middleware(req: NextRequest, res:NextResponse) {
     return NextResponse.redirect(new URL("/", req.url));
   }
 
-  const response = NextResponse.next()
+  const response = NextResponse.next();
   return response
 
 }
 
 export const config = {
-  matcher: '/(inventory|balance|trades|market/:path*)',
+  matcher: '/(inventory|balance|profile|trades|market/:path*)',
 };

@@ -159,7 +159,7 @@ const handle_Logout = async () => {
                     <Image src={inn && url ? url : "/login.png"} alt={"sword"} width={30} height={30}/>
                     {
                        inn && url && after_login && <div id={h.afterlogin}>
-                            <Link href={"/profile"}><button onClick={()=>router.push("/profile")}><Image src={"/profile.png"} alt={"sword"} width={30} height={30}/>
+                            <Link href={"/profile"}><button><Image src={"/profile.png"} alt={"sword"} width={30} height={30}/>
                             <span>Profile</span></button></Link>
 
                             <Link href={"/balance"}><button><Image src={"/balance.png"} alt={"sword"} width={30} height={30}/>

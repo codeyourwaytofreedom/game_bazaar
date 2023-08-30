@@ -30,7 +30,7 @@ const Profile = () => {
     useEffect(()=>{
         const fetch_user = async () => {
             try{
-                const response = await fetch('/api/user',{method:"POST"});
+                const response = await fetch('/api/user');
                 const status = response.status;
                 if(status === 200){
                     const resJson = await response.json();
@@ -44,7 +44,9 @@ const Profile = () => {
             }
             
         }
-        fetch_user();
+        setTimeout(() => {
+            fetch_user();
+        }, 300);
     },[])
 
     const handle_ak = () => {
