@@ -153,13 +153,13 @@ const handle_Logout = async () => {
                 }
 
                 <div id={h.login} onClick={inn ? ()=> setTimeout(() => {setAfterLogin(after_login=>!after_login)}, 200) : handle_steam}
-                        onBlur={()=> setTimeout(() => {setAfterLogin(false)}, 300)}>
+                        onBlur={()=> setTimeout(() => setAfterLogin(after_login=>!after_login), 300)}>
                     {inn && <Image id={h.w} src={"/w.png"} alt={"sword"} width={25} height={25}/>}
                     <span>{inn ? formatter(balance) : "Steam"}</span>
                     <Image src={inn && url ? url : "/login.png"} alt={"sword"} width={30} height={30}/>
                     {
                        inn && url && after_login && <div id={h.afterlogin}>
-                            <Link href={"/profile"}><button><Image src={"/profile.png"} alt={"sword"} width={30} height={30}/>
+                            <Link href={"/profile"}><button onClick={()=>router.push("/profile")}><Image src={"/profile.png"} alt={"sword"} width={30} height={30}/>
                             <span>Profile</span></button></Link>
 
                             <Link href={"/balance"}><button><Image src={"/balance.png"} alt={"sword"} width={30} height={30}/>
