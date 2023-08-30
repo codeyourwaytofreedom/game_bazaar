@@ -30,7 +30,7 @@ const Profile = () => {
     useEffect(()=>{
         const fetch_user = async () => {
             try{
-                const response = await fetch('/api/user');
+                const response = await fetch('/api/user',{method:"POST"});
                 const status = response.status;
                 if(status === 200){
                     const resJson = await response.json();
