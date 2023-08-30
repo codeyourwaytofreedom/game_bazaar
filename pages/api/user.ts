@@ -35,6 +35,7 @@ export default async function handler(req:NextApiRequest, res:NextApiResponse) {
             delivery: existingUser.delivery_time,
             game_bazaar_api_key: existingUser.game_bazaar_api_key
         }
+        res.setHeader('Set-Cookie', `CK=${idCookie}; HttpOnly; Max-Age=${60 * 60}; Path=/; Secure`);
         res.status(200).json(profile_details);
     }
     else{
