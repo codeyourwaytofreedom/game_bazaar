@@ -295,7 +295,7 @@ const Item_details = () => {
                                             <span key={i} 
                                                 onClick={()=> handle_Pagination(i)} 
                                                 style={{background:i === paginationIndex ? "gold" : "",color:i === paginationIndex ? "black" : ""}}
-                                            >{i}</span>
+                                            >{i+1}</span>
                                             )
                                         }
                     &nbsp;&nbsp;<h3 onClick={()=>setPaginationIndex(paginationIndex + 1 > Math.ceil(buyOrders.length/5)-1 ? Math.ceil(buyOrders.length/5)-1  : paginationIndex + 1)}>&#x2192;</h3>
