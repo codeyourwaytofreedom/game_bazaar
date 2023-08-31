@@ -515,6 +515,37 @@
                         background-color: rgba($color: white, $alpha: 0.15);
                         display: grid;
                         row-gap: 5px;
+                        #pagination{
+                            //background-color: blue;
+                            user-select: none;
+                            position: absolute;
+                            bottom: -50px;
+                            width: 100%;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            padding: 10px 0;
+                            span{
+                                border: 1px solid gold;
+                                width: 30px; height: 30px;
+                                background-color: #000000;
+                                display: flex; justify-content: center; align-items: center;
+                                cursor: pointer;
+                                &:nth-child(odd){
+                                    border-left: none;
+                                }
+                                &:hover{
+                                    background-color: skyblue;
+                                    color: black;
+                                }
+                            }
+                            h3{
+                                cursor: pointer;
+                                &:hover{
+                                    color: skyblue;
+                                }
+                            }
+                        }
                         #buypopup{
                             position: absolute;
                             top: -55px; bottom: 0;

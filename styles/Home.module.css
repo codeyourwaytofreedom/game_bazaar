@@ -573,6 +573,42 @@
   display: grid;
   row-gap: 5px;
 }
+.homie_product_holder_orders_kernel_options #pagination {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  position: absolute;
+  bottom: -50px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 0;
+}
+.homie_product_holder_orders_kernel_options #pagination span {
+  border: 1px solid gold;
+  width: 30px;
+  height: 30px;
+  background-color: #000000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+.homie_product_holder_orders_kernel_options #pagination span:nth-child(odd) {
+  border-left: none;
+}
+.homie_product_holder_orders_kernel_options #pagination span:hover {
+  background-color: skyblue;
+  color: black;
+}
+.homie_product_holder_orders_kernel_options #pagination h3 {
+  cursor: pointer;
+}
+.homie_product_holder_orders_kernel_options #pagination h3:hover {
+  color: skyblue;
+}
 .homie_product_holder_orders_kernel_options #buypopup {
   position: absolute;
   top: -55px;
