@@ -1,16 +1,21 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const Test = () => {
-/*     useEffect(()=>{
-        try{
-            fetch('https://fastapi-xi.vercel.app/api/pt',{method:"POST"}).then(r=>console.log(r))
-        }catch(error){
-            console.log(error)
+    const [message, setMessage] = useState("");
+
+    const execute_Test = async () => {
+        const response = await fetch('/api/rot');
+        console.log(response);
+        if(response.status === 200){
+            const resJspon = await response.json();
+            setMessage(resJspon.message);
         }
-    },[]) */
+    }
     return ( <>
-    <div style={{background:"white", height:"100vh"}}>
+    <div style={{background:"white", height:"100vh", display:"grid", justifyContent:"center"}}>
         <h1>Hello Test</h1>
+        <button onClick={execute_Test}>EXECUTE TEST</button>
+        <h1>{message}</h1>
     </div>
             
     </> );
