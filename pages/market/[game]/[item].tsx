@@ -256,7 +256,9 @@ const Item_details = () => {
                     delivery_time:delivery_time,
                     image:image,
                     trade_link:"trade link of buyer",
-                    price:buyDetails.price
+                    price:buyDetails.price,
+                    status:"Pending",
+                    when:new Date()
                 })
             });
             const resJson = await response.json();

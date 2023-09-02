@@ -332,13 +332,13 @@
   display: grid;
   -moz-column-gap: 30px;
        column-gap: 30px;
-  grid-template-columns: 20px 5fr 3fr 3fr 1fr;
+  grid-template-columns: 20px 3fr 2fr 4fr 1fr;
   align-items: center;
 }
 .trades_all_each img {
   -o-object-fit: contain;
      object-fit: contain;
-  width: 60px;
+  width: 80px;
   height: auto;
 }
 .trades_all_each #name {

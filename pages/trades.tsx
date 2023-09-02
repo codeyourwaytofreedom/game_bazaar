@@ -18,6 +18,7 @@ const Trades = () => {
     }
     const [chosen, setChosen] = useState(0);
     const [transactions, setTransactions] = useState<any>();
+    const [orders_to_me, setOrders_to_me] = useState<any>([])
 
     const tabs = ["All transactions", "Completed", "Pending", "Failed"]
     const actions = [
@@ -26,6 +27,13 @@ const Trades = () => {
                         {status:"Pending", icon:"♨", color:"gold",date:"06.09.2023 14:47"},
                         {status:"Failed", icon:"☓", color:"crimson",date:"06.09.2023 14:47"}
                     ]
+
+    const statuses = [
+        {status:"Completed", icon:"★", color:"lightgreen"}, 
+        {status:"Pending", icon:"♨", color:"gold"},
+        {status:"Failed", icon:"☓", color:"crimson"}
+    ]
+
 
     useEffect(()=>{
         let dummy:any = [];
@@ -37,6 +45,15 @@ const Trades = () => {
             setTransactions(dummy.filter((e:any)=> e.status === actions[chosen].status));
         }
     },[chosen])
+
+    useEffect(()=>{
+        const fetch_trades =async () => {
+            const response = await fetch('/api/show_trades');
+            const resJson = await response.json();
+            setOrders_to_me(resJson)
+        }
+        fetch_trades();
+    },[])
 
     return ( 
         
@@ -51,21 +68,21 @@ const Trades = () => {
                 </div>
                 <div className={t.trades_all}>
                     {
-                        transactions && transactions.map((e:any,i:any)=>
+                        orders_to_me && orders_to_me.map((e:any,i:any)=>
                             <div className={t.trades_all_each} style={{background:i%2 ? "#36454F" : "#13242f"}} key={i} suppressHydrationWarning>
-                               <span suppressHydrationWarning style={{color:e.color, fontSize:"x-large", paddingRight:"40px"}}>{e.icon}</span>
-                               <div id={t.name} style={{color:e.color}}>
-                                    <span>Item Name goes here...</span>
+                               <span suppressHydrationWarning style={{color:statuses.find(s=>s.status === e.status)?.color, fontSize:"x-large", paddingRight:"40px"}}>{statuses.find(s=>s.status === e.status)?.icon}</span>
+                               <div id={t.name} style={{color:statuses.find(s=>s.status === e.status)?.color}}>
+                                    <span>{e.assetid}</span>
                                     <span style={{fontSize:"small"}} suppressHydrationWarning>{e.date}</span>
                                </div>
                                <div id={t.image}>
-                                    <span style={{boxShadow:`0 0 35px 14px ${e.color}`}}></span>
-                                    <Image alt={"steam image"} src={`/${Math.floor(Math.random() * 10)}.png`} width={70} height={70}/>
+                                    {/* <span style={{boxShadow:`0 0 35px 14px ${statuses.find(s=>s.status === e.status)?.color}`}}></span> */}
+                                    <Image alt={"steam image"} src={e.image} width={70} height={70}/>
                                </div>
                                
                                
-                               <span style={{color:e.color}}>{e.status}</span>
-                               <span style={{color:e.color}}>{e.status !== "Pending" && e.status !== "Failed" && "$50"} </span>
+                               <span style={{color:statuses.find(s=>s.status === e.status)?.color}}>{e.status} <br />{e.trade_link}</span>
+                               <span style={{color:statuses.find(s=>s.status === e.status)?.color}}>{e.status !== "Failed" && formatter(e.price)} </span>
                             </div>
                         )
                     }

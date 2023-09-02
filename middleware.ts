@@ -2,7 +2,6 @@ import { NextResponse,NextRequest } from 'next/server';
 
 
 export async function middleware(req: NextRequest, res:NextResponse) {
-  console.log(req.cookies)
   try {
     const ID = req.cookies.get('ID')?.value;
     if(!ID){

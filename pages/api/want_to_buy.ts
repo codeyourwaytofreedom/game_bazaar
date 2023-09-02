@@ -40,12 +40,21 @@ export default async function order_handle(req:NextApiRequest, res:NextApiRespon
     if(existingUser){
         const balance = existingUser.balance;
         const balanceEnough = parseFloat(balance) > parseFloat(buy_order_details.price);
-
-        const existingOrder = await members.findOne({
+        
+          const existingOrder = await members.findOne({
             steamId: sellerId,
-            they_ordered: { $elemMatch: buy_order_details }
-          });
-
+            they_ordered: {
+                $elemMatch: {
+                    sellerId: sellerId,
+                    assetid: assetid,
+                    delivery_time:delivery_time,
+                    image:image,
+                    trade_link:trade_link,
+                    price:price,
+                    buyer_id:steamID
+                }
+            }
+        });
         
         if(existingOrder){
             res.status(500).json({ message: "IDENTICAL ORDER.", color:"red"});

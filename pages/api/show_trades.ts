@@ -25,5 +25,12 @@ export default async function order_handle(req:NextApiRequest, res:NextApiRespon
     const members = db.collection('members');
     const existingUser = await members.findOne({steamId:steamID})
 
-    res.send("OK")
+    if(existingUser){
+        //console.log(existingUser.they_ordered)
+        const they_ordered = existingUser.they_ordered;
+        res.status(200).json(they_ordered)
+    }
+    else{
+        res.status(401).json({message:"Login Required !!!", color:"red"});
+    }
 }
