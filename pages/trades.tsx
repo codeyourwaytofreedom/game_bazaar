@@ -2,6 +2,7 @@ import Layout from "../components/Layout";
 import t from "../styles/Pages.module.css";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import Counter from "../components/counter";
 
 const Trades = () => {
     const formatter = (price:string) => {
@@ -16,6 +17,7 @@ const Trades = () => {
             return price_formatted;
         }
     }
+
     const [chosen, setChosen] = useState(0);
     const [transactions, setTransactions] = useState<any>();
     const [orders_to_me, setOrders_to_me] = useState<any>([])
@@ -55,6 +57,41 @@ const Trades = () => {
         fetch_trades();
     },[])
 
+    function getTimeDifference(givenTime: any) {
+        let givenDate: any = new Date(givenTime);
+        
+        givenDate.setHours(givenDate.getHours() + 12);
+    
+        const calculateDifference = () => {
+            const currentDate: any = new Date();
+            const timeDifference = givenDate - currentDate;
+    
+            const secondsDifference = Math.floor(timeDifference / 1000);
+            const hours = Math.floor(secondsDifference / 3600);
+            const minutes = Math.floor((secondsDifference % 3600) / 60);
+            const seconds = secondsDifference % 60;
+    
+            const formattedDifference = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    
+            return {
+                dif: formattedDifference
+            };
+        };
+    
+        let difference = calculateDifference();
+    
+        const interval = setInterval(() => {
+            difference = calculateDifference();
+        }, 1000);
+    
+        return {
+            ...difference,
+            stop: () => clearInterval(interval)
+        };
+    }
+    
+    
+
     return ( 
         
         <Layout searchbox={false}>
@@ -73,7 +110,7 @@ const Trades = () => {
                                <span suppressHydrationWarning style={{color:statuses.find(s=>s.status === e.status)?.color, fontSize:"x-large", paddingRight:"40px"}}>{statuses.find(s=>s.status === e.status)?.icon}</span>
                                <div id={t.name} style={{color:statuses.find(s=>s.status === e.status)?.color}}>
                                     <span>{e.assetid}</span>
-                                    <span style={{fontSize:"small"}} suppressHydrationWarning>{e.date}</span>
+                                    <Counter time={e.when} />
                                </div>
                                <div id={t.image}>
                                     {/* <span style={{boxShadow:`0 0 35px 14px ${statuses.find(s=>s.status === e.status)?.color}`}}></span> */}
