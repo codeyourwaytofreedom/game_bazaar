@@ -46,15 +46,15 @@ export default async function order_handle(req:NextApiRequest, res:NextApiRespon
             they_ordered: { $elemMatch: buy_order_details }
           });
 
-        let allow_buy_order = true;
         
         if(existingOrder){
-            console.log(existingOrder.they_ordered)
-            allow_buy_order = false;
+            res.status(500).json({ message: "IDENTICAL ORDER.", color:"red"});
         }
-
-        if(balanceEnough){
-            if(allow_buy_order){
+        else if(sellerId === steamID){
+            res.status(500).json({ message: "CAN'T PLACE BUY ORDER FOR YOUR OWN ITEMS.", color:"red"});
+        }
+        else{
+            if(balanceEnough){
                 const result = await members.updateOne(
                     { steamId: sellerId },
                     {
@@ -71,11 +71,8 @@ export default async function order_handle(req:NextApiRequest, res:NextApiRespon
                 }
             }
             else{
-                res.status(500).json({ message: "IDENTICAL ORDER.", color:"red"});
+                res.status(401).json({message:"Insufficient Balance !!!", color:"red"});
             }
-        }
-        else{
-            res.status(401).json({message:"Insufficient Balance !!!", color:"red"});
         }
     }
     else{
