@@ -255,7 +255,6 @@ const Item_details = () => {
                     assetid:assetid,
                     delivery_time:delivery_time,
                     image:image,
-                    trade_link:"trade link of buyer",
                     price:buyDetails.price,
                     status:"Pending",
                     when:new Date()

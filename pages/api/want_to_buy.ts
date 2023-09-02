@@ -27,7 +27,6 @@ export default async function order_handle(req:NextApiRequest, res:NextApiRespon
     const assetid =  buy_order_details.assetid;
     const delivery_time = buy_order_details.delivery_time;
     const image = buy_order_details.image;
-    const trade_link = buy_order_details.trade_link;
     const price = buy_order_details.price;
 
     //console.log(sellerId,assetid,delivery_time,image,trade_link,price)
@@ -42,6 +41,8 @@ export default async function order_handle(req:NextApiRequest, res:NextApiRespon
         if(existingUser.trade_link){
             const balance = existingUser.balance;
             const balanceEnough = parseFloat(balance) > parseFloat(buy_order_details.price);
+
+            buy_order_details.trade_link = existingUser.trade_link;
             
             const existingOrder = await members.findOne({
                 steamId: sellerId,
@@ -51,7 +52,7 @@ export default async function order_handle(req:NextApiRequest, res:NextApiRespon
                         assetid: assetid,
                         delivery_time:delivery_time,
                         image:image,
-                        trade_link:trade_link,
+                        trade_link:existingUser.trade_link,
                         price:price,
                         buyer_id:steamID
                     }
