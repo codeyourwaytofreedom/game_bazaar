@@ -23,6 +23,7 @@ const Profile = () => {
     const [fBack, setfBack] = useState<string>("Inventory loading...");
     const [myItems, setmyItems] = useState<any>();
     const base_url = "https://community.cloudflare.steamstatic.com/economy/image/";
+    const [tradeLinkReady, setTradeLinkReady] = useState(false);
 
 
     const dels = ["12 hr", "15 min"]
@@ -62,24 +63,45 @@ const Profile = () => {
             })
         }
     }
-    const handle_link = () => {
+
+
+    const handle_link = async () => {
         if(link.current && link.current.value.length > 0){
-            fetch('/api/lk',{
-                method:'POST',
-                body:link.current!.value
-            }).then(r=> {
-                if(r.status === 200){
-                    console.log("Geçerli Trade Link")
-                }
-                else{console.log("Yanlış Trade Link")}
-            })
+            const steamTradeLinkPattern = /^https:\/\/steamcommunity\.com\/tradeoffer\/new\/\?partner=\d+&token=\w+$/;
+            if(steamTradeLinkPattern.test(link.current.value)){
+                dispatch(note_universal_feedback({message:"Adding trade link...", color:"gold"}))
+                const response = await fetch('/api/add_link',{
+                    method:"POST",
+                    body:link.current.value
+                })
+                const resJson = await response.json();
+                dispatch(note_universal_feedback({message:resJson.message, color:resJson.color}))
+                setTimeout(() => {
+                    dispatch(note_universal_feedback({message:"", color:"red"}))
+                }, 1500);
+            }
+            else{
+                dispatch(note_universal_feedback({message:"Invalid Input!", color:"red"}))
+                setTimeout(() => {
+                    dispatch(note_universal_feedback({message:"", color:"red"}))
+                }, 1500);
+            }
         }
+        else{
+            dispatch(note_universal_feedback({message:"Invalid Input!", color:"red"}))
+            setTimeout(() => {
+                dispatch(note_universal_feedback({message:"", color:"red"}))
+            }, 1500);
         }
+    }
     
     useEffect(()=>{
         if(profile_details){
                 dispatch(note_balance(profile_details.balance));
                 localStorage.setItem("balance", profile_details.balance);
+                if(link.current){
+                    link.current.value = profile_details.trade_link;
+                }
         }
       },[profile_details]);
 
@@ -353,7 +375,7 @@ const Profile = () => {
                         <span></span>
                         <div>
                             <input id={c.link} type={"text"} placeholder={"Trade Link"} ref={link}/>
-                            <Image src={"/edit.png"} width={25} height={25} alt={"copy"}/>
+                            <Image src={"/plus.png"} width={30} height={30} alt={"copy"} onClick={handle_link}/>
                             <Link href={"http://steamcommunity.com/my/tradeoffers/privacy#trade_offer_access_url"} target={"_blank"}>Get it</Link>
                         </div>
                     </div>
@@ -366,7 +388,7 @@ const Profile = () => {
                         <span></span>
                         <div>
                             <input id={c.key} type={"password"} placeholder={"Your Steam API key"} ref={ak}/>
-                            <Image src={"/edit.png"} width={25} height={25} alt={"copy"}/>
+                            <Image src={"/plus.png"} width={30} height={30} alt={"copy"}/>
                             <Link href={"https://steamcommunity.com/dev/apikey"} target={"_blank"}>Get it</Link>
                         </div>
                     </div>

@@ -268,6 +268,12 @@ const Item_details = () => {
                     dispatch(note_universal_feedback({message:"", color:resJson.color}));
                 }, 1500);
             }
+            else if(response.status === 400){
+                dispatch(note_universal_feedback({message:resJson.message, color:resJson.color}));
+                setTimeout(() => {
+                    dispatch(note_universal_feedback({message:"", color:resJson.color}));
+                }, 3500);
+            }
             else{
                 dispatch(note_universal_feedback({message:resJson.message, color:resJson.color}));
                 setTimeout(() => {

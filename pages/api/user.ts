@@ -20,7 +20,6 @@ export default async function handler(req:NextApiRequest, res:NextApiResponse) {
         }
         else {
             steamID = idCookie;
-            console.log("direk id")
         }
     }
     const existingUser = await members.findOne({steamId:steamID});
@@ -32,7 +31,8 @@ export default async function handler(req:NextApiRequest, res:NextApiResponse) {
             balance: existingUser.balance,
             email:existingUser.email,
             delivery: existingUser.delivery_time,
-            game_bazaar_api_key: existingUser.game_bazaar_api_key
+            game_bazaar_api_key: existingUser.game_bazaar_api_key,
+            trade_link:existingUser.trade_link || "........."
         }
         res.status(200).json(profile_details);
     }
