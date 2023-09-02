@@ -236,6 +236,46 @@ const Item_details = () => {
     const handle_Pagination = (i:any) => {
         setPaginationIndex(i)
     }
+    const handle_buy_order =async (e:any) => {
+        const buyDetails = e.filteredDescriptions[0];
+        const assetid = buyDetails.assetid;
+        const delivery_time = e.delivery_time;
+        const image = base_url + buyDetails.icon_url;
+        const sellerId = e.steamId;
+
+        console.log(buyDetails);
+
+        dispatch(note_universal_feedback({message:"Placing BUY ORDER ...", color:"gold"}));
+
+        try{
+            const response = await fetch('/api/want_to_buy',{
+                method:"POST",
+                body:JSON.stringify({
+                    sellerId:sellerId,
+                    assetid:assetid,
+                    delivery_time:delivery_time,
+                    image:image,
+                    trade_link:"trade link of buyer",
+                    price:buyDetails.price
+                })
+            });
+            const resJson = await response.json();
+            if(response.status === 200){
+                dispatch(note_universal_feedback({message:resJson.message, color:resJson.color}));
+                setTimeout(() => {
+                    dispatch(note_universal_feedback({message:"", color:resJson.color}));
+                }, 1500);
+            }
+            else{
+                dispatch(note_universal_feedback({message:resJson.message, color:resJson.color}));
+                setTimeout(() => {
+                    dispatch(note_universal_feedback({message:"", color:resJson.color}));
+                }, 1500);
+            }
+        }catch(err){
+            console.log(err)
+        }
+    }
 
     return ( 
         <Layout searchbox={false}>
@@ -356,7 +396,18 @@ const Item_details = () => {
                                                 <span style={{color:"red", textDecoration:"underline"}}>{e.delivery_time}</span>
                                             </div>
                                             <div>{formatter(e.filteredDescriptions[0].price)}</div>
-                                            <div><button>{chosen === 0 ? "Buy" : "Sell"}</button></div>
+                                            <div>
+                                                
+                                                {
+                                                    chosen === 0 ? 
+                                                    
+                                                    <button onClick={()=>handle_buy_order(e)}>Buy</button>
+                                                
+                                                    : <button>Sell</button>}
+
+                                                    
+                                                
+                                            </div>
                                         </div>
                                     </div> : null
                                         )
