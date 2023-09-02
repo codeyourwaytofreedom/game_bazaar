@@ -52,45 +52,11 @@ const Trades = () => {
         const fetch_trades =async () => {
             const response = await fetch('/api/show_trades');
             const resJson = await response.json();
+            console.log(resJson)
             setOrders_to_me(resJson)
         }
         fetch_trades();
     },[])
-
-    function getTimeDifference(givenTime: any) {
-        let givenDate: any = new Date(givenTime);
-        
-        givenDate.setHours(givenDate.getHours() + 12);
-    
-        const calculateDifference = () => {
-            const currentDate: any = new Date();
-            const timeDifference = givenDate - currentDate;
-    
-            const secondsDifference = Math.floor(timeDifference / 1000);
-            const hours = Math.floor(secondsDifference / 3600);
-            const minutes = Math.floor((secondsDifference % 3600) / 60);
-            const seconds = secondsDifference % 60;
-    
-            const formattedDifference = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-    
-            return {
-                dif: formattedDifference
-            };
-        };
-    
-        let difference = calculateDifference();
-    
-        const interval = setInterval(() => {
-            difference = calculateDifference();
-        }, 1000);
-    
-        return {
-            ...difference,
-            stop: () => clearInterval(interval)
-        };
-    }
-    
-    
 
     return ( 
         
@@ -107,9 +73,8 @@ const Trades = () => {
                     {
                         orders_to_me && orders_to_me.map((e:any,i:any)=>
                             <div className={t.trades_all_each} style={{background:i%2 ? "#36454F" : "#13242f"}} key={i} suppressHydrationWarning>
-                               <span suppressHydrationWarning style={{color:statuses.find(s=>s.status === e.status)?.color, fontSize:"x-large", paddingRight:"40px"}}>{statuses.find(s=>s.status === e.status)?.icon}</span>
+                               <span suppressHydrationWarning style={{color:statuses.find(s=>s.status === e.status)?.color, fontSize:"x-large"}}>{statuses.find(s=>s.status === e.status)?.icon}</span>
                                <div id={t.name} style={{color:statuses.find(s=>s.status === e.status)?.color}}>
-                                    <span>{e.assetid}</span>
                                     <Counter time={e.when} />
                                </div>
                                <div id={t.image}>
@@ -117,8 +82,8 @@ const Trades = () => {
                                     <Image alt={"steam image"} src={e.image} width={70} height={70}/>
                                </div>
                                
-                               
-                               <span style={{color:statuses.find(s=>s.status === e.status)?.color}}>{e.status} <br />{e.trade_link}</span>
+                               <span style={{color:statuses.find(s=>s.status === e.status)?.color}}>{e.assetid} <br />{e.trade_link}</span>
+                               <span style={{color:statuses.find(s=>s.status === e.status)?.color}}>{e.status}</span>
                                <span style={{color:statuses.find(s=>s.status === e.status)?.color}}>{e.status !== "Failed" && formatter(e.price)} </span>
                             </div>
                         )

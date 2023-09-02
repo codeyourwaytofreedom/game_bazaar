@@ -313,10 +313,8 @@
         display: grid;
         row-gap: 10px;
         &_each{
-            padding: 5px 1vw;
-            display: grid;
-            column-gap: 30px;
-            grid-template-columns: 20px 3fr 2fr 4fr 1fr;
+            display: flex;
+            justify-content: space-evenly;
             align-items: center;
             img{
                 object-fit: contain;

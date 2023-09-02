@@ -47,7 +47,7 @@ const Counter = ({time}:any) => {
 
 
     return ( <>
-        <span style={{fontSize:"medium", color:"crimson"}} suppressHydrationWarning>{difference && difference.dif}</span>
+        <span style={{fontSize:"large", color:"red", fontWeight:"bold"}} suppressHydrationWarning>{difference && difference.dif}</span>
     </> );
 }
  
