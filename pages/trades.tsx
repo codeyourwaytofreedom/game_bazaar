@@ -18,7 +18,8 @@ const Trades = () => {
     }
 
     const [chosen, setChosen] = useState(0);
-    const [orders, setOrders] = useState<any>()
+    const [orders, setOrders] = useState<any>();
+    const [trigger, setTrigger] = useState(false);
 
     const actions = [
                         {status:"All transactions", icon:"|||", color:"skyblue", date:"06.09.2023 14:47" },
@@ -47,7 +48,7 @@ const Trades = () => {
             }
         }
         fetch_trades();
-    },[])
+    },[trigger])
 
     return ( 
         
@@ -66,7 +67,7 @@ const Trades = () => {
                     {
                         orders && orders.they_ordered && orders.they_ordered.map((e:any,i:any)=>
                             <div className={t.trades_all_each} style={{background:i%2 ? "#36454F" : "#13242f"}} key={i} suppressHydrationWarning>
-                               <Counter time={e.when} del={e.delivery_time === "12 hr" ? 12 : 15} cancel={false} />
+                               <Counter time={e.when} del={e.delivery_time === "12 hr" ? 12 : 15} cancel={false} order={e}/>
                                <div id={t.image}>
                                     <Image alt={"steam image"} src={e.image} width={70} height={70}/>
                                </div>
@@ -83,7 +84,7 @@ const Trades = () => {
                     {
                         orders && orders.I_ordered &&  orders.I_ordered.map((e:any,i:any)=>
                             <div className={t.trades_all_each} style={{background:i%2 ? "#36454F" : "#13242f"}} key={i} suppressHydrationWarning>
-                               <Counter time={e.when} del={e.delivery_time === "12 hr" ? 12 : 15} cancel={true} />
+                               <Counter time={e.when} del={e.delivery_time === "12 hr" ? 12 : 15} cancel={true} order={e} setTrigger={setTrigger} />
                                <div id={t.image}>
                                     <Image alt={"steam image"} src={e.image} width={70} height={70}/>
                                </div>

@@ -323,11 +323,15 @@
                 column-gap: 10px;
                 min-width: 80px;
                 button{
-                    width: 25px; height: 25px;
+                    min-width: 25px; height: 25px;
                     background-color: gold;
                     color: red;
                     font-weight: bold;
                     border-radius: 50%;
+                    &:hover{
+                        background-color: black;
+                        border: 2px solid firebrick;
+                    }
                 }
             }
             img{

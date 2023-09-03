@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import t from "../styles/Pages.module.css";
+import { useDispatch } from "react-redux";
+import { note_universal_feedback } from "../redux/loginSlice";
 
 function getTimeDifference(givenTime: any, del: number) {
   let givenDate: any = new Date(givenTime);
@@ -21,11 +23,8 @@ function getTimeDifference(givenTime: any, del: number) {
     const formattedDifference = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
   
     const twelveHourDifference = -((hours - 12) * 3600 + minutes * 60 + seconds);
-
   
     const cancel = twelveHourDifference > 30 * 60;
-
-    console.log(cancel)
   
     return {
       dif: formattedDifference,
@@ -37,8 +36,9 @@ function getTimeDifference(givenTime: any, del: number) {
   return calculateDifference();
 }
 
-const Counter = ({ time, del, cancel }: any) => {
+const Counter = ({ time, del, cancel,order, setTrigger }: any) => {
   const [difference, setDifference] = useState<any>(getTimeDifference(time, del));
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -53,10 +53,33 @@ const Counter = ({ time, del, cancel }: any) => {
     return () => clearInterval(intervalId);
   }, [time, del, difference]);
 
+  const handle_cancel =async (order:any) => {
+    dispatch(note_universal_feedback({message:"Cancelling order...", color:"gold"}))
+    try{
+      const response = await fetch('/api/cancel_order',{method:"POST", body:JSON.stringify(order)});
+      if(response.status === 200){
+        setTrigger((pr:boolean)=>!pr);
+        const resJson = await response.json();
+        dispatch(note_universal_feedback({message:resJson.message, color:resJson.color}))
+        setTimeout(() => {
+          dispatch(note_universal_feedback({message:"", color:resJson.color}))
+        }, 1500);
+      }
+      else{
+        const resJson = await response.json();
+        dispatch(note_universal_feedback({message:resJson.message, color:resJson.color}));
+        setTimeout(() => {
+          dispatch(note_universal_feedback({message:"", color:resJson.color}))
+        }, 1500);
+      }
+    }catch(err){
+      console.log(err)
+    }
+  }
   return (
     <>
     <div id={t.counter}>
-        {difference && cancel && difference.cancel &&  <button>X</button> }
+        {difference && cancel && del === 12 && difference.cancel &&  <button onClick={()=>handle_cancel(order)}>X</button> }
         <span style={{ fontSize: "large", color: "red", fontWeight: "bold" }} suppressHydrationWarning>
             {difference && difference.dif}
         </span>

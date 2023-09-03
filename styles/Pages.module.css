@@ -341,12 +341,16 @@
   min-width: 80px;
 }
 .trades_all_each #counter button {
-  width: 25px;
+  min-width: 25px;
   height: 25px;
   background-color: gold;
   color: red;
   font-weight: bold;
   border-radius: 50%;
+}
+.trades_all_each #counter button:hover {
+  background-color: black;
+  border: 2px solid firebrick;
 }
 .trades_all_each img {
   -o-object-fit: contain;
