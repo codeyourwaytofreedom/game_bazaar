@@ -8,13 +8,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     try{        
         const response = await fetch(url);
         const status = response.status;
-        const resJson = await response.json();
-
-        console.log(resJson.response);
-
-        res.send("OK")
-
-
+        if(status === 200){
+            const resJson = await response.json();
+            console.log(resJson.response['trade_offers_sent'][0]);
+            res.status(200).json({message:"Trades object received"})
+        }
     }
     catch(err){
         console.log(err)

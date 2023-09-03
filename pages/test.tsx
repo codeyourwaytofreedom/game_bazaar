@@ -4,7 +4,7 @@ const Test = () => {
     const [message, setMessage] = useState("");
 
     const execute_Test = async () => {
-        const response = await fetch('/api/rot');
+        const response = await fetch('/api/check_trade');
         console.log(response);
         if(response.status === 200){
             const resJspon = await response.json();
