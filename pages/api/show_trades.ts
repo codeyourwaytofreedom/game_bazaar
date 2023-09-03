@@ -28,12 +28,16 @@ export default async function order_handle(req:NextApiRequest, res:NextApiRespon
     if(existingUser){
         //console.log(existingUser.they_ordered)
         const they_ordered = existingUser.they_ordered;
-        if(they_ordered){
+        const I_ordered = existingUser.I_ordered;
+        
+
+        res.status(200).json({they_ordered:they_ordered, I_ordered:I_ordered})
+/*         if(they_ordered){
             res.status(200).json(they_ordered)
         }
         else{
             res.status(404).json({message:"NO ORDERS YET...", color:"red"});
-        }
+        } */
         
     }
     else{

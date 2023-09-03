@@ -37,7 +37,7 @@ function getTimeDifference(givenTime: any, del: number) {
   return calculateDifference();
 }
 
-const Counter = ({ time, del }: any) => {
+const Counter = ({ time, del, cancel }: any) => {
   const [difference, setDifference] = useState<any>(getTimeDifference(time, del));
 
   useEffect(() => {
@@ -56,7 +56,7 @@ const Counter = ({ time, del }: any) => {
   return (
     <>
     <div id={t.counter}>
-        {difference && difference.cancel &&  <button>X</button> }
+        {difference && cancel && difference.cancel &&  <button>X</button> }
         <span style={{ fontSize: "large", color: "red", fontWeight: "bold" }} suppressHydrationWarning>
             {difference && difference.dif}
         </span>

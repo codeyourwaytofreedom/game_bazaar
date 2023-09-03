@@ -75,6 +75,19 @@ export default async function order_handle(req:NextApiRequest, res:NextApiRespon
                             }
                         }
                     );
+
+                    const result_I_ordered = await members.updateOne(
+                        { steamId: steamID },
+                        {
+                            $push: {
+                                I_ordered: buy_order_details
+                            }
+                        }
+                    );
+
+                    console.log(result_I_ordered.modifiedCount)
+
+
                     if (result.modifiedCount > 0 || result.upsertedCount > 0) {
                         console.log('Update was successful.');
                         res.status(200).json({message:"BUY ORDER placed !!!", color:"green"});

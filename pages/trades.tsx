@@ -18,7 +18,7 @@ const Trades = () => {
     }
 
     const [chosen, setChosen] = useState(0);
-    const [orders_to_me, setOrders_to_me] = useState<any>()
+    const [orders, setOrders] = useState<any>()
 
     const actions = [
                         {status:"All transactions", icon:"|||", color:"skyblue", date:"06.09.2023 14:47" },
@@ -40,7 +40,7 @@ const Trades = () => {
             if(response.status === 200){
                 const resJson = await response.json();
                 console.log(resJson)
-                setOrders_to_me(resJson)
+                setOrders(resJson)
             }
             else{
                 console.log(response)
@@ -60,11 +60,30 @@ const Trades = () => {
                         )
                     }
                 </div>
+
                 <div className={t.trades_all}>
+                    <h1>Items to Send</h1>
                     {
-                        orders_to_me && orders_to_me.map((e:any,i:any)=>
+                        orders && orders.they_ordered && orders.they_ordered.map((e:any,i:any)=>
                             <div className={t.trades_all_each} style={{background:i%2 ? "#36454F" : "#13242f"}} key={i} suppressHydrationWarning>
-                               <Counter time={e.when} del={e.delivery_time === "12 hr" ? 12 : 15} />
+                               <Counter time={e.when} del={e.delivery_time === "12 hr" ? 12 : 15} cancel={false} />
+                               <div id={t.image}>
+                                    <Image alt={"steam image"} src={e.image} width={70} height={70}/>
+                               </div>
+                               <span style={{color:statuses.find(s=>s.status === e.status)?.color}}>{e.assetid} <br />{e.trade_link}</span>
+                               <span style={{color:statuses.find(s=>s.status === e.status)?.color}}>{e.status}</span>
+                               <span style={{color:statuses.find(s=>s.status === e.status)?.color}}>{e.status !== "Failed" && formatter(e.price)} </span>
+                            </div>
+                        )
+                    }
+                </div>
+
+                <div className={t.trades_all}>
+                    <h1>Items to Get</h1>
+                    {
+                        orders && orders.I_ordered &&  orders.I_ordered.map((e:any,i:any)=>
+                            <div className={t.trades_all_each} style={{background:i%2 ? "#36454F" : "#13242f"}} key={i} suppressHydrationWarning>
+                               <Counter time={e.when} del={e.delivery_time === "12 hr" ? 12 : 15} cancel={true} />
                                <div id={t.image}>
                                     <Image alt={"steam image"} src={e.image} width={70} height={70}/>
                                </div>
