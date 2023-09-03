@@ -18,7 +18,7 @@ const Trades = () => {
     }
 
     const [chosen, setChosen] = useState(0);
-    const [orders_to_me, setOrders_to_me] = useState<any>([])
+    const [orders_to_me, setOrders_to_me] = useState<any>()
 
     const actions = [
                         {status:"All transactions", icon:"|||", color:"skyblue", date:"06.09.2023 14:47" },
@@ -37,9 +37,14 @@ const Trades = () => {
     useEffect(()=>{
         const fetch_trades =async () => {
             const response = await fetch('/api/show_trades');
-            const resJson = await response.json();
-            console.log(resJson)
-            setOrders_to_me(resJson)
+            if(response.status === 200){
+                const resJson = await response.json();
+                console.log(resJson)
+                setOrders_to_me(resJson)
+            }
+            else{
+                console.log(response)
+            }
         }
         fetch_trades();
     },[])
@@ -59,15 +64,10 @@ const Trades = () => {
                     {
                         orders_to_me && orders_to_me.map((e:any,i:any)=>
                             <div className={t.trades_all_each} style={{background:i%2 ? "#36454F" : "#13242f"}} key={i} suppressHydrationWarning>
-                               <span suppressHydrationWarning style={{color:statuses.find(s=>s.status === e.status)?.color, fontSize:"x-large"}}>{statuses.find(s=>s.status === e.status)?.icon}</span>
-                               <div id={t.name} style={{color:statuses.find(s=>s.status === e.status)?.color}}>
-                                    <Counter time={e.when} />
-                               </div>
+                               <Counter time={e.when} del={e.delivery_time === "12 hr" ? 12 : 15} />
                                <div id={t.image}>
-                                    {/* <span style={{boxShadow:`0 0 35px 14px ${statuses.find(s=>s.status === e.status)?.color}`}}></span> */}
                                     <Image alt={"steam image"} src={e.image} width={70} height={70}/>
                                </div>
-                               
                                <span style={{color:statuses.find(s=>s.status === e.status)?.color}}>{e.assetid} <br />{e.trade_link}</span>
                                <span style={{color:statuses.find(s=>s.status === e.status)?.color}}>{e.status}</span>
                                <span style={{color:statuses.find(s=>s.status === e.status)?.color}}>{e.status !== "Failed" && formatter(e.price)} </span>

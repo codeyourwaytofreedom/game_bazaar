@@ -331,6 +331,21 @@
   display: flex;
   justify-content: space-evenly;
   align-items: center;
+  padding: 0 1vw;
+}
+.trades_all_each #counter {
+  display: flex;
+  align-items: center;
+  -moz-column-gap: 10px;
+       column-gap: 10px;
+}
+.trades_all_each #counter button {
+  width: 25px;
+  height: 25px;
+  background-color: gold;
+  color: red;
+  font-weight: bold;
+  border-radius: 50%;
 }
 .trades_all_each img {
   -o-object-fit: contain;
