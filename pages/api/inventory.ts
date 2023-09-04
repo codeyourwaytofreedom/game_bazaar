@@ -15,7 +15,6 @@ export default async function handler(req:NextApiRequest, res:NextApiResponse) {
         }
         else {
             steamID = idCookie;
-            console.log("direk id");
         }
     }
 
@@ -36,14 +35,14 @@ export default async function handler(req:NextApiRequest, res:NextApiResponse) {
             const existing_inventory = existingUser[`descriptions_${appId}`];
             if(!existing_inventory){
                 try {
-                    const url = `https://api.steampowered.com/IEconService/GetInventoryItemsWithDescriptions/v1/?key=${process.env.STEAM}&steamid=${process.env.ID}&appid=${appId}&contextid=2&get_descriptions=true`;
-            
-                    const response = await fetch(url);
-                    const data = await response.json();
+                    const rotated_url = `https://markt.tf/inventory/${process.env.ID}/${process.env.STEAM}/${appId}`;
+                    const response = await fetch(rotated_url);
+                    
+                    const restext = await response.json();
+                    const data = JSON.parse(restext);
+
                     const descriptions = data.response.descriptions;
                     const assets = data.response.assets;
-
-                    //console.log(descriptions.length, assets.length)
 
                     assets.forEach((asset:any,assetInd:any) => {
                         descriptions.forEach((desc:any, descInd:any) => {
