@@ -16,6 +16,7 @@ function getTimeDifference(givenTime: any, del: number) {
     const timeDifference = givenDate - currentDate;
   
     const secondsDifference = Math.floor(timeDifference / 1000);
+    
     const hours = Math.floor(secondsDifference / 3600);
     const minutes = Math.floor((secondsDifference % 3600) / 60);
     const seconds = secondsDifference % 60;
@@ -25,10 +26,13 @@ function getTimeDifference(givenTime: any, del: number) {
     const twelveHourDifference = -((hours - 12) * 3600 + minutes * 60 + seconds);
   
     const cancel = twelveHourDifference > 30 * 60;
+
+    const finito = secondsDifference < 0;
   
     return {
       dif: formattedDifference,
       cancel: cancel,
+      finito
     };
   };
   
@@ -81,7 +85,8 @@ const Counter = ({ time, del, cancel,order, setTrigger }: any) => {
     <div id={t.counter}>
         {difference && cancel && del === 12 && difference.cancel &&  <button onClick={()=>handle_cancel(order)}>X</button> }
         <span style={{ fontSize: "large", color: "red", fontWeight: "bold" }} suppressHydrationWarning>
-            {difference && difference.dif}
+            {difference && !difference.finito && difference.dif}
+            {difference && difference.finito && "00:00:00"}
         </span>
     </div>
     </>
