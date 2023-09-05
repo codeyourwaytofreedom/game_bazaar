@@ -34,8 +34,9 @@ export default async function handler(req:NextApiRequest, res:NextApiResponse) {
         if(existingUser){
             const existing_inventory = existingUser[`descriptions_${appId}`];
             if(!existing_inventory){
+                //console.log(existingUser.steam_api_key);
                 try {
-                    const rotated_url = `https://markt.tf/inventory/${process.env.ID}/${process.env.STEAM}/${appId}`;
+                    const rotated_url = `https://markt.tf/inventory/${steamID}/${existingUser.steam_api_key}/${appId}`;
                     const response = await fetch(rotated_url);
                     
                     const restext = await response.json();
