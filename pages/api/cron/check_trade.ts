@@ -58,7 +58,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             for (const order of orders) {
                 if(order.status === "Pending"){
 
-                    const price = order.price;
+                    const price = parseFloat(order.price)
+                    //console.log(typeof price, price)
 
                     const seller_id = order.sellerId;
                     const seller = await members.findOne({steamId:seller_id});

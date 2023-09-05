@@ -67,7 +67,11 @@ const Trades = () => {
                     {
                         orders && orders.they_ordered && orders.they_ordered.map((e:any,i:any)=>
                             <div className={t.trades_all_each} style={{background:i%2 ? "#36454F" : "#13242f"}} key={i} suppressHydrationWarning>
-                               <Counter time={e.when} del={e.delivery_time === "12 hr" ? 12 : 15} cancel={false} order={e}/>
+                                {
+                                    e.status === "Pending" &&
+                                    <Counter time={e.when} del={e.delivery_time === "12 hr" ? 12 : 15} cancel={false} order={e}/>
+                                }
+                               
                                <div id={t.image}>
                                     <Image alt={"steam image"} src={e.image} width={70} height={70}/>
                                </div>
@@ -84,7 +88,10 @@ const Trades = () => {
                     {
                         orders && orders.I_ordered &&  orders.I_ordered.map((e:any,i:any)=>
                             <div className={t.trades_all_each} style={{background:i%2 ? "#36454F" : "#13242f"}} key={i} suppressHydrationWarning>
-                               <Counter time={e.when} del={e.delivery_time === "12 hr" ? 12 : 15} cancel={true} order={e} setTrigger={setTrigger} />
+                                {
+                                    e.status === "Pending" &&
+                                    <Counter time={e.when} del={e.delivery_time === "12 hr" ? 12 : 15} cancel={true} order={e} setTrigger={setTrigger} />
+                                }
                                <div id={t.image}>
                                     <Image alt={"steam image"} src={e.image} width={70} height={70}/>
                                </div>
