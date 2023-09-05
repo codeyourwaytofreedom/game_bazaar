@@ -14,22 +14,28 @@ export default async function handler(
         const data_base = client.db('game-bazaar');
         const members = data_base.collection('members');
 
-          const result = await members.aggregate([
-            {
-              $project: {
-                _id: 0,
-                steamId:1,
-                filteredDescriptions: {
-                  $filter: {
-                    input: `$descriptions_${appid}`,
-                    as: 'description',
-                    cond: { $eq: ['$$description.assetid', assetid] }
-                  }
+        const result = await members.aggregate([
+          {
+            $match: {
+              [`descriptions_${appid}`]: { $exists: true, $ne: [] }, // Exclude members with missing or empty "descriptions" array
+            },
+          },
+          {
+            $project: {
+              _id: 0,
+              steamId: 1,
+              filteredDescriptions: {
+                $filter: {
+                  input: `$descriptions_${appid}`,
+                  as: 'description',
+                  cond: { $eq: ['$$description.assetid', assetid] },
                 },
-                delivery_time: 1
-              }
-            }
-          ]).toArray();
+              },
+              delivery_time: 1,
+            },
+          },
+        ]).toArray();
+        
 
           if(result){
             res.status(200).json(result)
