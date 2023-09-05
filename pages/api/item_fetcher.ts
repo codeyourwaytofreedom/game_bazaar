@@ -17,7 +17,14 @@ export default async function handler(
         const result = await members.aggregate([
           {
             $match: {
-              [`descriptions_${appid}`]: { $exists: true, $ne: [] }, // Exclude members with missing or empty "descriptions" array
+              [`descriptions_${appid}`]: {
+                $exists: true,
+                $ne: [],
+                $elemMatch: {
+                  price: { $ne: 0 }, // Ensure at least one element has a price not equal to 0
+                  assetid: assetid, // Match the desired assetid
+                },
+              },
             },
           },
           {
@@ -36,13 +43,14 @@ export default async function handler(
           },
         ]).toArray();
         
+        
 
-          if(result){
-            res.status(200).json(result)
-          }
-          else{
-            res.status(404).json({message:"Matching items could not be fetched..."})
-          }
+        if(result){
+          res.status(200).json(result)
+        }
+        else{
+          res.status(404).json({message:"Matching items could not be fetched..."})
+        }
     }
     else{
         res.status(404).json({message:"Item parameters missing !!!"})

@@ -31,7 +31,7 @@ const Inventory = () => {
                     return response.json();
                 } else {
                     return response.json().then(data => {
-                        console.log(data.message);
+                        //console.log(data.message);
                         setFeedback(data.message);
                         //throw new Error(`Response status: ${response.status}`);
                     });
@@ -39,7 +39,7 @@ const Inventory = () => {
             })
             .then(data => {
                 if (data) {
-                    console.log(data)
+                    //console.log(data)
                     setInventory(data);
                     setFeedback("")
                 }
