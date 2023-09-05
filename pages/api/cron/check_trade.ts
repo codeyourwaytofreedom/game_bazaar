@@ -6,7 +6,7 @@ import _ from 'lodash';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
 
-    console.log("TRADE MATCH ENDPOINT...");
+    //console.log("TRADE MATCH ENDPOINT...");
     const get_trade_offers = async (key:string, seller:boolean) => {
         const rotated_url = `https://markt.tf/trade/${key}?seller=${seller}`;
         try{        
@@ -57,6 +57,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             const orders = member.they_ordered;
             for (const order of orders) {
 
+                const order_assetid = order.assetid;
+                
+
                 const when = order.when;
                 const delivery_time = order.delivery_time;
                 const time_space_in_seconds = delivery_time === "12 hr" ? 12*3600 : 15*60;
@@ -67,8 +70,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
                 if(order.status === "Pending"){
                     const price = parseFloat(order.price)
-                    //console.log(typeof price, price)
-                    console.log(expired)
+
+                    console.log("assetid of the order",order_assetid, order.sellerId);
 
                     const seller_id = order.sellerId;
                     const seller = await members.findOne({steamId:seller_id});
@@ -86,15 +89,18 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
                     //console.log(items_to_give);
                     //console.log(items_to_receive);
-    
+                    
                     items_to_give.forEach((item_to_give:any) => {
                         items_to_receive.forEach(async (item_to_receive:any) => {
-                            if(_.isEqual(item_to_give,item_to_receive)){
+                            const tripleMatch = item_to_give.assetid === item_to_receive.assetid === order_assetid;
+                            if(_.isEqual(item_to_give,item_to_receive) && tripleMatch){
+                                //console.log(tripleMatch);
                                 const seller_trade_state = seller_data.trade_offers.find((order:any)=> order.pure_id === buyer_id).trade_offer_state;
                                 const buyer_trade_state = buyer_data.trade_offers.find((order:any)=> order.pure_id === seller_id).trade_offer_state;
                                 if(seller_trade_state === 3 && buyer_trade_state === 3){
-                                    console.log("Execute balance ops");
+                                   // console.log("Execute balance ops");
                                     console.log(item_to_receive.assetid);
+                                    console.log(item_to_give.assetid);
 
                                     const response_seller = await members.updateOne(
                                         {
@@ -135,8 +141,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                                     console.log("Not yet")
                                 }
                             }
+                            else{
+                                console.log("Triple match failed")
+                            }
                         });
                     });
+
+                    //console.log(match)
                 }
             }
         }

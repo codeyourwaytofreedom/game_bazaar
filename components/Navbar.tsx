@@ -76,6 +76,27 @@ const handle_Logout = async () => {
         return price_formatted;
     }
     
+    useEffect(()=>{
+        const check_cookie =async () => {
+            const response = await fetch('/api/clear_navbar');
+            const status = response.status;
+            if(status === 404){
+                if(localStorage.getItem('userLoginStatus')){
+                    localStorage.removeItem('userLoginStatus')
+                }
+                if(localStorage.getItem('url')){
+                    localStorage.removeItem('url')
+                }
+                if(localStorage.getItem('balance')){
+                    localStorage.removeItem('balance')
+                }
+                dispatch(note_login(false));
+            }
+        }
+        check_cookie();
+    },[])
+
+
 
     const handle_URL = () => {
         dispatch(note_scroll(false));
