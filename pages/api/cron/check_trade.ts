@@ -56,10 +56,19 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         for await (const member of cursor) {
             const orders = member.they_ordered;
             for (const order of orders) {
-                if(order.status === "Pending"){
 
+                const when = order.when;
+                const delivery_time = order.delivery_time;
+                const time_space_in_seconds = delivery_time === "12 hr" ? 12*3600 : 15*60;
+
+                const difference = (new Date().getTime() - new Date(when).getTime()) / 1000;
+
+                const expired = time_space_in_seconds - difference < 0;
+
+                if(order.status === "Pending"){
                     const price = parseFloat(order.price)
                     //console.log(typeof price, price)
+                    console.log(expired)
 
                     const seller_id = order.sellerId;
                     const seller = await members.findOne({steamId:seller_id});

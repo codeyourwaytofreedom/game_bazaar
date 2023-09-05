@@ -24,7 +24,8 @@ export default async function handler(req:NextApiRequest, res:NextApiResponse) {
 
     const client_input = JSON.parse(req.body)
     const item_assetid = client_input.assetid;
-    const item_new_price = client_input.price; 
+    const item_new_price = parseFloat(client_input.price); 
+    console.log(typeof item_new_price, item_new_price)
     const item_group = client_input.appId;
     const KEY = client_input.KEY;
 
@@ -36,7 +37,7 @@ export default async function handler(req:NextApiRequest, res:NextApiResponse) {
         if(item_new_price){
             const inventory = await existingUser[`descriptions_${item_group}`];
             const itemToUpdate = inventory.find((item:any) => item.assetid === item_assetid);
-            console.log(itemToUpdate);
+            //console.log(itemToUpdate);
             
             if(itemToUpdate){
                 const updateQuery = {
