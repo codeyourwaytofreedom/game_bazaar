@@ -42,14 +42,40 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             return err
         }
     }
-/*     const buyer_data:any = await get_trade_offers(process.env.STEAM!, false);
-    const seller_data:any = await get_trade_offers(process.env.SELLER!, true); */
+
 
     // retrieve trade objects from member documents
     try{
         const client = await connectToDatabase();
         const data_base = client.db('game-bazaar');
         const members = data_base.collection('members');
+
+        const fetch_new_inventory = async (steamId:string,steam_api_key:string,appId:number) => {
+            try {
+                const rotated_url = `https://markt.tf/inventory/${steamId}/${steam_api_key}/${appId}`;
+                const response = await fetch(rotated_url);
+                
+                const restext = await response.json();
+                const data = JSON.parse(restext);
+    
+                const descriptions = data.response.descriptions;
+                const assets = data.response.assets;
+    
+                assets.forEach((asset:any,assetInd:any) => {
+                    descriptions.forEach((desc:any, descInd:any) => {
+                        //console.log(asset.classid === desc.classid, asset.instanceid === desc.instanceid);
+                        if(asset.classid === desc.classid && asset.instanceid === desc.instanceid){
+                            descriptions[descInd].assetid = asset.assetid
+                        }
+                    });
+                });
+                return descriptions
+        
+            } catch (error) {
+                return null
+            } 
+        }
+
         
         const cursor = members.find({ "they_ordered": { $exists: true } });
         
@@ -92,17 +118,33 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                     
                     items_to_give.forEach((item_to_give:any) => {
                         items_to_receive.forEach(async (item_to_receive:any) => {
-                            const tripleMatch = item_to_give.assetid === item_to_receive.assetid === order_assetid;
-                            if(_.isEqual(item_to_give,item_to_receive) && tripleMatch){
-                                //console.log(tripleMatch);
+                            if(     _.isEqual(item_to_give,item_to_receive) 
+                                    && item_to_give.assetid === order_assetid 
+                                    && item_to_receive.assetid === order_assetid )
+                            {
                                 const seller_trade_state = seller_data.trade_offers.find((order:any)=> order.pure_id === buyer_id).trade_offer_state;
                                 const buyer_trade_state = buyer_data.trade_offers.find((order:any)=> order.pure_id === seller_id).trade_offer_state;
                                 if(seller_trade_state === 3 && buyer_trade_state === 3){
-                                   // console.log("Execute balance ops");
+                                    console.log("Execute balance ops");
                                     console.log(item_to_receive.assetid);
                                     console.log(item_to_give.assetid);
+                                    console.log(order_assetid);
 
-                                    const response_seller = await members.updateOne(
+                                    //change 440 to dynamic later on updating order object
+                                    const buyer_inventory_new = await fetch_new_inventory(buyer_id,buyer_steam_api_key,440);
+                                    const buyer_inventory_old = buyer?.descriptions_440;
+                                    //console.log(buyer_inventory_new);
+                                    //console.log(buyer_inventory_old);
+
+                                    
+
+                                    const seller_inventory_new = await fetch_new_inventory(seller_id,seller_steam_api_key,440);
+                                    const seller_inventory_old = seller?.descriptions_440;
+
+                                    console.log(seller_inventory_new.length);
+                                    console.log(seller_inventory_old.length);
+
+/*                                     const response_seller = await members.updateOne(
                                         {
                                           steamId: seller_id,
                                           "they_ordered.sellerId": seller_id,
@@ -134,8 +176,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                                         }
                                       );
 
-                                    console.log(response_seller.modifiedCount, response_buyer.modifiedCount,"Bingo, go check balances")
-                                      
+                                    console.log(response_seller.modifiedCount, response_buyer.modifiedCount,"Bingo, go check balances")  */  
                                 }
                                 else{
                                     console.log("Not yet")
