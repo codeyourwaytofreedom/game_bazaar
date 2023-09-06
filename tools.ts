@@ -1,4 +1,4 @@
-export const fetch_new_inventory = async (steamId:string,steam_api_key:string,appId:number) => {
+export const fetch_new_inventory = async (steamId:string,steam_api_key:string,appId:any) => {
     try {
         const rotated_url = `https://markt.tf/inventory/${steamId}/${steam_api_key}/${appId}`;
         const response = await fetch(rotated_url);

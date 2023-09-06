@@ -170,8 +170,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                                     const response_seller = await members.updateOne(
                                         {
                                           steamId: seller_id,
-                                          "they_ordered.sellerId": seller_id,
-                                          "they_ordered.buyer_id": buyer_id,
+                                          they_ordered: {
+                                            $elemMatch: {
+                                              sellerId: seller_id,
+                                              buyer_id: buyer_id,
+                                              assetid: order.assetid,
+                                              when:order.when
+                                            }
+                                          }
                                         },
                                         {
                                           $set: {
@@ -187,8 +193,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                                       const response_buyer = await members.updateOne(
                                         {
                                           steamId: buyer_id,
-                                          "I_ordered.sellerId": seller_id,
-                                          "I_ordered.buyer_id": buyer_id,
+                                          I_ordered: {
+                                            $elemMatch: {
+                                              sellerId: seller_id,
+                                              buyer_id: buyer_id,
+                                              assetid: order.assetid,
+                                              when:order.when
+                                            }
+                                          }
                                         },
                                         {
                                           $set: {
@@ -207,44 +219,56 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                                     console.log("Not yet")
                                 }
                             }
-                            if(!to_be_given){
-                                console.log("Gönderici Göndermedi");
-                                const response_seller = await members.updateOne(
-                                    {
-                                      steamId: seller_id,
-                                      "they_ordered.sellerId": seller_id,
-                                      "they_ordered.buyer_id": buyer_id,
-                                      "they_ordered.assetid": order_assetid,
-                                    },
-                                    {
-                                      $set: {
-                                        "they_ordered.$.status": "Failed",
-                                      },
-                                    }
-                                  );
-
-                                  const response_buyer = await members.updateOne(
-                                    {
-                                      steamId: buyer_id,
-                                      "I_ordered.sellerId": seller_id,
-                                      "I_ordered.buyer_id": buyer_id,
-                                      "I_ordered.assetid": order_assetid,
-                                    },
-                                    {
-                                      $set: {
-                                        "I_ordered.$.status": "Failed",
-                                      },
-                                    }
-                                  );
-
-                                  console.log(response_buyer.matchedCount, response_seller.modifiedCount,"Failed trade")
-
-                            }
                             else{
                                 console.log("Triple match failed")
                             }
                         });
                     });
+
+
+                    if(!to_be_given){
+                        console.log("Gönderici Göndermedi");
+                        //console.log(order_assetid, seller_id, buyer_id)
+                        console.log(seller_id, buyer_id, order_assetid, order.when)
+                        const response_seller = await members.updateOne(
+                            {
+                              steamId: seller_id,
+                              they_ordered: {
+                                $elemMatch: {
+                                  sellerId: seller_id,
+                                  buyer_id: buyer_id,
+                                  assetid: order.assetid,
+                                  when:order.when
+                                }
+                              }
+                            },
+                            {
+                              $set: {
+                                "they_ordered.$.status": "Failed"
+                              }
+                            }
+                          );                          
+
+                          const response_buyer = await members.updateOne(
+                            {
+                              steamId: buyer_id,
+                              I_ordered: {
+                                $elemMatch: {
+                                  sellerId: seller_id,
+                                  buyer_id: buyer_id,
+                                  assetid: order.assetid,
+                                  when:order.when
+                                }
+                              }
+                            },
+                            {
+                              $set: {
+                                "I_ordered.$.status": "Failed",
+                              },
+                            }
+                          );
+                          console.log(response_seller.modifiedCount,response_buyer.modifiedCount,"Failed trade");
+                    }
 
                     //console.log(match)
                 }

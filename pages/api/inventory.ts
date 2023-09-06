@@ -91,7 +91,7 @@ export default async function handler(req:NextApiRequest, res:NextApiResponse) {
                 if(difference > refresh_time){
                     console.log("Time to update inventory for this category");
 
-                    const new_inventory = await fetch_new_inventory(steamID,existingUser.steam_api_key,parseInt(appId));
+                    const new_inventory = await fetch_new_inventory(steamID,existingUser.steam_api_key,appId);
                     const old_intenvory = existingUser[`descriptions_${appId}`];
 
                     //Localhost for testing
