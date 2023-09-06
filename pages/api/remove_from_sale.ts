@@ -33,10 +33,10 @@ import {connectToDatabase} from "./db";
 
 export default async function handler(req:NextApiRequest, res:NextApiResponse) {
 
-/*     const idCookie = req.cookies.ID;
-    let steamID; */
+    const idCookie = req.cookies.ID;
+    let steamID;
 
-/*     if(idCookie){
+    if(idCookie){
         const isSteamOpenIDURL = idCookie.includes("https://steamcommunity.com/openid/id/");
         if(isSteamOpenIDURL){
             const parts = idCookie.split("/");
@@ -46,7 +46,7 @@ export default async function handler(req:NextApiRequest, res:NextApiResponse) {
             steamID = idCookie;
             console.log("direk id")
         }
-    } */
+    }
 
     const client = await connectToDatabase();
     const data_base = client.db('game-bazaar');
@@ -58,10 +58,16 @@ export default async function handler(req:NextApiRequest, res:NextApiResponse) {
     const item_assetid = client_input.assetid;
     const item_group = client_input.appId;
     const KEY = client_input.KEY;
+    const KEY_owner = await members.findOne({steamId:steamID});
+    const KEY_from_DB = KEY_owner?.game_bazaar_api_key;
 
-    console.log(client_input);
+    console.log(KEY, KEY_from_DB)
 
-    const existingUser = await members.findOne({game_bazaar_api_key:KEY});
+    //console.log(client_input);
+    
+
+    const existingUser = await members.findOne({game_bazaar_api_key:KEY ?? KEY_from_DB});
+
     
     if(existingUser){
             const inventory = await existingUser[`descriptions_${item_group}`];
@@ -70,7 +76,7 @@ export default async function handler(req:NextApiRequest, res:NextApiResponse) {
             
             if(itemToUpdate){
                 const updateQuery = {
-                    game_bazaar_api_key:KEY,
+                    game_bazaar_api_key:KEY ?? KEY_from_DB,
                     [`descriptions_${item_group}.assetid`]: item_assetid
                   };
               

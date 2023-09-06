@@ -4,6 +4,8 @@ import { useSelector } from "react-redux";
 import Layout from "../components/Layout";
 import i from "../styles/Pages.module.css";
 import { useRouter } from "next/router";
+import { useDispatch } from "react-redux";
+import { note_category, note_universal_feedback } from "../redux/loginSlice";
 
 const Inventory = () => {
     const [inventory, setInventory] = useState<any>();
@@ -21,6 +23,8 @@ const Inventory = () => {
     const [popup, setPopup] = useState<number>(0);
     const [hoverDeetails, setHoverDetails] = useState<any>();
     const {assetid} = router.query; 
+    const dispatch = useDispatch();
+    const [trigger, setTrigger] = useState(false);
 
     useEffect(() => {
         setInventory(null);
@@ -47,7 +51,7 @@ const Inventory = () => {
             .catch(error => {
                 console.error("Error fetching data:", error);
             });
-    }, [category]);
+    }, [category,trigger]);
     
     useEffect(()=>{
         if(assetid && inventory && search.current){
@@ -183,6 +187,38 @@ const Inventory = () => {
         
 
     }
+
+    const handle_remove_from_sale = async (item:any) => {
+        if(confirm("Are you sure that you want to remove this item from sale?")){
+            dispatch(note_universal_feedback({message:"Removing item from sale...", color:"gold"}))
+            const response = await fetch('/api/remove_from_sale',{
+                method:"POST",
+                body:JSON.stringify(
+                    {
+                        assetid:item.assetid,
+                        appId:item.appid,
+                        KEY:null
+                    })
+            })
+            const status = response.status;
+            if(status === 200){
+                setTrigger(tr=>!tr);
+                dispatch(note_universal_feedback({message:"Item removed from sale...", color:"green"}));             
+                setTimeout(() => {
+                    dispatch(note_universal_feedback({message:"", color:"green"}));
+                }, 1500);
+            }
+            else{
+                const text = await response.text();
+                dispatch(note_universal_feedback({message:text, color:"red"}));
+                setTimeout(() => {
+                    dispatch(note_universal_feedback({message:"", color:"red"}));
+                }, 1500);
+            }
+        }
+    }
+
+
     return ( 
         <Layout searchbox={false}>
             <div className={i.inventory}>
@@ -251,7 +287,9 @@ const Inventory = () => {
                                 
                                 </span>
                             <button onClick={()=> handle_price_editing(item)}>Edit Price</button>
-                            <span><Image alt={"delete steam"} src={index%2 ? "/delete4.png" : "/delete3.png" } width={20} height={20}/></span>
+                            <span onClick={()=>handle_remove_from_sale(item)} style={{cursor:"pointer"}}>
+                                <Image alt={"delete steam"} src={index%2 ? "/delete4.png" : "/delete3.png" } width={20} height={20}/>
+                            </span>
                         </div>
                         )
                         : 

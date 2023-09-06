@@ -89,7 +89,7 @@ const Item_details = () => {
 
     useEffect(()=>{
         const fetch_orders = async () => {
-            if(item_details){
+            if(item_details && item_details.length > 0){
                 const item_name = item_details[0].filteredDescriptions[0].market_hash_name;
                 const response = await fetch(`/api/orders?item=${item_name}`);
                 const status = response.status;
@@ -293,7 +293,7 @@ const Item_details = () => {
 
                     <div className={i.homie_product_holder}>
                         {
-                            item_details && 
+                            item_details && item_details.length > 0 &&
                             <>
                             <Image id={i.item} src={`${base_url}${item_details[0].filteredDescriptions[0].icon_url}`}  alt={"item"} width={300} height={300} />
                             <div className={i.homie_product_holder_details}>

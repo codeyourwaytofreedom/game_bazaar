@@ -6,7 +6,7 @@ import _ from 'lodash';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
 
-    //console.log("TRADE MATCH ENDPOINT...");
+    console.log("TRADE MATCH ENDPOINT...");
     const get_trade_offers = async (key:string, seller:boolean) => {
         const rotated_url = `https://markt.tf/trade/${key}?seller=${seller}`;
         try{        
@@ -209,12 +209,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
                     //console.log(match)
                 }
+                else{
+                    console.log(order.status)
+                }
             }
         }
+        res.status(200).json({message:"Trades object received"})
     }        
     catch(err){
         console.log(err);
+        res.status(200).json({message:err})
     }
-
-    res.status(200).json({message:"Trades object received"})
 }
