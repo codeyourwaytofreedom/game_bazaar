@@ -113,7 +113,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                     const items_to_give = seller_data.trade_offers.find((order:any)=> order.pure_id === buyer_id).items_to_give;
                     const items_to_receive = buyer_data.trade_offers.find((order:any)=> order.pure_id === seller_id).items_to_receive;
 
-                    //console.log(items_to_give);
+                    const to_be_given = items_to_give.find((e:any)=>e.assetid === order_assetid);
+                    const to_be_received = items_to_receive.find((e:any)=>e.assetid === order_assetid);
+                    
+                    console.log(to_be_given)
+                    console.log(to_be_received);
+                    
+                    //console.log(items_to_receive);
                     //console.log(items_to_receive);
                     
                     items_to_give.forEach((item_to_give:any) => {
@@ -200,6 +206,39 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                                 else{
                                     console.log("Not yet")
                                 }
+                            }
+                            if(!to_be_given){
+                                console.log("Gönderici Göndermedi");
+                                const response_seller = await members.updateOne(
+                                    {
+                                      steamId: seller_id,
+                                      "they_ordered.sellerId": seller_id,
+                                      "they_ordered.buyer_id": buyer_id,
+                                      "they_ordered.assetid": order_assetid,
+                                    },
+                                    {
+                                      $set: {
+                                        "they_ordered.$.status": "Failed",
+                                      },
+                                    }
+                                  );
+
+                                  const response_buyer = await members.updateOne(
+                                    {
+                                      steamId: buyer_id,
+                                      "I_ordered.sellerId": seller_id,
+                                      "I_ordered.buyer_id": buyer_id,
+                                      "I_ordered.assetid": order_assetid,
+                                    },
+                                    {
+                                      $set: {
+                                        "I_ordered.$.status": "Failed",
+                                      },
+                                    }
+                                  );
+
+                                  console.log(response_buyer.matchedCount, response_seller.modifiedCount,"Failed trade")
+
                             }
                             else{
                                 console.log("Triple match failed")
