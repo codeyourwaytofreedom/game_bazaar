@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import {connectToDatabase} from "./db";
+import { fetch_new_inventory } from '../../tools';
 
 export default async function handler(req:NextApiRequest, res:NextApiResponse) {
 
@@ -36,6 +37,10 @@ export default async function handler(req:NextApiRequest, res:NextApiResponse) {
             if(!existing_inventory){
                 //console.log(existingUser.steam_api_key);
                 try {
+                    //Localhost for testing
+                    //const rotated_url = `https://markt.tf/inventory/${process.env.ID}/${existingUser.steam_api_key}/${appId}`;
+
+                    // Production version
                     const rotated_url = `https://markt.tf/inventory/${steamID}/${existingUser.steam_api_key}/${appId}`;
                     const response = await fetch(rotated_url);
                     
@@ -58,7 +63,11 @@ export default async function handler(req:NextApiRequest, res:NextApiResponse) {
                         const descriptions_with_prices = descriptions.map((game_item:any) => {return {...game_item, price:0}})
                         await members.updateOne(
                             { steamId: steamID },
-                            { $set: { [`descriptions_${appId}`]: descriptions_with_prices } }
+                            { $set: { 
+                                [`descriptions_${appId}`]: descriptions_with_prices,
+                                [`last_updated_${appId}`]:new Date() 
+                                } 
+                            }
                           );
                         res.status(200).json(descriptions_with_prices);
                     }
@@ -72,7 +81,47 @@ export default async function handler(req:NextApiRequest, res:NextApiResponse) {
                 } 
             }
             else{
-                res.status(200).json(existingUser[`descriptions_${appId}`])
+                // Existing inventory
+                const last_updated = existingUser[`last_updated_${appId}`];
+
+                const difference = (new Date().getTime() - new Date(last_updated).getTime())/1000;
+                const refresh_time = 30*60;
+
+                if(difference > refresh_time){
+                    console.log("Time to update inventory for this category");
+
+                    const new_inventory = await fetch_new_inventory(steamID,existingUser.steam_api_key,parseInt(appId));
+                    const old_intenvory = existingUser[`descriptions_${appId}`];
+                    
+                    //Localhost for testing
+                    //const new_inventory = await fetch_new_inventory(process.env.ID!,existingUser.steam_api_key,parseInt(appId));
+                    
+
+                    //transferring existing prices to new inventory
+                    old_intenvory.forEach((old_element:any) => {
+                        new_inventory.forEach((new_element:any) => {
+                            if(old_element.assetid === new_element.assetid){
+                                new_element.price = old_element.price;
+                            }
+                        });
+                    });
+
+                    console.log(new_inventory)
+                    
+                    const result = await members.updateOne(
+                        { steamId: steamID },
+                        { $set: { 
+                            [`descriptions_${appId}`]: new_inventory,
+                            [`last_updated_${appId}`]:new Date() 
+                            } 
+                        }
+                      );
+                    console.log(result.modifiedCount);
+                    res.status(200).json(new_inventory)
+                }else{
+                    console.log("No need to update inventory")
+                    res.status(200).json(existingUser[`descriptions_${appId}`])
+                }
             }
         }
         else{
