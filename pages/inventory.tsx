@@ -43,7 +43,7 @@ const Inventory = () => {
             })
             .then(data => {
                 if (data) {
-                    //console.log(data)
+                    console.log(data)
                     setInventory(data);
                     setFeedback("")
                 }
@@ -282,7 +282,7 @@ const Inventory = () => {
                             <span onClick={() => handle_item_choose(item)}>{item.market_name}</span>
                             <span style={{color:item.price === 0 ? "whitesmoke" : "gold"}}>
                                 {   
-                                    formatter(item.price.toString())
+                                    item.price ? formatter(item.price.toString()) : "--"
                                 }
                                 
                                 </span>
