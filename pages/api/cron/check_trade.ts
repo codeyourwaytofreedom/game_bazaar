@@ -143,19 +143,22 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
                                     const buyer_inventory_new = await fetch_new_inventory(buyer_id,buyer_steam_api_key,"440");
                                     const buyer_inventory_old = buyer?.descriptions_440;
-                                  
+
+                                    
 
                                     //transferring existing prices from old inventory in game bazaar
+                                    //match according to market_hash_name
                                     buyer_inventory_old.forEach((old_item:any) => {
                                         buyer_inventory_new.forEach((new_item:any) => {
-                                            if(old_item.assetid === new_item.assetid){
+                                            if(old_item.market_hash_name === new_item.market_hash_name){
                                                 new_item.price = old_item.price
+                                            }else{
+                                              new_item.price = 0
                                             }
                                         });
                                     });
 
-                                    console.log(buyer_inventory_new);
-                                    
+                                    console.log(buyer_inventory_new)
 
                                     if(seller_inventory_new){
                                       //transferring existing prices from old inventory in game bazaar
@@ -165,16 +168,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                                             buyer_inventory_new.push(old_element);
                                         }
                                         seller_inventory_new.forEach((new_element:any) => {
-                                                if(old_element.assetid === new_element.assetid)
+                                                if(old_element.market_hash_name === new_element.market_hash_name)
                                                 {
                                                     new_element.price = old_element.price
                                                 }
                                             });
                                         });
                                     }
-
-                                    console.log(buyer_inventory_new);
-
+                                    
                                     const response_seller = await members.updateOne(
                                         {
                                           steamId: seller_id,
