@@ -50,7 +50,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         const data_base = client.db('game-bazaar');
         const members = data_base.collection('members');
 
-        const fetch_new_inventory = async (steamId:string,steam_api_key:string,appId:number) => {
+        const fetch_new_inventory = async (steamId:string,steam_api_key:string,appId:string) => {
             try {
                 const rotated_url = `https://markt.tf/inventory/${steamId}/${steam_api_key}/${appId}`;
                 const response = await fetch(rotated_url);
@@ -116,8 +116,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                     const to_be_given = items_to_give.find((e:any)=>e.assetid === order_assetid);
                     const to_be_received = items_to_receive.find((e:any)=>e.assetid === order_assetid);
                     
-                    console.log(to_be_given)
-                    console.log(to_be_received);
+                    //console.log(to_be_given)
+                    //console.log(to_be_received);
                     
                     //console.log(items_to_receive);
                     //console.log(items_to_receive);
@@ -131,32 +131,19 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                                 const seller_trade_state = seller_data.trade_offers.find((order:any)=> order.pure_id === buyer_id).trade_offer_state;
                                 const buyer_trade_state = buyer_data.trade_offers.find((order:any)=> order.pure_id === seller_id).trade_offer_state;
                                 if(seller_trade_state === 3 && buyer_trade_state === 3){
-                                    console.log("Execute balance ops");
+                                    //console.log("Execute balance ops");
                                     //console.log(item_to_receive.assetid);
                                     //console.log(item_to_give.assetid);
                                     //console.log(order_assetid);
 
                                     //change 440 to dynamic later on updating order object
 
-                                    const seller_inventory_new = await fetch_new_inventory(seller_id,seller_steam_api_key,440);
+                                    const seller_inventory_new = await fetch_new_inventory(seller_id,seller_steam_api_key,"440");
                                     const seller_inventory_old = seller?.descriptions_440;
 
-                                    const buyer_inventory_new = await fetch_new_inventory(buyer_id,buyer_steam_api_key,440);
+                                    const buyer_inventory_new = await fetch_new_inventory(buyer_id,buyer_steam_api_key,"440");
                                     const buyer_inventory_old = buyer?.descriptions_440;
-
-                                    //transferring existing prices from old inventory in game bazaar
-                                    seller_inventory_old.forEach((old_element:any) => {
-                                        if(old_element.assetid === order_assetid){
-                                            old_element.price = 0;
-                                            buyer_inventory_new.push(old_element);
-                                        }
-                                        seller_inventory_new.forEach((new_element:any) => {
-                                            if(old_element.assetid === new_element.assetid)
-                                            {
-                                                new_element.price = old_element.price
-                                            }
-                                        });
-                                    });
+                                  
 
                                     //transferring existing prices from old inventory in game bazaar
                                     buyer_inventory_old.forEach((old_item:any) => {
@@ -166,6 +153,27 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                                             }
                                         });
                                     });
+
+                                    console.log(buyer_inventory_new);
+                                    
+
+                                    if(seller_inventory_new){
+                                      //transferring existing prices from old inventory in game bazaar
+                                      seller_inventory_old.forEach((old_element:any) => {
+                                        if(old_element.assetid === order_assetid){
+                                            old_element.price = 0;
+                                            buyer_inventory_new.push(old_element);
+                                        }
+                                        seller_inventory_new.forEach((new_element:any) => {
+                                                if(old_element.assetid === new_element.assetid)
+                                                {
+                                                    new_element.price = old_element.price
+                                                }
+                                            });
+                                        });
+                                    }
+
+                                    console.log(buyer_inventory_new);
 
                                     const response_seller = await members.updateOne(
                                         {
@@ -182,7 +190,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                                         {
                                           $set: {
                                             "they_ordered.$.status": "Completed",
-                                            descriptions_440:seller_inventory_new
+                                            descriptions_440:seller_inventory_new,
+                                            last_updated_440:new Date()
                                           },
                                           $inc: {
                                             "balance": price,
@@ -205,7 +214,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                                         {
                                           $set: {
                                             "I_ordered.$.status": "Completed",
-                                            descriptions_440:buyer_inventory_new
+                                            descriptions_440:buyer_inventory_new,
+                                            last_updated_440:new Date()
                                           },
                                           $inc: {
                                             "balance": -price,
@@ -273,7 +283,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                     //console.log(match)
                 }
                 else{
-                    console.log(order.status)
+                    //console.log(order.status)
                 }
             }
         }

@@ -38,10 +38,13 @@ export default async function handler(req:NextApiRequest, res:NextApiResponse) {
                 //console.log(existingUser.steam_api_key);
                 try {
                     //Localhost for testing
-                    //const rotated_url = `https://markt.tf/inventory/${process.env.ID}/${existingUser.steam_api_key}/${appId}`;
+                    const rotated_url = process.env.NODE_ENV === 'development' ? 
+                                                                `https://markt.tf/inventory/${process.env.ID}/${process.env.STEAM}/${appId}`
+                                                                                :
+                                                                `https://markt.tf/inventory/${steamID}/${existingUser.steam_api_key}/${appId}`
 
                     // Production version
-                    const rotated_url = `https://markt.tf/inventory/${steamID}/${existingUser.steam_api_key}/${appId}`;
+                    //const rotated_url = `https://markt.tf/inventory/${steamID}/${existingUser.steam_api_key}/${appId}`;
                     const response = await fetch(rotated_url);
                     
                     const restext = await response.json();
@@ -49,8 +52,6 @@ export default async function handler(req:NextApiRequest, res:NextApiResponse) {
 
                     const descriptions = data.response.descriptions;
                     const assets = data.response.assets;
-                    console.log("hereeeeeeeee")
-
 
                     assets.forEach((asset:any,assetInd:any) => {
                         descriptions.forEach((desc:any, descInd:any) => {
@@ -93,10 +94,13 @@ export default async function handler(req:NextApiRequest, res:NextApiResponse) {
                 if(difference > refresh_time){
                     console.log("Time to update inventory for this category");
 
-                    const new_inventory = await fetch_new_inventory(steamID,existingUser.steam_api_key,appId);
+                    const new_inventory = process.env.NODE_ENV === 'development' ? 
+                                                                await fetch_new_inventory(process.env.ID!,process.env.STEAM!,appId)
+                                                                                 :
+                                                                await fetch_new_inventory(steamID,existingUser.steam_api_key,appId)
                     const old_intenvory = existingUser[`descriptions_${appId}`];
 
-                    
+                    console.log(new_inventory)
 
                     //Localhost for testing
                     //const new_inventory = await fetch_new_inventory(process.env.ID!,existingUser.steam_api_key,parseInt(appId));
