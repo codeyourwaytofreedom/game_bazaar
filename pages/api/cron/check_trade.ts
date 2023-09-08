@@ -2,6 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import SteamID from 'steamid';
 import { connectToDatabase } from '../db';
 import _ from 'lodash';
+import { fetch_new_inventory } from '../../../tools';
 
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -50,7 +51,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         const data_base = client.db('game-bazaar');
         const members = data_base.collection('members');
 
-        const fetch_new_inventory = async (steamId:string,steam_api_key:string,appId:string) => {
+/*         const fetch_new_inventory = async (steamId:string,steam_api_key:string,appId:string) => {
             try {
                 const rotated_url = `https://markt.tf/inventory/${steamId}/${steam_api_key}/${appId}`;
                 const response = await fetch(rotated_url);
@@ -74,7 +75,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             } catch (error) {
                 return null
             } 
-        }
+        } */
 
         
         const cursor = members.find({ "they_ordered": { $exists: true } });
@@ -132,49 +133,59 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                                 const buyer_trade_state = buyer_data.trade_offers.find((order:any)=> order.pure_id === seller_id).trade_offer_state;
                                 if(seller_trade_state === 3 && buyer_trade_state === 3){
                                     //console.log("Execute balance ops");
-                                    //console.log(item_to_receive.assetid);
-                                    //console.log(item_to_give.assetid);
+                                    console.log(item_to_receive.assetid);
+                                    console.log(item_to_give.assetid);
                                     //console.log(order_assetid);
 
                                     //change 440 to dynamic later on updating order object
 
-                                    const seller_inventory_new = await fetch_new_inventory(seller_id,seller_steam_api_key,"440");
+                                    let seller_inventory_new = await fetch_new_inventory(seller_id,seller_steam_api_key,"440");
                                     const seller_inventory_old = seller?.descriptions_440;
 
                                     const buyer_inventory_new = await fetch_new_inventory(buyer_id,buyer_steam_api_key,"440");
                                     const buyer_inventory_old = buyer?.descriptions_440;
 
-                                    
+                                    console.log(buyer_inventory_old.length);
 
                                     //transferring existing prices from old inventory in game bazaar
                                     //match according to market_hash_name
-                                    buyer_inventory_old.forEach((old_item:any) => {
+                                      buyer_inventory_old.forEach((old_item:any) => {
                                         buyer_inventory_new.forEach((new_item:any) => {
-                                            if(old_item.market_hash_name === new_item.market_hash_name){
+                                            if(old_item.assetid === new_item.assetid){
                                                 new_item.price = old_item.price
                                             }else{
                                               new_item.price = 0
                                             }
                                         });
-                                    });
+                                      });
 
-                                    console.log(buyer_inventory_new)
 
-                                    if(seller_inventory_new){
                                       //transferring existing prices from old inventory in game bazaar
                                       seller_inventory_old.forEach((old_element:any) => {
                                         if(old_element.assetid === order_assetid){
                                             old_element.price = 0;
-                                            buyer_inventory_new.push(old_element);
+                                            //buyer_inventory_new.push(old_element);
                                         }
-                                        seller_inventory_new.forEach((new_element:any) => {
-                                                if(old_element.market_hash_name === new_element.market_hash_name)
-                                                {
-                                                    new_element.price = old_element.price
-                                                }
+                                          if(seller_inventory_new){
+                                            seller_inventory_new.forEach((new_element:any) => {
+                                              if(old_element.market_hash_name === new_element.market_hash_name)
+                                              {
+                                                  new_element.price = old_element.price
+                                              }
                                             });
+                                          }
+                                          else{
+                                            console.log("No new inventory for the seller!");
+                                            seller_inventory_new = [];
+                                          }
                                         });
-                                    }
+                                    
+                                    
+                                    //console.log(seller_inventory_old.length);
+                                    //console.log(seller_inventory_new.length);
+
+                                    //console.log(buyer_inventory_old.length);
+                                    //console.log(buyer_inventory_new.length);
                                     
                                     const response_seller = await members.updateOne(
                                         {
