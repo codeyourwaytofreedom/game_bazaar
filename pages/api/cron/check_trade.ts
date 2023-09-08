@@ -145,10 +145,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                                     const buyer_inventory_new = await fetch_new_inventory(buyer_id,buyer_steam_api_key,"440");
                                     const buyer_inventory_old = buyer?.descriptions_440;
 
-                                    console.log(buyer_inventory_old.length);
 
                                     //transferring existing prices from old inventory in game bazaar
                                     //match according to market_hash_name
+                                    if(buyer_inventory_old){
                                       buyer_inventory_old.forEach((old_item:any) => {
                                         buyer_inventory_new.forEach((new_item:any) => {
                                             if(old_item.assetid === new_item.assetid){
@@ -158,6 +158,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                                             }
                                         });
                                       });
+                                    }
 
 
                                       //transferring existing prices from old inventory in game bazaar
