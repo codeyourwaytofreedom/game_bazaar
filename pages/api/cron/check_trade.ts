@@ -117,13 +117,66 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                     const to_be_given = items_to_give.find((e:any)=>e.assetid === order_assetid);
                     const to_be_received = items_to_receive.find((e:any)=>e.assetid === order_assetid);
                     
-                    //console.log(to_be_given)
-                    //console.log(to_be_received);
+                    console.log(to_be_given)
+                    console.log(to_be_received);
                     
+                    //console.log(items_to_give);
                     //console.log(items_to_receive);
-                    //console.log(items_to_receive);
-                    
-                    items_to_give.forEach((item_to_give:any) => {
+                    if(to_be_given && to_be_received && _.isEqual(to_be_given,to_be_received)){
+                      console.log("Trade status e bakılabilir");
+                      const seller_trade_state = seller_data.trade_offers.find((order:any)=> order.pure_id === buyer_id).trade_offer_state;
+                      const buyer_trade_state = buyer_data.trade_offers.find((order:any)=> order.pure_id === seller_id).trade_offer_state;
+                      if(seller_trade_state === 2 && buyer_trade_state === 2){
+                        console.log("Sender fulfilled: Buyer did not accept");
+
+                        const response_seller = await members.updateOne(
+                          {
+                            steamId: seller_id,
+                            they_ordered: {
+                              $elemMatch: {
+                                sellerId: seller_id,
+                                buyer_id: buyer_id,
+                                assetid: order.assetid,
+                                when:order.when
+                              }
+                            }
+                          },
+                          {
+                            $set: {
+                              "they_ordered.$.status": "Failed"
+                            }
+                          }
+                        );                          
+
+                        const response_buyer = await members.updateOne(
+                          {
+                            steamId: buyer_id,
+                            I_ordered: {
+                              $elemMatch: {
+                                sellerId: seller_id,
+                                buyer_id: buyer_id,
+                                assetid: order.assetid,
+                                when:order.when
+                              }
+                            }
+                          },
+                          {
+                            $set: {
+                              "I_ordered.$.status": "Failed",
+                            },
+                          }
+                        );
+                        console.log(response_seller.modifiedCount,response_buyer.modifiedCount,"Failed trade");
+
+                        
+                      }
+
+                      console.log(seller_trade_state,buyer_trade_state)
+                    }
+
+
+
+/*                     items_to_give.forEach((item_to_give:any) => {
                         items_to_receive.forEach(async (item_to_receive:any) => {
                             if(     _.isEqual(item_to_give,item_to_receive) 
                                     && item_to_give.assetid === order_assetid 
@@ -246,10 +299,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                                 console.log("Triple match failed")
                             }
                         });
-                    });
+                    }); */
 
 
-                    if(!to_be_given){
+/*                     if(!to_be_given){
                         console.log("Gönderici Göndermedi");
                         //console.log(order_assetid, seller_id, buyer_id)
                         console.log(seller_id, buyer_id, order_assetid, order.when)
@@ -291,7 +344,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                             }
                           );
                           console.log(response_seller.modifiedCount,response_buyer.modifiedCount,"Failed trade");
-                    }
+                    } */
 
                     //console.log(match)
                 }

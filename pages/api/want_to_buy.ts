@@ -54,7 +54,8 @@ export default async function order_handle(req:NextApiRequest, res:NextApiRespon
                         image:image,
                         trade_link:existingUser.trade_link,
                         price:price,
-                        buyer_id:steamID
+                        buyer_id:steamID,
+                        status:"Pending"
                     }
                 }
             });
