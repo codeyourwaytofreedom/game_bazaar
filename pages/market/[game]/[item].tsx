@@ -257,6 +257,7 @@ const Item_details = () => {
                     image:image,
                     price:buyDetails.price,
                     status:"Pending",
+                    appid:appid,
                     when:new Date()
                 })
             });

@@ -117,11 +117,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                     const to_be_given = items_to_give.find((e:any)=>e.assetid === order_assetid);
                     const to_be_received = items_to_receive.find((e:any)=>e.assetid === order_assetid);
                     
-                    console.log(to_be_given)
-                    console.log(to_be_received);
-                    
                     //console.log(items_to_give);
                     //console.log(items_to_receive);
+
+
                     if(to_be_given && to_be_received && _.isEqual(to_be_given,to_be_received)){
                       console.log("Trade status e bakılabilir");
                       const seller_trade_state = seller_data.trade_offers.find((order:any)=> order.pure_id === buyer_id).trade_offer_state;
@@ -174,6 +173,107 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                       console.log(seller_trade_state,buyer_trade_state)
                     }
 
+                    if(to_be_received && !to_be_given){
+                      const buyer_trade_state = buyer_data.trade_offers.find((order:any)=> order.pure_id === seller_id).trade_offer_state;
+                      //const seller_trade_state = seller_data.trade_offers.find((order:any)=> order.pure_id === buyer_id).trade_offer_state;
+                      if(buyer_trade_state === 3){
+                        let seller_inventory_new = await fetch_new_inventory(seller_id,seller_steam_api_key,"440");
+                        const seller_inventory_old = seller?.descriptions_440;
+
+                        const buyer_inventory_new = await fetch_new_inventory(buyer_id,buyer_steam_api_key,"440");
+                        const buyer_inventory_old = buyer?.descriptions_440;
+
+                        //transferring existing prices from old inventory in game bazaar
+                        //match according to market_hash_name
+                        if(buyer_inventory_old){
+                          buyer_inventory_old.forEach((old_item:any) => {
+                            buyer_inventory_new.forEach((new_item:any) => {
+                                if(old_item.assetid === new_item.assetid){
+                                    new_item.price = old_item.price
+                                }else{
+                                  new_item.price = 0
+                                }
+                            });
+                          });
+                        }
+                        //transferring existing prices from old inventory in game bazaar
+                        seller_inventory_old.forEach((old_element:any) => {
+                          if(old_element.assetid === order_assetid){
+                              old_element.price = 0;
+                              //buyer_inventory_new.push(old_element);
+                          }
+                            if(seller_inventory_new){
+                              seller_inventory_new.forEach((new_element:any) => {
+                                if(old_element.market_hash_name === new_element.market_hash_name)
+                                {
+                                    new_element.price = old_element.price
+                                }
+                              });
+                            }
+                            else{
+                              console.log("No new inventory for the seller!");
+                              seller_inventory_new = [];
+                            }
+                          });
+                        console.log(seller_inventory_old.length);
+                        console.log(seller_inventory_new.length);
+
+                        console.log(buyer_inventory_old.length);
+                        console.log(buyer_inventory_new.length);
+
+                        const response_seller = await members.updateOne(
+                          {
+                            steamId: seller_id,
+                            they_ordered: {
+                              $elemMatch: {
+                                sellerId: seller_id,
+                                buyer_id: buyer_id,
+                                assetid: order.assetid,
+                                when:order.when
+                              }
+                            }
+                          },
+                          {
+                            $set: {
+                              "they_ordered.$.status": "Completed",
+                              descriptions_440:seller_inventory_new,
+                              last_updated_440:new Date()
+                            },
+                            $inc: {
+                              "balance": price,
+                            },
+                          }
+                        );
+
+                        const response_buyer = await members.updateOne(
+                          {
+                            steamId: buyer_id,
+                            I_ordered: {
+                              $elemMatch: {
+                                sellerId: seller_id,
+                                buyer_id: buyer_id,
+                                assetid: order.assetid,
+                                when:order.when
+                              }
+                            }
+                          },
+                          {
+                            $set: {
+                              "I_ordered.$.status": "Completed",
+                              descriptions_440:buyer_inventory_new,
+                              last_updated_440:new Date()
+                            },
+                            $inc: {
+                              "balance": -price,
+                            },
+                          }
+                        );
+
+                       console.log(response_seller.modifiedCount, response_buyer.modifiedCount,"Bingo, go check balances") 
+
+                      }
+                      
+                    }
 
 
 /*                     items_to_give.forEach((item_to_give:any) => {

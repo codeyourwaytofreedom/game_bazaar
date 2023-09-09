@@ -28,6 +28,7 @@ export default async function order_handle(req:NextApiRequest, res:NextApiRespon
     const delivery_time = buy_order_details.delivery_time;
     const image = buy_order_details.image;
     const price = buy_order_details.price;
+    const appId = buy_order_details.appId;
 
     //console.log(sellerId,assetid,delivery_time,image,trade_link,price)
     
@@ -55,6 +56,7 @@ export default async function order_handle(req:NextApiRequest, res:NextApiRespon
                         trade_link:existingUser.trade_link,
                         price:price,
                         buyer_id:steamID,
+                        appId:appId,
                         status:"Pending"
                     }
                 }
