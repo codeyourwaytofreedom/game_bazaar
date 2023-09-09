@@ -76,7 +76,8 @@ const Trades = () => {
                                     <Image alt={"steam image"} src={e.image} width={70} height={70}/>
                                </div>
                                <span style={{color:statuses.find(s=>s.status === e.status)?.color}}>{e.assetid} <br />{e.trade_link}</span>
-                               <span style={{color:statuses.find(s=>s.status === e.status)?.color}}>{e.status}</span>
+                               <span style={{color:statuses.find(s=>s.status === e.status)?.color}}>{e.status} 
+                                                                    <br />{e.transaction_closed_at && e.transaction_closed_at}</span>
                                <span style={{color:statuses.find(s=>s.status === e.status)?.color}}>{e.status !== "Failed" && formatter(e.price)} </span>
                             </div>
                         )
