@@ -87,10 +87,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 const order_assetid = order.assetid;
                 const when = order.when;
                 const delivery_time = order.delivery_time;
-                const time_space_in_seconds = delivery_time === "12 hr" ? 12*3600 : 15*60;
-
+                const time_space_in_seconds = delivery_time === "12 hr" ? 12*3600 : 20*60;
                 const difference = (new Date().getTime() - new Date(when).getTime()) / 1000;
-
                 const expired = time_space_in_seconds - difference < 0;
 
                 if(order.status === "Pending"){
@@ -112,19 +110,21 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                     const items_to_give = seller_data.trade_offers.find((order:any)=> order.pure_id === buyer_id).items_to_give;
                     const items_to_receive = buyer_data.trade_offers.find((order:any)=> order.pure_id === seller_id).items_to_receive;
 
-                    const to_be_given = items_to_give.find((e:any)=>e.assetid === order_assetid);
-                    const to_be_received = items_to_receive.find((e:any)=>e.assetid === order_assetid);
+                    const to_be_given = items_to_give.find((e:any)=>e.assetid === order_assetid) || null;
+                    const to_be_received = items_to_receive.find((e:any)=>e.assetid === order_assetid) || null;
                     
                     console.log(appId)
-                    console.log(items_to_give);
-                    console.log(items_to_receive);
+                    console.log(to_be_given);
+                    console.log(to_be_received);
+
+                    console.log(expired)
 
 
                     if(to_be_given && to_be_received && _.isEqual(to_be_given,to_be_received)){
                       console.log("Trade status e bakılabilir");
                       const seller_trade_state = seller_data.trade_offers.find((order:any)=> order.pure_id === buyer_id).trade_offer_state;
                       const buyer_trade_state = buyer_data.trade_offers.find((order:any)=> order.pure_id === seller_id).trade_offer_state;
-                      if(seller_trade_state === 2 && buyer_trade_state === 2){
+                      if(seller_trade_state === 2 && buyer_trade_state === 2 && expired){
                         console.log("Sender fulfilled: Buyer did not accept");
 
                         const response_seller = await members.updateOne(
@@ -266,8 +266,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                             }
                           );
   
-                         console.log(response_seller.modifiedCount, response_buyer.modifiedCount,"Bingo, go check balances") 
-
+                         console.log(response_seller.modifiedCount, response_buyer.modifiedCount,"Bingo, go check balances"); 
 
                       }
 
@@ -384,6 +383,52 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                       
                     }
 
+                    if(!to_be_given && !to_be_received && expired){
+                      console.log("Sender faield to send...");
+
+/*                       const response_seller = await members.updateOne(
+                        {
+                          steamId: seller_id,
+                          they_ordered: {
+                            $elemMatch: {
+                              sellerId: seller_id,
+                              buyer_id: buyer_id,
+                              assetid: order.assetid,
+                              when:order.when
+                            }
+                          }
+                        },
+                        {
+                          $set: {
+                            "they_ordered.$.status": "Failed",
+                            "they_ordered.$.transaction_closed_at": new Date(),
+                            banned:{for:"failed to send item", when:new Date()}
+                          }
+                        }
+                      );                          
+
+                      const response_buyer = await members.updateOne(
+                        {
+                          steamId: buyer_id,
+                          I_ordered: {
+                            $elemMatch: {
+                              sellerId: seller_id,
+                              buyer_id: buyer_id,
+                              assetid: order.assetid,
+                              when:order.when
+                            }
+                          }
+                        },
+                        {
+                          $set: {
+                            "I_ordered.$.status": "Failed",
+                            "I_ordered.$.transaction_closed_at": new Date(),
+                          },
+                        }
+                      );
+                      console.log(response_seller.modifiedCount,response_buyer.modifiedCount,"Failed trade"); */
+                    }
+
                     //Olumsuz sonuç
 /*                     if(!to_be_given){
                         console.log("Gönderici Göndermedi");
@@ -409,26 +454,26 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                             }
                           );                          
 
-                          const response_buyer = await members.updateOne(
-                            {
-                              steamId: buyer_id,
-                              I_ordered: {
-                                $elemMatch: {
-                                  sellerId: seller_id,
-                                  buyer_id: buyer_id,
-                                  assetid: order.assetid,
-                                  when:order.when
-                                }
+                        const response_buyer = await members.updateOne(
+                          {
+                            steamId: buyer_id,
+                            I_ordered: {
+                              $elemMatch: {
+                                sellerId: seller_id,
+                                buyer_id: buyer_id,
+                                assetid: order.assetid,
+                                when:order.when
                               }
-                            },
-                            {
-                              $set: {
-                                "I_ordered.$.status": "Failed",
-                                "I_ordered.$.transaction_closed_at": new Date(),
-                              },
                             }
-                          );
-                          console.log(response_seller.modifiedCount,response_buyer.modifiedCount,"Failed trade");
+                          },
+                          {
+                            $set: {
+                              "I_ordered.$.status": "Failed",
+                              "I_ordered.$.transaction_closed_at": new Date(),
+                            },
+                          }
+                        );
+                        console.log(response_seller.modifiedCount,response_buyer.modifiedCount,"Failed trade");
                     } */
 
                 }

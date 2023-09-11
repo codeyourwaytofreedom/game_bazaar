@@ -266,7 +266,7 @@ const Inventory = () => {
                                     onMouseLeave={()=> category === "tm2" && setPopup(-1)}
                                 />
                                 <span style={{boxShadow: index%2 ? "0 0 35px 15px whitesmoke" : "0 0 35px 15px gold"}}></span>
-                                {popup === index && hoverDeetails &&
+                                {popup === index && hoverDeetails && category === "tm2" && 
                                     <div id={i.popup}>
                                         {
                                             <>
